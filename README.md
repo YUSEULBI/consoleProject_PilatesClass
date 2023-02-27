@@ -24,6 +24,10 @@ MVC디자인패턴을 사용하여 CRUD[생성,읽기,갱신,삭제]를 JAVA와 
 
 ## 조원별 역할분담 / 일정
 
-## DB구조도
+
+
+## MYSQL ER 다이어그램
+![DB다이어그램](https://user-images.githubusercontent.com/121651792/221512220-a482b88c-24ae-4c3f-a2c8-8a5d524201fb.png)
+
 ## 패키지[MVC] 구조도
 ## 컨트롤 구조도
