@@ -1,5 +1,5 @@
 package pilatesClass.controller;
 
-public class Mcontroller {
+public class 스케줄Controller {
 
 }
