@@ -5,10 +5,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-
 public class 회원dao extends Dao{
 	
-	 ArrayList<회원dto>회원DB=new ArrayList<>();
+	private static 회원dao dao = new 회원dao();
+	private 회원dao() {
+		// TODO Auto-generated constructor stub
+	}
+	public static 회원dao getInstance() {
+		return dao;
+	}
+	
 	//회원가입
 	public boolean signup(회원dto 회원) {//회원가입
 		
@@ -17,7 +23,7 @@ public class 회원dao extends Dao{
 		
 		
 		try {//ps는 상속받으면 해결
-			ps=conn.prepareStatement(sql);
+			ps=con.prepareStatement(sql);
 			
 			ps.setString(1, 회원.get아이디());
 			ps.setString(2, 회원.get비밀번호());
@@ -26,8 +32,6 @@ public class 회원dao extends Dao{
 			ps.setInt(5, 회원.get등급());
 			
 			ps.executeUpdate();
-			회원DB.add(회원);
-			
 			
 			return true;
 			
@@ -47,7 +51,7 @@ public class 회원dao extends Dao{
 		String sql="select 비밀번호,등급 from 회원 where 아이디=? ";
 		
 		try {
-			ps=conn.prepareStatement(sql);
+			ps=con.prepareStatement(sql);
 			ps.setString(1, 아이디);
 			rs=ps.executeQuery();
 			

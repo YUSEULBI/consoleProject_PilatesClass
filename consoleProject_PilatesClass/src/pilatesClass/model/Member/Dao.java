@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 public class Dao {
 	
 		
-	private Connection con;
-	private PreparedStatement ps;
-	private ResultSet rs;
+	public Connection con;
+	public PreparedStatement ps;
+	public ResultSet rs;
 	
 	public Dao() {
 		try {

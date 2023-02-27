@@ -1,4 +1,4 @@
-package pilatesClass.Controller;
+package pilatesClass.controller;
 
 public class 수강내역Controller {
 
