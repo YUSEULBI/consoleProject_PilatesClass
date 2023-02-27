@@ -1,5 +1,5 @@
 package pilatesClass.model.Member;
 
-public class dao {
+public class 수강내역dao {
 
 }

@@ -1,5 +1,5 @@
 package pilatesClass.view;
 
-public class View {
+public class 스케줄View {
 
 }
