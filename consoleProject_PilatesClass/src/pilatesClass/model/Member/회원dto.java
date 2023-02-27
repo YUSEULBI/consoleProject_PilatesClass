@@ -3,7 +3,7 @@ package pilatesClass.model.Member;
 public class 회원dto {
 	
 	//필드
-		private int 회원번호;
+		private int 회원번호_pk;
 		private String 아이디;
 		private String 비밀번호;
 		private String 전화번호;
@@ -11,8 +11,8 @@ public class 회원dto {
 		private int 등급;
 		
 		//생성자
-		public 회원dto(int 회원번호, String 아이디, String 비밀번호, String 전화번호, String 이름, int 등급) {
-			this.회원번호 = 회원번호;
+		public 회원dto(int 회원번호_pk, String 아이디, String 비밀번호, String 전화번호, String 이름, int 등급) {
+			this.회원번호_pk = 회원번호_pk;
 			this.아이디 = 아이디;
 			this.비밀번호 = 비밀번호;
 			this.전화번호 = 전화번호;
@@ -23,12 +23,12 @@ public class 회원dto {
 		public 회원dto() {
 		}
 
-		public int get회원번호() {
-			return 회원번호;
+		public int get회원번호_pk() {
+			return 회원번호_pk;
 		}
 
-		public void set회원번호(int 회원번호) {
-			this.회원번호 = 회원번호;
+		public void set회원번호_pk(int 회원번호_pk) {
+			this.회원번호_pk = 회원번호_pk;
 		}
 
 		public String get아이디() {
@@ -71,6 +71,11 @@ public class 회원dto {
 			this.등급 = 등급;
 		}
 
+		@Override
+		public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+		}
 		
 		//메소드
 	
