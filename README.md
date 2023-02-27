@@ -1,4 +1,4 @@
-# consoleProject_PilatesClass
+# 콘솔프로젝트_PilatesClass
 ## 주제
 
 필라테스 수업과 회원을 관리하는 기능을 콘솔에 구현했습니다.
