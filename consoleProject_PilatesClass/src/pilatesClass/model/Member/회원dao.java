@@ -91,11 +91,12 @@ public class 회원dao extends Dao{
 	public boolean reservation(int ch) {
 		
 		String sql="insert into ";
-		
+		return true;
 	}
 	
 	public ArrayList<수강내역dto> print(){
 		
+		return null;
 	}
 	
 	
@@ -111,5 +112,5 @@ public class 회원dao extends Dao{
 	
 	
 	
-}
+
 
