@@ -3,9 +3,9 @@ package pilatesClass.view;
 import java.util.Scanner;
 
 import pilatesClass.controller.회원controller;
-import pilatesClass.controller.회원controller_ver2;
+import pilatesClass.controller.회원controller;
 import pilatesClass.model.Member.회원dao;
-import pilatesClass.model.Member.회원dao_ver2;
+import pilatesClass.model.Member.회원dao;
 
 public class 회원view {
 	
@@ -38,11 +38,9 @@ public class 회원view {
 			System.out.println("비밀번호:"); String 비밀번호=scanner.next();
 			
 			int result=
-					회원controller_ver2.getInstance().login(아이디, 비밀번호);
+					회원controller.getInstance().login(아이디, 비밀번호);
 			if(result==1) {
 				System.out.println("일반 회원 로그인성공");
-				//
-				
 			}else if(result==0) {
 				System.out.println("비밀번호가 잘못되었습니다.");
 			}else if (result==-1) {
@@ -51,8 +49,8 @@ public class 회원view {
 				System.out.println("관리자회원 로그인 성공");
 			}
 			
-			int login1=회원dao.getInstance().getLogSession();
-			System.out.println("login1:"+login1);
+			int login=회원controller.getInstance().getLogSession();
+			System.out.println("login2:"+login);
 					
 		}
 		

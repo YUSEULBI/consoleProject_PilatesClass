@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import pilatesClass.controller.회원controller;
+
 
 public class 회원dao extends Dao{
 	
@@ -44,16 +46,11 @@ public class 회원dao extends Dao{
 		
 		
 	}
-	
-	private int logSession; //로그세션 int
-	public int getLogSession() { //로그세션 게터
-		return logSession;
-	}
 
 	
-	public 회원dto login(String 아이디,String 비밀번호) {//로그인
+	public int login(String 아이디,String 비밀번호) { //로그인
 		
-		String sql="select * from 회원 where 아이디=? ";
+		String sql="select 회원번호_pk,비밀번호,등급 from 회원 where 아이디=? ";
 		
 		try {
 			ps=con.prepareStatement(sql);
@@ -61,29 +58,28 @@ public class 회원dao extends Dao{
 			rs=ps.executeQuery();
 			
 			if(rs.next()) {//출력이면..출력이 트루이면(?)
-				if(rs.getString(3).contentEquals(비밀번호)) {//출력된 rs1번과 작성하는 비밀번호와 같을시
-						회원dto 회원dto=new 회원dto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getInt(6));
-						logSession=회원dto.get회원번호_pk();//왜 갑자기 안되지..?! 분명됐는뎅
-						return 회원dto; 
+				if(rs.getString(2).contentEquals(비밀번호)) {//출력된 rs1번과 작성하는 비밀번호와 같을시
 					
+					회원controller.getInstance().setLogSession( rs.getInt(1) ) ; //1번이면 일반회원 로그인 성
+					
+					if(rs.getInt(3)==1) {//수강생 로그인
+						 //회원번호 pk를 대입 -> 정보를 꺼내온다던지 할때 추후에 문제가 없는지..공
+						return 1;
+					}else if (rs.getInt(3)==2) {//강사 로그인
+						return 2 ;
+					}
 				}else {
-					회원dto A;//비번틀림 필요없음 = 0으로 리턴할거임
+					return 0; //비밀번호 틀림
 				}
 			}
-			return null; //없는회원(아이디없음)
+			return -1; //없는회원(아이디없음)
 			
 		} catch (SQLException e) {
 			System.out.println("없는회원입니다."+e);
 		}
 		
-		return null;//db오류 필요없는리턴값이지만 리턴안해주면 오류남
-		
-		
-		
-		
-		
+		return -2;//db오류 필요없는리턴값이지만 리턴안해주면 오류남
 		
 	}
-	
 
 }
