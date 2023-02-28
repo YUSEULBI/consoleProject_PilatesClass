@@ -71,7 +71,7 @@ public class 회원dao extends Dao{
 				}else {
 					return 0; //비밀번호 틀림
 				}
-			}
+			}// 아이디가 존재 하는 회원
 			return -1; //없는회원(아이디없음)
 			
 		} catch (SQLException e) {
