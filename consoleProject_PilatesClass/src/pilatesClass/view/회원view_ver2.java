@@ -7,7 +7,7 @@ import pilatesClass.controller.회원controller_ver2;
 import pilatesClass.model.Member.회원dao;
 import pilatesClass.model.Member.회원dao_ver2;
 
-public class 회원view {
+public class 회원view_ver2 {
 	
 	Scanner scanner=new Scanner(System.in);
 
@@ -51,8 +51,8 @@ public class 회원view {
 				System.out.println("관리자회원 로그인 성공");
 			}
 			
-			int login1=회원dao.getInstance().getLogSession();
-			System.out.println("login1:"+login1);
+			int login=회원dao_ver2.getInstance().getLogSession();
+			System.out.println("login2:"+login);
 					
 		}
 		

@@ -17,19 +17,24 @@ public class 회원controller {
 		
 		boolean result=
 				회원dao.getInstance().signup(회원);
-		
-		
 		return result;
 		
 		
 	}
 	
-	public int login(String 아이디,String 비밀번호) {
-		
-		return 회원dao.getInstance().login(아이디, 비밀번호);
-		
+
 	
-		
+	
+	public int login(String 아이디,String 비밀번호) {
+		회원dto 회원dto=회원dao.getInstance().login(아이디, 비밀번호);
+		if(회원dto.get등급()==1) {
+			return 1;//일반회원 로그인 성공
+		}else if (회원dto.get등급()==2) {
+			return 2;//관리자회원 로그인 성공
+		}else if (회원dto==null) {
+			return -1;//없는회원
+		}
+		return 0;//비밀번호가 잘못됨
 		
 	}
 	
