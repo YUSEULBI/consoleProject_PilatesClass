@@ -1,5 +1,5 @@
 package pilatesClass.model.Member;
 
-public class Mdto {
+public class 스케줄dao {
 
 }
