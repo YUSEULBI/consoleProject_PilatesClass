@@ -41,7 +41,7 @@ public class 회원view {
 					회원controller.getInstance().login(아이디, 비밀번호);
 			if(result==1) {
 				System.out.println("일반 회원 로그인성공");
-				스케줄View.getInstance().classView();
+				스케줄View.getInstance().classView(); //
 				
 			}else if(result==0) {
 				System.out.println("비밀번호가 잘못되었습니다.");
@@ -56,6 +56,10 @@ public class 회원view {
 			System.out.println("login2:"+login);
 					
 		}
+		
+		
+		
+		
 		
 		
 	
