@@ -82,11 +82,6 @@ public class 회원dao extends Dao{
 		
 	}
 	
-	
-	
-	
-	
-	
 
 	public boolean reservation(int ch) {
 		
@@ -99,6 +94,61 @@ public class 회원dao extends Dao{
 		return null;
 	}
 	
+	
+	
+	public String findId(String 이름 , String 전화번호) { // 이름과 전화번호 입력으로 아이디 찾기
+		 String sql="select 아이디 from 회원 where  이름=? and 전화번호=?";
+		 try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, 이름);
+			ps.setString(2, 전화번호);
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}return null;
+		
+	}
+	
+	public String findPw(String 아이디 , String 이름) { // 아이디와 이름으로 비밀번호 찾기
+		String sql="select 비밀번호 from 회원 where  아이디=? and 이름=?";
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, 아이디);
+			ps.setString(2, 이름);
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}return null;
+		
+	}
+	
+	
+	public String findName() {//로그세션으로 이름 뽑아내는 함수 , 인수없이 이름만 리턴
+		String sql="select 이름 from 회원 where  회원번호_pk =?"  ;
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, 회원controller.getInstance().getLogSession());
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} return null;
+	}
 	
 }
 
