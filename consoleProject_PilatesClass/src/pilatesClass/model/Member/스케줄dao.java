@@ -71,7 +71,7 @@ public class 스케줄dao extends Dao {
 	}
 	
 	
-	// 수업수정 ///아직 수정중
+	// 수업수정
 		public int classEdit( 스케줄dto dto , int 수업번호 ) {
 			int 회원번호 = memberNoFind(dto.get강사명());
 			if ( 회원번호 == -1 ) { return 3;	} // 강사명이 잘못됨
@@ -91,5 +91,32 @@ public class 스케줄dao extends Dao {
 			return 2;
 		}
 	
-	
+	// 수업삭제 전 스케줄번호 유무 확인
+	public boolean deleteCheck ( int ch ) {
+		String sql = "select * from 스케줄 where 스케줄번호_pk = ?;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, ch);
+			rs = ps.executeQuery();
+			if ( rs.next() ) { return true;	}
+			
+		}catch (Exception e) {
+			System.out.println(e);
+		}return false;
+	}
+		
+	// 수업삭제
+		public int classDelete( int ch ) {
+			if ( !deleteCheck(ch) ) { return 2; } // 수업이 없음 , 스케줄번호 잘못입력 
+			String sql = "delete from 스케줄 where 스케줄번호_pk = ?;";
+			try {
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, ch);
+				ps.executeUpdate();
+				return 1; // 삭제 성공
+			}catch (Exception e) {
+				System.out.println(e);
+			}
+			return 3; // 실패 관리자문의
+		}
 }

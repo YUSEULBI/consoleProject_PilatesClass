@@ -85,8 +85,16 @@ public class 스케줄View {
 		
 	}
 	
+	//스케줄을 삭제하면 수강내역이 사라짐 / 사라지기전에 해당 스케줄을 수강한 회원들에게 삭제 알림을 안내해야할 것 같다.
 	public void classDelete() {
+		System.out.println("삭제할 스케줄번호를 입력하세요");
+		int ch = scanner.nextInt();
+		int result = 스케줄Controller.getInstance().classDelete(ch);
+		if ( result == 1 ) { System.out.println("["+ch+"번 수업을 삭제했습니다.]");	}
+		else if ( result == 2 ) { System.out.println("[존재하지 않는 수업번호 입니다.]");	}
+		else if ( result == 3 ) { System.out.println("[수업삭제 실패]-관리자문의");	}
 		
+				
 	}
 	
 }
