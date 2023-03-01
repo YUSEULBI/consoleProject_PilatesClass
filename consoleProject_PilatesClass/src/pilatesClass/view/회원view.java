@@ -17,7 +17,7 @@ public class 회원view {
 			System.out.println("비밀번호:"); String 비밀번호=scanner.next();
 			System.out.println("전화번호:");	String 전화번호=scanner.next();
 			System.out.println("이름:");	String 이름=scanner.next();
-			System.out.println("회원=> 1입력 , 강사=> 2입력"); int 등급=scanner.nextInt();
+			System.out.println("회원=> 1입력 , 관리자=> 2입력"); int 등급=scanner.nextInt();
 			
 			boolean result=
 					회원controller.getInstance().signup(아이디, 비밀번호, 전화번호, 이름, 등급);
@@ -42,13 +42,12 @@ public class 회원view {
 			if(result==1) {
 				System.out.println("일반 회원 로그인성공");
 				스케줄View.getInstance().classView(); //
-				
 			}else if(result==0) {
 				System.out.println("비밀번호가 잘못되었습니다.");
 			}else if (result==-1) {
 				System.out.println("없는 회원 입니다.");
 			}else if (result==2) {
-				System.out.println("강사 로그인 성공");
+				System.out.println("관리자회원 로그인 성공");
 				스케줄View.getInstance().classView();
 			}
 			
@@ -60,8 +59,11 @@ public class 회원view {
 		
 		
 		
-		
-		
-	
-	
 }
+		
+
+		
+		
+	
+	
+

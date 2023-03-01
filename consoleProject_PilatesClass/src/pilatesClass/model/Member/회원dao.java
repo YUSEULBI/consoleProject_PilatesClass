@@ -81,5 +81,36 @@ public class 회원dao extends Dao{
 		return -2;//db오류 필요없는리턴값이지만 리턴안해주면 오류남
 		
 	}
+	
+	
+	
+	
+	
+	
 
+	public boolean reservation(int ch) {
+		
+		String sql="insert into ";
+		return true;
+	}
+	
+	public ArrayList<수강내역dto> print(){
+		
+		return null;
+	}
+	
+	
 }
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+

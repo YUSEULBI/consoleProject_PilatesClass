@@ -14,6 +14,14 @@ public class 수강내역Controller {
 	public boolean cancel(int ch) {
 		return 수강내역dao.getInstance().cancel(ch);
 	}
+	
+	
+	public boolean reservation(int ch) {
+		
+	boolean result=수강내역dao.getInstance().reservation(ch);
+	return result;
+	}
+	
 }
 
 
