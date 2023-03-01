@@ -38,4 +38,11 @@ public class 스케줄Controller {
 		return 스케줄dao.getInstance().classDelete(ch);
 	}
 	
+	// 존재하는 회원명인지 확인하기{}
+	public boolean memberNoFind( String name ) {
+		int result = 스케줄dao.getInstance().memberNoFind(name);
+		if ( result == -1 ) { return false;	}
+		else { return true;	}
+		
+	}
 }
