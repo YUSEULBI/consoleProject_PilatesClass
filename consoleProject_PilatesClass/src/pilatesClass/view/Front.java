@@ -40,7 +40,7 @@ public class Front {
 	public void admin_page() {
 		System.out.println("1.수업조회 2.회원조회 3.강사조회");
 		int sc = scanner.nextInt();
-		if ( sc == 1 ) {	}
+		if ( sc == 1 ) { 스케줄View.getInstance().classPage();	}
 		else if ( sc == 2 ) {	}
 		else if ( sc == 3 ) {	}
 		
