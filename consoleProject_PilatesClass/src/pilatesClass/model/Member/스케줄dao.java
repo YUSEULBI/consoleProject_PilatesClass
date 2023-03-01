@@ -54,7 +54,6 @@ public class 스케줄dao extends Dao {
 	// 수업등록
 	public boolean classAdd( 스케줄dto dto ) {
 		int 회원번호 = memberNoFind(dto.get강사명());
-		if ( 회원번호 == -1 ) { return false;	} // 강사명이 잘못됨
 		String sql = "insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( ? , ? , ? );";
 		try {
 			ps = con.prepareStatement(sql);

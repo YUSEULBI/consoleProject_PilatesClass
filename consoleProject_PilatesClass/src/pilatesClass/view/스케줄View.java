@@ -84,11 +84,12 @@ public class 스케줄View {
 		
 		// 금액,강사명
 		System.out.print("금액 : "); int price = scanner.nextInt();
-		System.out.print("강사명 : "); String tName = scanner.next();
-		
-		// 금액,강사명 유효성검사
 		if ( price < 30000  ) { System.out.println("[3만원 이상의 수강료를 기입해주세요.]"); return null; } // 기본금액 3만원 이상
+		
+		System.out.print("강사명 : "); String tName = scanner.next();
 		if ( !(스케줄Controller.getInstance().memberNoFind(tName))) { System.out.println("[존재하지 않는 강사입니다.]"); return null;		} // 강사이름이 없으면 null;
+		
+				
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		//2023-02-24 11:00:00
