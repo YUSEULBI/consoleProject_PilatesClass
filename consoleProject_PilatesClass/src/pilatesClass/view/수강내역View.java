@@ -16,10 +16,10 @@ public class 수강내역View {
 	
 	public void reservation(){
 		System.out.println("수강번호 를 입력해주세요");int ch=scanner.nextInt();
-		 boolean result=수강내역Controller.getInstance().reservation(ch);
-		 if(result) {System.out.println("수강할 수업이 등록되었습니다.");}
-		 else {System.out.println("[실패]");}
-		
+		 int result=수강내역Controller.getInstance().reservation(ch);
+		 if(result == 1) {System.out.println("[수강할 수업이 등록되었습니다.]");}
+		 else if ( result == 2 ) {  System.out.println("[이미 예약된 수업입니다.]");}
+		 else if ( result == 3 ) {  System.out.println("[예약 실패 - 관리자문의 ]");}
 	}
 	
 	public void cancel() {//취소

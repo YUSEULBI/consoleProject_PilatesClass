@@ -16,9 +16,9 @@ public class 수강내역Controller {
 	}
 	
 	
-	public boolean reservation(int ch) {
-		
-	boolean result=수강내역dao.getInstance().reservation(ch);
+	public int reservation(int ch) {
+	int loginsession = 회원controller.getInstance().getLogSession();
+	int result=수강내역dao.getInstance().reservation(loginsession , ch );
 	return result;
 	}
 	

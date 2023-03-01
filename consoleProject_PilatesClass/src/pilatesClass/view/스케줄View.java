@@ -1,5 +1,6 @@
 package pilatesClass.view;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -26,12 +27,13 @@ public class 스케줄View {
 	public void classPage() {
 		while(true) {
 			classView();
-			System.out.println("1.수업등록 2.수업변경 3.수업삭제");
+			System.out.println("1.수업등록 2.수업변경 3.수업삭제 4.뒤로가기");
 			try {
 				int ch = scanner.nextInt();
 				if ( ch == 1 ) { classAdd();	}
 				else if ( ch == 2 ) { classEdit();	 }
 				else if ( ch == 3 ) { classDelete();	}
+				else if ( ch == 4 ) { break;	}
 			}catch (Exception e) {
 				System.out.println(e);
 				scanner = new Scanner(System.in);
@@ -40,19 +42,27 @@ public class 스케줄View {
 	}
 	
 	public void classView() {
-		System.out.println("=========== 전체 수업목록 ===========");
-		System.out.printf("%s\t%-15s\t%s\t%s\n","수업번호","수강일시","금액","강사");
+		System.out.println("============= 전체 수업목록 =============");
+		System.out.printf("%s\t%-15s\t%s\t %s\n","수업번호","수강일시","금액","강사");
 		ArrayList<스케줄dto> classList = 스케줄Controller.getInstance().classView();
 		for ( 스케줄dto d : classList) {
-			System.out.printf("%d\t%s\t%d\t%s\n",d.get스케줄번호(),d.get수강일시(),d.get금액(),d.get강사명());
+			String DateTime =  d.get수강일시();
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yy.MM.dd HH:mm");
+			LocalDateTime time = LocalDateTime.parse(DateTime,dtf);
+			String time2 = time.format(dtf2);
+			int bPrice = d.get금액();
+			DecimalFormat df = new DecimalFormat("#,##0원");
+			 
+			System.out.printf("%d\t%s\t%s\t %s\n",d.get스케줄번호(),time2,df.format(bPrice),d.get강사명());
 		}
-		System.out.println("=================================");
+		System.out.println("=====================================");
 	}
 	
 	public 스케줄dto classAddandEditInput() {
 				
 		// 날짜
-		System.out.print("년 : ");	int year = scanner.nextInt();
+		System.out.print("년[yyyy] : ");	int year = scanner.nextInt();
 		
 		System.out.print("월 : ");	int month = scanner.nextInt();
 		if ( month > 12 || month < 1) { System.out.println("[날짜를 올바르게 입력하세요]"); return null;	}
@@ -67,16 +77,15 @@ public class 스케줄View {
 		if ( minute > 60 || minute < 0 ){ System.out.println("[날짜를 올바르게 입력하세요]"); return null;	}
 		
 		LocalDateTime time = LocalDateTime.of(year, month, day, hour, minute);
-		System.out.println(time);
+		//System.out.println(time);
 		
 		// 날짜 유효성검사
 		LocalDateTime now = LocalDateTime.now(); //현재시간
 		Duration duration = Duration.between(now, time);
-		System.out.println("날짜차이 : "+duration.toDays());
+		//System.out.println("날짜차이 : "+duration.toDays());
 		if ( duration.toDays() < 0 ) { System.out.println("[지난 날짜는 수업을 등록할 수 없습니다.]"); return null;	} // 날짜가 과거이면 null;
-		System.out.println("시간차이 : "+duration.toHours());
+		//System.out.println("시간차이 : "+duration.toHours());
 		if ( duration.toHours() < 0 ) { System.out.println("[지난 시간은 수업을 등록할 수 없습니다.]"); return null;	} // 날짜가 과거이면 null;
-		
 		if ( duration.toDays() > 30 ) { System.out.println("[한달 이내 날짜만 등록할 수 있습니다.]"); return null;	} // 날짜가 과거이면 null;
 		
 		
