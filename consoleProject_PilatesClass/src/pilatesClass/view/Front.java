@@ -47,11 +47,12 @@ public class Front {
 	}
 	
 	public void reservation_page() {
-		System.out.println("1.예약 2.예약내역보기");
-		int ch=scanner.nextInt();
-		if(ch==1) {수강내역View.getInstance().reservation();}
-		else if(ch==2) {}
-		
+		while(true) {
+			System.out.println("1.예약 2.예약내역보기");
+			int ch=scanner.nextInt();
+			if(ch==1) {수강내역View.getInstance().reservation();}
+			else if(ch==2) {수강내역View.getInstance().res_print();}
+		}	
 
 }
 }
