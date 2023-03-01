@@ -72,22 +72,23 @@ public class 스케줄dao extends Dao {
 	
 	
 	// 수업수정 ///아직 수정중
-		public boolean classEdit( 스케줄dto dto , int 수업번호 ) {
+		public int classEdit( 스케줄dto dto , int 수업번호 ) {
 			int 회원번호 = memberNoFind(dto.get강사명());
-			if ( 회원번호 == -1 ) { return false;	} // 강사명이 잘못됨
+			if ( 회원번호 == -1 ) { return 3;	} // 강사명이 잘못됨
 			String sql = "update 스케줄 set 수강일시 =? , 금액=? , 회원번호_fk =? where 스케줄번호_pk =?;";
 			try {
 				ps = con.prepareStatement(sql);
 				ps.setString(1, dto.get수강일시());
 				ps.setInt(2, dto.get금액());
 				ps.setInt(3, 회원번호);
+				ps.setInt(4, 수업번호);
 				ps.executeUpdate();
-				return true;
+				return 1; // 변경성공
 			}catch (Exception e) {
 				System.out.println(e);
 			}
 			
-			return false;
+			return 2;
 		}
 	
 	

@@ -29,9 +29,9 @@ public class 스케줄Controller {
 	}
 	
 	//수업수정
-	public boolean classEdit( 스케줄dto dto , int 수업번호 ) {
+	public int classEdit( 스케줄dto dto , int 수업번호 ) {
+		return 스케줄dao.getInstance().classEdit(dto, 수업번호);
 		
-		return false;
 	}
 	
 }

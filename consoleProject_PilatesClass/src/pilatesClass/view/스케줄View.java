@@ -25,11 +25,16 @@ public class 스케줄View {
 	public void classPage() {
 		while(true) {
 			classView();
-			System.out.println("1.수업등록 2.수업수정 3.수업삭제");
-			int ch = scanner.nextInt();
-			if ( ch == 1 ) { classAdd();	}
-			else if ( ch == 2 ) { classEdit();	 }
-			else if ( ch == 3 ) { classDelete();	}
+			System.out.println("1.수업등록 2.수업변경 3.수업삭제");
+			try {
+				int ch = scanner.nextInt();
+				if ( ch == 1 ) { classAdd();	}
+				else if ( ch == 2 ) { classEdit();	 }
+				else if ( ch == 3 ) { classDelete();	}
+			}catch (Exception e) {
+				System.out.println(e);
+				scanner = new Scanner(System.in);
+			}
 		}
 	}
 	
@@ -70,8 +75,13 @@ public class 스케줄View {
 		
 	}
 	
-	public void classEdit() {
-		
+	public void classEdit() throws Exception {
+		System.out.println("수정할 스케줄번호 입력하세요 : ");
+		int ch = scanner.nextInt();
+		int result = 스케줄Controller.getInstance().classEdit(classAddandEditInput(), ch);
+		if ( result == 1 ) { System.out.println("["+ch+"번 수업을 변경했습니다.]");	}
+		else if ( result == 2 ) { System.out.println("[강사명을 바르게 입력하세요.]");	}
+		else if ( result == 3 ) { System.out.println("[수업 변경 실패] - 관리자 문의");	}
 		
 	}
 	
