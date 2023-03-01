@@ -11,7 +11,7 @@ public class 회원view {
 	
 	Scanner scanner=new Scanner(System.in);
 
-	public void signup() {
+	public void signup() {//회원가입
 			
 			System.out.println("아이디:"); String 아이디=scanner.next();
 			System.out.println("비밀번호:"); String 비밀번호=scanner.next();
@@ -32,7 +32,7 @@ public class 회원view {
 			
 		}
 		
-		public void login() {
+		public void login() {//로그인
 			
 			System.out.println("아이디:"); String 아이디=scanner.next();
 			System.out.println("비밀번호:"); String 비밀번호=scanner.next();
@@ -41,12 +41,14 @@ public class 회원view {
 					회원controller.getInstance().login(아이디, 비밀번호);
 			if(result==1) {
 				System.out.println("일반 회원 로그인성공");
+				스케줄View.getInstance().classView(); //
 			}else if(result==0) {
 				System.out.println("비밀번호가 잘못되었습니다.");
 			}else if (result==-1) {
 				System.out.println("없는 회원 입니다.");
 			}else if (result==2) {
 				System.out.println("관리자회원 로그인 성공");
+				스케줄View.getInstance().classView();
 			}
 			
 			int login=회원controller.getInstance().getLogSession();
@@ -54,6 +56,14 @@ public class 회원view {
 					
 		}
 		
-	
-	
+		
+		
+		
 }
+		
+
+		
+		
+	
+	
+
