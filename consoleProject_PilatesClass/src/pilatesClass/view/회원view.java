@@ -1,10 +1,12 @@
 package pilatesClass.view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import pilatesClass.controller.회원controller;
 import pilatesClass.controller.회원controller;
 import pilatesClass.model.Member.회원dao;
+import pilatesClass.model.Member.회원dto;
 import pilatesClass.model.Member.회원dao;
 
 public class 회원view {
@@ -27,10 +29,23 @@ public class 회원view {
 			}else {
 				System.out.println("가입실패");
 			}
+	}
 			
-			
-			
+	public void PMemberView() {
+		System.out.println("================= 회원 목록 =================");
+		System.out.printf("%s\t%-15s\t%s\t%s\n","아이디","이름","전화번호","등급");
+		ArrayList<회원dto> PMemberList = 회원controller.getInstance().PMemberView();
+		for (회원dto Pm : PMemberList) {
+			System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , Pm.get등급());
 		}
+		System.out.println("==============================");
+	}
+			
+			
+			
+			
+			
+
 		
 		public void login() {//로그인
 			

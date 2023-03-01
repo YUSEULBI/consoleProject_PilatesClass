@@ -1,5 +1,7 @@
 package pilatesClass.controller;
 
+import java.util.ArrayList;
+
 import pilatesClass.model.Member.회원dao;
 import pilatesClass.model.Member.회원dto;
 
@@ -21,6 +23,13 @@ public class 회원controller {
 		
 		return result;
 		
+		
+	}
+	
+	// 회원출력
+	public ArrayList<회원dto> PMemberView(){
+		
+		return 회원dao.getInstance().PMemberView(logSession);
 		
 	}
 	
