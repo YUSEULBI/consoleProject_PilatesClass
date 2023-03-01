@@ -28,7 +28,7 @@ public class 수강내역View {
 	
 	public void res_print() {
 		System.out.println("==================나의 수강목록===================");
-		System.out.printf("%s\t %s\t %s\t %s \n","수업번호","수강일시","금액","강사");
+		System.out.printf("%s\t %10s\t %10s\t %5s \n","수업번호","수강일시","금액","강사");
 		ArrayList<스케줄dto> relist=수강내역Controller.getInstance().print();
 		for(스케줄dto d: relist) {
 			System.out.printf("%d\t%s\t%d\t%s \n",d.get스케줄번호(),d.get수강일시(),d.get금액(),d.get강사명());
