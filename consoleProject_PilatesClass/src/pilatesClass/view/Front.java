@@ -68,7 +68,7 @@ public class Front {
 			if(ch==1) {수강내역View.getInstance().reservation();}
 			else if(ch==2) {
 				수강내역View.getInstance().res_print();
-				수강내역View.getInstance().cancel(); //학생은 예약을 하기때문에 취소가 가능
+				cancel_page(); //학생은 예약을 하기때문에 취소가 가능
 			}else if (ch==3) {	logout();		}
 		}
 
@@ -80,7 +80,7 @@ public class Front {
 			System.out.printf("1.나의수업보기 2.로그아웃");
 			int ch=scanner.nextInt();
 			if(ch==1) {
-				수강내역View.getInstance().res_print(); //강사는 예약이 없음->취소도없음(취소는관리자만 가능)
+				스케줄View.getInstance().te_print(); //강사는 예약이 없음->취소도없음(취소는관리자만 가능)
 			}
 			else if(ch==2) {logout();}
 		}
@@ -103,6 +103,7 @@ public class Front {
 	 int ch=scanner.nextInt();
 	 if(ch==1) {수강내역View.getInstance().cancel(); }
 	 else if (ch==2) {
+		 스케줄View.getInstance().classView();
 		 student_page(); //이렇게했을때 문제가 있는지 확인할것
 	}
  }
