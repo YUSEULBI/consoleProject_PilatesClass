@@ -1,5 +1,6 @@
 package pilatesClass.model.Member;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class 스케줄dao extends Dao {
@@ -118,4 +119,42 @@ public class 스케줄dao extends Dao {
 			}
 			return 3; // 실패 관리자문의
 		}
+		
+		
+		ArrayList<스케줄dto> relist=new ArrayList<>();
+		public ArrayList<스케줄dto> te_print(int logsession){
+			relist=new ArrayList<>();
+			String spl="select 스케줄번호_pk,수강일시,금액, 이름 from 회원 m ,스케줄 s  where m.회원번호_pk=?;";
+				
+			
+			try {
+				ps=con.prepareStatement(spl);
+				ps.setInt(1, logsession);
+				rs=ps.executeQuery();
+				
+				while(rs.next()) {
+					스케줄dto 스케줄dto=new 스케줄dto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getString(4));
+					relist.add(스케줄dto);
+					
+				}
+				return relist;
+				
+			} catch (SQLException e) {System.out.println(e);}
+			
+			return null;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }

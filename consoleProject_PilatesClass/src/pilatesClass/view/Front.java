@@ -66,7 +66,9 @@ public class Front {
 			System.out.printf("1.예약 2.예약내역보기 3.로그아웃");
 			int ch=scanner.nextInt();
 			if(ch==1) {수강내역View.getInstance().reservation();}
-			else if(ch==2) {수강내역View.getInstance().res_print();
+			else if(ch==2) {
+				수강내역View.getInstance().res_print();
+				수강내역View.getInstance().cancel();
 			}else if (ch==3) {	logout();		}
 		}
 		

@@ -2,6 +2,7 @@ package pilatesClass.controller;
 
 import java.util.ArrayList;
 
+import pilatesClass.model.Member.Dao;
 import pilatesClass.model.Member.수강내역dao;
 import pilatesClass.model.Member.스케줄dto;
 
@@ -20,7 +21,12 @@ public class 수강내역Controller {
 	
 	
 	public boolean reservation(int ch) {
+		
+		
 		int logsession=회원controller.getInstance().getLogSession();
+		
+		if(수강내역dao.getInstance().re_check(ch) == false) {return false;}
+		
 		boolean result=수강내역dao.getInstance().reservation(logsession,ch);
 		return result;
 		}
@@ -30,6 +36,8 @@ public class 수강내역Controller {
 		
 		return 수강내역dao.getInstance().print(logsession);
 	}
+	
+	
 	
 	
 	
