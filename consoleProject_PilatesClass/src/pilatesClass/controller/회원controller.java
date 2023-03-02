@@ -44,6 +44,15 @@ public class 회원controller {
 		
 	}
 	
+	public String findId(String 이름 , String 전화번호) {//아이디찾기
+		
+		return 회원dao.getInstance().findId(이름, 전화번호);
+	}
+	
+	public String findPw(String 아이디 , String 이름) {//비밀번호찾기
+		
+		return 회원dao.getInstance().findPw(아이디, 이름);
+	}
 	
 	
 
