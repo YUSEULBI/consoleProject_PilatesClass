@@ -12,8 +12,8 @@ public class 수강내역dao extends Dao{
 	public static 수강내역dao getInstance () {return dao;}
 
 	
-	public boolean cancel(int ch) { //수강내역취소함수(예약 완료후 예약내역보기 다음에 넣기)
-		String sql="delete from 수강내역 where 수강내역번호=?";
+	public boolean cancel(int ch) { //취소함수
+		String sql="delete from 수강내역 where cno=?";
 		
 		try {
 			ps=con.prepareStatement(sql);
@@ -23,59 +23,46 @@ public class 수강내역dao extends Dao{
 			
 			
 		} catch (SQLException e) {
-			System.out.println("실패~");
 			e.printStackTrace();
 		}
 		return false;
 	}
 
-<<<<<<< HEAD
-	
-	public boolean reser_Check( int loginsession , int ch ) {
-		String sql = "select * from 수강내역 where 수강내역.회원번호_fk = ? and 수강내역.스케줄번호_fk = ?;";
-		try {
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, loginsession);
-			ps.setInt(2, ch);
-			rs = ps.executeQuery();
-			if( rs.next() ) { return false;	} // 예약중복이 있으면 false;
-			else { return true; } // 예약중복없으면 true;
-		}catch (Exception e) {
-			System.out.println(e);
-		}
-		return true;
-=======
 
 
-	public boolean reservation(int ch) {// 은영이가 한걸로 머지해주세용
->>>>>>> branch '장민정' of https://github.com/YUSEULBI/consoleProject_PilatesClass
+	public boolean reservation(int logsession,int ch) {
 		
-<<<<<<< HEAD
-	}
-	
-
-	public int reservation(int loginsession , int ch) {
-		boolean result = reser_Check(loginsession, ch);
-		if ( !result ) { return 2;	} // 중복 예약실패 
-		String sql="insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values(? , ?);";
-=======
-		String sql="insert into 수강내역(회원번호_fk,스케줄번호_fk) values (?,?);";
->>>>>>> branch '장민정' of https://github.com/YUSEULBI/consoleProject_PilatesClass
+		String sql="insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( ? , ? );";
 		try {
 		ps=con.prepareStatement(sql);
-<<<<<<< HEAD
-		ps.setInt(1, loginsession);
-=======
-		ps.setInt(1, 회원controller.getInstance().getLogSession());
->>>>>>> branch '장민정' of https://github.com/YUSEULBI/consoleProject_PilatesClass
+		ps.setInt(1, logsession);
 		ps.setInt(2, ch);
 		ps.executeUpdate();
-		return 1; // 예약성공
+		return true;
 	}catch (Exception e) {System.out.println(e);}
-		return 3; // 예외 관리자 문의
+		return false;
 	}
 		
-	public ArrayList<수강내역dto> print(){
+	ArrayList<스케줄dto> relist=new ArrayList<>();
+	public ArrayList<스케줄dto> print(int logsession){
+		relist=new ArrayList<>();
+		String spl="select 스케줄번호_pk,수강일시,금액, 이름 from 회원 m ,스케줄 s,수강내역 r"
+				+ " where m.회원번호_pk=s.회원번호_fk and s.스케줄번호_pk=r.스케줄번호_fk and r.회원번호_fk=?;";
+			
+		
+		try {
+			ps=con.prepareStatement(spl);
+			ps.setInt(1, logsession);
+			rs=ps.executeQuery();
+			
+			while(rs.next()) {
+				스케줄dto 스케줄dto=new 스케줄dto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getString(4));
+				relist.add(스케줄dto);
+				
+			}
+			return relist;
+			
+		} catch (SQLException e) {System.out.println(e);}
 		
 		return null;
 	}
