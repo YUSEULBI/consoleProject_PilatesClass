@@ -2,6 +2,7 @@ package pilatesClass.controller;
 
 import java.util.ArrayList;
 
+import pilatesClass.model.Member.수강내역dao;
 import pilatesClass.model.Member.수강내역dto;
 import pilatesClass.model.Member.스케줄dao;
 import pilatesClass.model.Member.스케줄dto;
@@ -45,4 +46,11 @@ public class 스케줄Controller {
 		else { return true;	}
 		
 	}
+	
+	public ArrayList<스케줄dto> te_print(){
+		int logsession=회원controller.getInstance().getLogSession();
+		
+		return 스케줄dao.getInstance().te_print(logsession);
+	}
+	
 }
