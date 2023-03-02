@@ -33,7 +33,7 @@ public class 회원view {
 			
 	public void PMemberView() {
 		System.out.println("================= 회원 목록 =================");
-		System.out.printf("%s\t%-15s\t%s\t%s\n","아이디","이름","전화번호","등급");
+		System.out.printf("%s\t%s\t%s\t%s\n","아이디","이름","전화번호","등급");
 		ArrayList<회원dto> PMemberList = 회원controller.getInstance().PMemberView();
 		for (회원dto Pm : PMemberList) {
 			System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , Pm.get등급());
