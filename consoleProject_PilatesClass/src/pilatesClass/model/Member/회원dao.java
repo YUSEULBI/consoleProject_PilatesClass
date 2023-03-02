@@ -18,7 +18,6 @@ public class 회원dao extends Dao{
 	}
 	ArrayList<회원dto> PMemberList = new ArrayList<>();
 	
-	
 	//회원가입
 	public boolean signup(회원dto 회원) {//회원가입
 		
@@ -66,6 +65,7 @@ public class 회원dao extends Dao{
 		return null;
 	}
 
+	
 	
 	public int login(String 아이디,String 비밀번호) { //로그인
 		

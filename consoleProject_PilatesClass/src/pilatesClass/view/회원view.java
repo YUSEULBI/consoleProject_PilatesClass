@@ -36,16 +36,52 @@ public class 회원view {
 	}
 			
 	public void PMemberView() {
+		while(true) {
+		String RaitingName;
 		System.out.println("================= 회원 목록 =================");
-		System.out.printf("%s\t%s\t%s\t%s\n","아이디","이름","전화번호","등급");
+		System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
 		ArrayList<회원dto> PMemberList = 회원controller.getInstance().PMemberView();
 		for (회원dto Pm : PMemberList) {
-			System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , Pm.get등급());
+			if(Pm.get등급() == 1) {RaitingName="일반회원";}
+			else {RaitingName=null;}
+			System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
 		}
-		System.out.println("==============================");
+		System.out.println("==========================================");
+		
+		System.out.println("1.뒤로가기 2.처음으로"); int 채널 = scanner.nextInt();
+		if(채널 == 1) {Front.getInstance().admin_page();	}
+		else if(채널 == 2) {Front.getInstance().index();}
+		else {System.out.println(
+				".╭◜◝ ͡ ◜◝\r\n"
+				+ "(    ´ㅅ` )\r\n"
+				+ "╰◟◞ ͜  「제대로 입력해주세요」 :)\r\n"
+				+ "");}
+		}
 	}
 			
-			
+	public void PteacherView() {
+		while(true) {
+		String RaitingName;
+		System.out.println("================= 회원 목록 =================");
+		System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
+		ArrayList<회원dto> PteacherList = 회원controller.getInstance().PteacherView();
+		for (회원dto Pm : PteacherList) {
+			if(Pm.get등급()==2) {RaitingName="강사";}
+			else {RaitingName=null;}
+			System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
+		}
+		System.out.println("==========================================");
+		
+		System.out.println("1.뒤로가기 2.처음으로"); int 채널 = scanner.nextInt();
+		if(채널 == 1) {Front.getInstance().admin_page();	}
+		else if(채널 == 2) {Front.getInstance().index();}
+		else {System.out.println(
+				".╭◜◝ ͡ ◜◝\r\n"
+				+ "(    ´ㅅ` )\r\n"
+				+ "╰◟◞ ͜  「제대로 입력해주세요」 :)\r\n"
+				+ "");}
+		}
+	}			
 			
 			
 			
