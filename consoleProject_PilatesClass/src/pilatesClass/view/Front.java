@@ -50,18 +50,33 @@ public class Front {
 		
 	}
 	
-	public void reservation_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
+	public void student_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
 		while (true) {
 			
 			System.out.printf("1.예약 2.예약내역보기 3.로그아웃");
 			int ch=scanner.nextInt();
 			if(ch==1) {수강내역View.getInstance().reservation();}
-			else if(ch==2) {수강내역View.getInstance().res_print();
+			else if(ch==2) {
+				수강내역View.getInstance().res_print();
+				수강내역View.getInstance().cancel(); //학생은 예약을 하기때문에 취소가 가능
 			}else if (ch==3) {	logout();		}
 		}
-		
 
 }
+	
+	public void teacher_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
+		while (true) {
+			
+			System.out.printf("1.나의수업보기 2.로그아웃");
+			int ch=scanner.nextInt();
+			if(ch==1) {
+				수강내역View.getInstance().res_print(); //강사는 예약이 없음->취소도없음(취소는관리자만 가능)
+			}
+			else if(ch==2) {logout();}
+		}
+		
+	}
+	
 	public void logout() {
 	 	 회원controller.getInstance().setLogSession(0);
 		 int login=회원controller.getInstance().getLogSession(); //확인용 주석처리할것
@@ -78,7 +93,7 @@ public class Front {
 	 int ch=scanner.nextInt();
 	 if(ch==1) {수강내역View.getInstance().cancel(); }
 	 else if (ch==2) {
-		 reservation_page(); //이렇게했을때 문제가 있는지 확인할것
+		 student_page(); //이렇게했을때 문제가 있는지 확인할것
 	}
  }
 	
