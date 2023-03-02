@@ -3,7 +3,7 @@ package pilatesClass.model.Member;
 import java.util.ArrayList;
 
 public class 스케줄dao extends Dao {
-	
+	 
 	private static 스케줄dao 스케줄dao = new 스케줄dao(); 
 	private 스케줄dao() {
 		// TODO Auto-generated constructor stub
