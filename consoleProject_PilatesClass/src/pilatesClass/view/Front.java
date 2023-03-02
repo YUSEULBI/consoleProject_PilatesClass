@@ -41,7 +41,18 @@ public class Front {
 		}
 	}
 	
+<<<<<<< HEAD
 	
+=======
+	public void admin_page() {
+		System.out.println("1.수업조회 2.회원조회 3.강사조회");
+		int sc = scanner.nextInt();
+		if ( sc == 1 ) { 스케줄View.getInstance().classPage();	}
+		else if ( sc == 2 ) {회원view.getInstance().PMemberView();	}
+		else if ( sc == 3 ) {회원view.getInstance().PteacherView();	}
+		
+	}
+>>>>>>> branch '김동혁' of https://github.com/YUSEULBI/consoleProject_PilatesClass
 	
 	public void reservation_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
 		while (true) {

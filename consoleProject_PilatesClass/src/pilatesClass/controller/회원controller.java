@@ -29,10 +29,16 @@ public class 회원controller {
 	// 회원출력
 	public ArrayList<회원dto> PMemberView(){
 		
-		return 회원dao.getInstance().PMemberView(logSession);
+		return 회원dao.getInstance().PMemberView(1);
 		
 	}
 	
+	// 강사출력
+		public ArrayList<회원dto> PteacherView(){
+			
+			return 회원dao.getInstance().PMemberView(2);
+			
+		}
 
 	
 	private int logSession; //로그 세션 int
