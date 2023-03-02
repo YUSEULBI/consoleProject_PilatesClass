@@ -9,7 +9,7 @@ public class Front {
 	
 	private static Front front=new Front();
 	private Front() {};
-	
+	 
 
 	public static Front getInstance() {
 		return front;
