@@ -43,7 +43,7 @@ public class 스케줄View {
 	}
 	
 	public void classView() {
-		System.out.println("================ 전체 수업목록 ================");
+		System.out.println("================= 전체 수업목록 ==================");
 		System.out.printf("%s\t%-10s\t%s\t %s\n","수업번호","수강일시","금액","강사");
 		ArrayList<스케줄dto> classList = 스케줄Controller.getInstance().classView();
 		for ( 스케줄dto d : classList) {
@@ -57,7 +57,7 @@ public class 스케줄View {
 			 
 			System.out.printf("%d\t%s\t%s\t %s\n",d.get스케줄번호(),time2,df.format(bPrice),d.get강사명());
 		}
-		System.out.println("===========================================");
+		System.out.println("==============================================");
 	}
 	
 	public 스케줄dto classAddandEditInput() {
