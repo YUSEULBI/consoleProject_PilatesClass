@@ -19,8 +19,14 @@ public class Front {
 	Scanner scanner=new Scanner(System.in);
 	
 	public void index() {
-		while (true) {
-			System.out.println("1.관리자페이지 2.회원페이지");
+		while (true) {	
+			System.out.println("     PilatesClass");
+			System.out.println("┊　　┊　　┊　　┊　　┊　　┊　　┊\r\n"
+					+ "┊　　┊　　┊　　☆　 ┊　　┊　　┊\r\n"
+					+ "┊　　┊　　✬ 　  　✬　　┊ 　┊\r\n"
+					+ "┊　　★ 　  　  　  　★ 　┊\r\n"
+					+ "☆ 　  　  　  　  　  　☆");
+			System.out.println(" 1.관리자페이지 2.회원페이지");
 			int ch = scanner.nextInt();
 			if ( ch == 1 ) { 회원view.getInstance().admin_login();	}
 			else if ( ch == 2 ) { member_page();	}
@@ -41,9 +47,9 @@ public class Front {
 		}
 	}
 	
-<<<<<<< HEAD
+
 	
-=======
+
 	public void admin_page() {
 		System.out.println("1.수업조회 2.회원조회 3.강사조회");
 		int sc = scanner.nextInt();
@@ -52,7 +58,7 @@ public class Front {
 		else if ( sc == 3 ) {회원view.getInstance().PteacherView();	}
 		
 	}
->>>>>>> branch '김동혁' of https://github.com/YUSEULBI/consoleProject_PilatesClass
+
 	
 	public void reservation_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
 		while (true) {

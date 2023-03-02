@@ -158,12 +158,14 @@ public class 회원view {
 		public void admin_page() {
 			while(true) {
 				System.out.println("================ 관리자 페이지 ================");
-				System.out.println("1.수업조회 2.회원조회 3.강사조회");
+				System.out.println("1.수업조회 2.회원조회 3.강사조회 4.로그아웃");
 				try {
 					int sc = scanner.nextInt();
 					if ( sc == 1 ) { 스케줄View.getInstance().classPage();	}
 					else if ( sc == 2 ) { PMemberView();	}
 					else if ( sc == 3 ) { PteacherView();	}
+					else if ( sc == 4 ) { break;	}
+					else {	}
 				}catch (Exception e) {
 					System.out.println("[메뉴 번호에 맞게 입력하세요.]");
 					scanner=new Scanner(System.in);
