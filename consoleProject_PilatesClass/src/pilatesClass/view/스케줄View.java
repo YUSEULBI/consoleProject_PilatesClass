@@ -42,8 +42,8 @@ public class 스케줄View {
 	}
 	
 	public void classView() {
-		System.out.println("============= 전체 수업목록 =============");
-		System.out.printf("%s\t%-15s\t%s\t %s\n","수업번호","수강일시","금액","강사");
+		System.out.println("================ 전체 수업목록 ================");
+		System.out.printf("%s\t%-10s\t%s\t %s\n","수업번호","수강일시","금액","강사");
 		ArrayList<스케줄dto> classList = 스케줄Controller.getInstance().classView();
 		for ( 스케줄dto d : classList) {
 			String DateTime =  d.get수강일시();
@@ -56,11 +56,11 @@ public class 스케줄View {
 			 
 			System.out.printf("%d\t%s\t%s\t %s\n",d.get스케줄번호(),time2,df.format(bPrice),d.get강사명());
 		}
-		System.out.println("=====================================");
+		System.out.println("===========================================");
 	}
 	
 	public 스케줄dto classAddandEditInput() {
-				
+		
 		// 날짜
 		System.out.print("년[yyyy] : ");	int year = scanner.nextInt();
 		
@@ -109,6 +109,7 @@ public class 스케줄View {
 	}
 	
 	public void classAdd() {
+		System.out.println("================ 수업등록 페이지 ================");
 		스케줄dto 스케줄dto = classAddandEditInput();
 		if ( 스케줄dto != null ) {
 			boolean result = 스케줄Controller.getInstance().classAdd(스케줄dto);
@@ -118,6 +119,7 @@ public class 스케줄View {
 	}
 	
 	public void classEdit() throws Exception {
+		System.out.println("================ 수업수정 페이지 ================");
 		System.out.println("수정할 스케줄번호 입력하세요 : ");
 		int ch = scanner.nextInt();
 		스케줄dto 스케줄dto = classAddandEditInput();
@@ -132,6 +134,7 @@ public class 스케줄View {
 	
 	//스케줄을 삭제하면 수강내역이 사라짐 / 사라지기전에 해당 스케줄을 수강한 회원들에게 삭제 알림을 안내해야할 것 같다.
 	public void classDelete() {
+		System.out.println("================ 수업삭제 페이지 ================");
 		System.out.println("삭제할 스케줄번호를 입력하세요");
 		int ch = scanner.nextInt();
 		int result = 스케줄Controller.getInstance().classDelete(ch);

@@ -63,6 +63,10 @@ public class 회원controller {
 		return 회원dao.getInstance().findPw(아이디, 이름);
 	}
 	
+	///관리자로그인//////////////////////////////////////////////////////
+	public boolean admin_login( String pw ) {
+		return 회원dao.getInstance().admin_login(pw);
+	}
 	
 
 }

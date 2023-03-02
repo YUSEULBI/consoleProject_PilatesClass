@@ -22,7 +22,7 @@ public class Front {
 		while (true) {
 			System.out.println("1.관리자페이지 2.회원페이지");
 			int ch = scanner.nextInt();
-			if ( ch == 1 ) { admin_page();	}
+			if ( ch == 1 ) { 회원view.getInstance().admin_login();	}
 			else if ( ch == 2 ) { member_page();	}
 		}
 		
@@ -41,14 +41,7 @@ public class Front {
 		}
 	}
 	
-	public void admin_page() {
-		System.out.println("1.수업조회 2.회원조회 3.강사조회");
-		int sc = scanner.nextInt();
-		if ( sc == 1 ) { 스케줄View.getInstance().classPage();	}
-		else if ( sc == 2 ) {	}
-		else if ( sc == 3 ) {	}
-		
-	}
+	
 	
 	public void reservation_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
 		while (true) {

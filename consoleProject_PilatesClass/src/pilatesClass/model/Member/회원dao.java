@@ -169,6 +169,25 @@ public class 회원dao extends Dao{
 		} return null;
 	}
 	
+	//////////////////////////////////////////////////////////////////
+	// 관리자페이지
+	public boolean admin_login( String pw ) {
+		
+		String sql = "select * from 회원 where 등급 = 3 and 비밀번호 = ? ;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, pw);
+			rs = ps.executeQuery();
+			
+			if ( rs.next() ) {
+				if ( rs.getString(3).equals(pw) ) { return true;	}
+			}
+			return false;
+		}catch (Exception e) {
+			System.out.println("[관리자 로그인 실패]"+e);
+		}return false;
+		
+	}
 }
 
 	
