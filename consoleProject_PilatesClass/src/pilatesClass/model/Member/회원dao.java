@@ -16,6 +16,8 @@ public class 회원dao extends Dao{
 	public static 회원dao getInstance() {
 		return dao;
 	}
+	ArrayList<회원dto> PMemberList = new ArrayList<>();
+	
 	
 	//회원가입
 	public boolean signup(회원dto 회원) {//회원가입
@@ -45,6 +47,23 @@ public class 회원dao extends Dao{
 		return false;
 		
 		
+	}
+	
+	public ArrayList<회원dto> PMemberView(int PRating){
+		PMemberList = new ArrayList<>();
+		String sql = "select * from 회원 where 회원.등급 = ?;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setLong( 1 ,  PRating);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				회원dto 회원dto = new 회원dto(rs.getInt(1) , rs.getString(2) , rs.getString(3) , rs.getString(4), rs.getString(5) , rs.getInt(6));
+				PMemberList.add(회원dto);
+			}
+			return PMemberList;
+		}catch (Exception e) {System.out.println(e);}
+		return null;
 	}
 
 	
