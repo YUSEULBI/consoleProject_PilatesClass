@@ -12,8 +12,8 @@ public class 수강내역dao extends Dao{
 	public static 수강내역dao getInstance () {return dao;}
 
 	
-	public boolean cancel(int ch) { //취소함수
-		String sql="delete from 수강내역 where cno=?";
+	public boolean cancel(int ch) { //수강내역취소함수(예약 완료후 예약내역보기 다음에 넣기)
+		String sql="delete from 수강내역 where 수강내역번호=?";
 		
 		try {
 			ps=con.prepareStatement(sql);
@@ -23,6 +23,7 @@ public class 수강내역dao extends Dao{
 			
 			
 		} catch (SQLException e) {
+			System.out.println("실패~");
 			e.printStackTrace();
 		}
 		return false;
@@ -31,18 +32,19 @@ public class 수강내역dao extends Dao{
 
 
 	public boolean reservation(int logsession,int ch) {
-		
-		String sql="insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( ? , ? );";
-		try {
-		ps=con.prepareStatement(sql);
-		ps.setInt(1, logsession);
-		ps.setInt(2, ch);
-		ps.executeUpdate();
-		return true;
-	}catch (Exception e) {System.out.println(e);}
-		return false;
-	}
-		
+			
+			String sql="insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( ? , ? );";
+			try {
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, logsession);
+			ps.setInt(2, ch);
+			ps.executeUpdate();
+			return true;
+		}catch (Exception e) {System.out.println(e);}
+			return false;
+		}
+	
+	
 	ArrayList<스케줄dto> relist=new ArrayList<>();
 	public ArrayList<스케줄dto> print(int logsession){
 		relist=new ArrayList<>();

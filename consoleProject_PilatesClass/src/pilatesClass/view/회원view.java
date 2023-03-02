@@ -11,6 +11,10 @@ import pilatesClass.model.Member.회원dao;
 
 public class 회원view {
 	
+	private static 회원view 회원view = new 회원view();
+	private 회원view() { }
+	public static 회원view getInstance() { 	return 회원view; 	}
+	
 	Scanner scanner=new Scanner(System.in);
 
 	public void signup() {//회원가입

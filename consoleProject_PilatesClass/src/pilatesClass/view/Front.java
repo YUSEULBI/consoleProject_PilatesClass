@@ -29,14 +29,14 @@ public class Front {
 	}
 	
 	public void member_page() {
-		회원view 회원view=new 회원view();
+		
 		while (true) {
 			System.out.println("1.회원가입  2.로그인  3.아이디찾기  4.비밀번호찾기" );
 			int ch=scanner.nextInt();
-			if(ch==1) { 회원view.signup ();}
-			else if(ch==2) {회원view.login(); }	
-			else if(ch==3) {회원view.findId();}	
-			else if(ch==4) {회원view.findPw();}	
+			if(ch==1) { 회원view.getInstance().signup ();}
+			else if(ch==2) {회원view.getInstance().login(); }	
+			else if(ch==3) {회원view.getInstance().findId();}	
+			else if(ch==4) {회원view.getInstance().findPw();}	
 			
 		}
 	}

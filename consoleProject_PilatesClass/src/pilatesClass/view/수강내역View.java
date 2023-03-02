@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import pilatesClass.controller.수강내역Controller;
-import pilatesClass.model.Member.수강내역dao;
+import pilatesClass.controller.회원controller;
 import pilatesClass.model.Member.스케줄dto;
 
 
@@ -36,16 +36,8 @@ public class 수강내역View {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	public void cancel() {//취소
-		System.out.println("취소하실 수업번호를 선택해주세요"); int ch=scanner.nextInt();
+		System.out.println("취소하실 수강내역번호를 선택해주세요"); int ch=scanner.nextInt();
 		
 		boolean result=수강내역Controller.getInstance().cancel(ch);
 		if(result==true) {
@@ -55,6 +47,8 @@ public class 수강내역View {
 		}
 		
 	}
+	
+	
 
 	
 }
