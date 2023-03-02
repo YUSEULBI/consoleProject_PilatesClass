@@ -99,8 +99,7 @@ public class 회원view {
 			if(result==1) {
 				System.out.println(회원dao.getInstance().findName()+" 회원님 어서오세요!");
 				스케줄View.getInstance().classView(); 
-				Front.getInstance().reservation_page(); //수강생 로그인 성공시 예약하기 및 예약보기가 나와야함
-				Front.getInstance().logout();
+				Front.getInstance().student_page(); //수강생 로그인 성공시 예약하기 및 예약보기가 나와야함
 			}else if(result==0) {
 				System.out.println("비밀번호가 잘못되었습니다.");
 			}else if (result==-1) {
@@ -108,6 +107,7 @@ public class 회원view {
 			}else if (result==2) {
 				System.out.println(회원dao.getInstance().findName()+" 강사님 어서오세요!");
 				스케줄View.getInstance().classView();
+				Front.getInstance().teacher_page();
 				//강사 로그인 성공시 예약은 x 본인의 수업만 출력해야함 reservation_page(); 사용불가
 				
 			}

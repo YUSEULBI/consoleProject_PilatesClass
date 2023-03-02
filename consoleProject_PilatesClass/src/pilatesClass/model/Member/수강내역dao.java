@@ -67,7 +67,7 @@ public class 수강내역dao extends Dao{
 	
 	
 	ArrayList<스케줄dto> relist=new ArrayList<>();
-	public ArrayList<스케줄dto> print(int logsession){
+	public ArrayList<스케줄dto> print(int logsession){//내가 신청한 수업 목록
 		relist=new ArrayList<>();
 		String spl="select 수강내역번호,수강일시,금액, 이름 from 회원 m ,스케줄 s,수강내역 r "
 				+  " where m.회원번호_pk=s.회원번호_fk  and r.스케줄번호_fk = s.스케줄번호_pk and r.회원번호_fk=?;";

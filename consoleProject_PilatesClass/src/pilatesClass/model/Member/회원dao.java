@@ -82,7 +82,7 @@ public class 회원dao extends Dao{
 					회원controller.getInstance().setLogSession( rs.getInt(1) ) ; //1번이면 일반회원 로그인 성
 					
 					if(rs.getInt(3)==1) {//수강생 로그인
-						 //회원번호 pk를 대입 -> 정보를 꺼내온다던지 할때 추후에 문제가 없는지..공
+						 //회원번호 pk를 대입 -> 정보를 꺼내온다던지 할때 추후에 문제가 없는지.. -> 문제없음!
 						return 1;
 					}else if (rs.getInt(3)==2) {//강사 로그인
 						return 2 ;
