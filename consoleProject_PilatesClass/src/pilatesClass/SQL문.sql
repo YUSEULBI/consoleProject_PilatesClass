@@ -46,12 +46,12 @@ insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) 
 select * from 회원 where 등급 = 3 and 비밀번호 = 1234;
 
 -- 2. 관리자가 수업 등록 
-insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-02-02 10:00:00' , 30000 , 2 );
-insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-02 11:00:00' , 30000 , 2 );
-insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-06 16:00:00' , 30000 , 2 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-02-02 10:00:00' , 30000 , 4 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-02 11:00:00' , 30000 , 4 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-06 16:00:00' , 30000 , 4 );
 insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-13 14:00:00' , 30000 , 4 );
-insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-15 17:00:00' , 30000 , 4 );
-insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-16 14:00:00' , 30000 , 4 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-15 17:00:00' , 30000 , 5 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-16 14:00:00' , 30000 , 5 );
 
 select * from 회원;
 select * from 스케줄;
@@ -99,8 +99,8 @@ create table 강사순위(
     foreign key( 회원번호_fk ) references 회원( 회원번호_pk )
 );
 select * from 강사순위;
-
--- 수강내역에 존재하는 스케줄 들 
+select * from 회원;
+select * from 스케줄;
 select * from 수강내역 a , 스케줄 b where a.스케줄번호_fk = b.스케줄번호_pk;
 -- 수강내역에 존재하는 스케줄이면 강사 정보 
 select * from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk;
