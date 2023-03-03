@@ -5,7 +5,7 @@ use console;
 drop table if exists 회원;
 create table 회원(
    회원번호_pk int auto_increment primary key , 
-    아이디 varchar(20) not null,
+    아이디 varchar(20) not null unique,
     비밀번호 varchar(20) not null,
     전화번호 varchar(20) not null,
     이름 varchar(20) not null,
@@ -32,9 +32,12 @@ create table 수강내역(
 
 -- 1. 회원가입
 insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'qwe' ,'qwe' ,'010-4444-4444' ,'유재석' , 1 );
+insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'qqq' ,'qqq' ,'010-1234-1234' ,'김현수' , 1 );
+insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'aaa' ,'aaa' ,'010-4321-4321' ,'서장훈' , 1 );
 select * from 회원;
 -- 2. 강사가입
 insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'asd' ,'asd' ,'010-5555-5555' ,'강호동' , 2 );
+insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'zxc' ,'zxc' ,'010-1234-4897' ,'신동엽' , 2 );
 
 -- 2-1. 관리자 비밀번호 등록
 insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( '관리자' ,'1234' ,'관리자' ,'관리자' , 3 );
@@ -43,9 +46,14 @@ insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) 
 select * from 회원 where 등급 = 3 and 비밀번호 = 1234;
 
 -- 2. 관리자가 수업 등록 
-insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-01 11:00:00' , 30000 , 2 );
-insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-06 11:00:00' , 30000 , 2 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-02-02 10:00:00' , 30000 , 2 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-02 11:00:00' , 30000 , 2 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-06 16:00:00' , 30000 , 2 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-13 14:00:00' , 30000 , 4 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-15 17:00:00' , 30000 , 4 );
+insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-16 14:00:00' , 30000 , 4 );
 
+select * from 회원;
 select * from 스케줄;
 
 -- 3. 회원이 수강신청 
@@ -69,3 +77,15 @@ select 회원번호_pk , 아이디 , 전화번호 , 이름 from 회원 where 등
 -- 모든 회원 출력
 select * from 회원 where 등급 = 1;
 select 회원번호_pk , 아이디 , 전화번호 , 이름 from 회원 where 등급 = 1;
+
+select * from 회원;
+select * from 스케줄;
+select * from 수강내역;
+-- 예약
+insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 1 , 1 );
+insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 5 , 4 );
+insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 6 , 5 );
+insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 6 , 3 );
+
+-- 수강번호 스케줄 일시 , 금액 , 아이디 출력
+select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk , 스케줄번호_pk from 회원 m , 스케줄 s , 수강내역 r where m.회원번호_pk = s.회원번호_fk and s.스케줄번호_pk = r.스케줄번호_fk;
