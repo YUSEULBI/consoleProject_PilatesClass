@@ -23,7 +23,7 @@ public class 수강내역View {
 		System.out.println("수강번호 를 입력해주세요");int ch=scanner.nextInt();
 		 boolean result=수강내역Controller.getInstance().reservation(ch);
 		 if(result) {System.out.println("수강할 수업이 등록되었습니다.");}
-		 else {System.out.println("[실패]");}
+		 else {System.err.println("이미 수업에 등록 되어있습니다");}
 		
 	}
 	

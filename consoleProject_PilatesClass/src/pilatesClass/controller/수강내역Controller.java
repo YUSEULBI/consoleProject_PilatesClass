@@ -24,11 +24,11 @@ public class 수강내역Controller {
 	public boolean reservation(int ch) {
 		
 		
-		int logsession=회원controller.getInstance().getLogSession();
 		
-		if(수강내역dao.getInstance().re_check(ch) == false) {return false;}
 		
-		boolean result=수강내역dao.getInstance().reservation(logsession,ch);
+		if(수강내역dao.getInstance().re_check(ch) == false) {return false;}//결제하기로 옮길것
+		
+		boolean result=수강내역dao.getInstance().reservation(ch);
 		return result;
 		}
 	
