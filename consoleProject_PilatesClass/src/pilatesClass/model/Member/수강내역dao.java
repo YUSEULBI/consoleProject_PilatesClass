@@ -11,14 +11,15 @@ public class 수강내역dao extends Dao{
 	private 수강내역dao () {};
 	public static 수강내역dao getInstance () {return dao;}
 
-	
+	int logsession=회원controller.getInstance().getLogSession();	
 	
 	public boolean re_check(int ch) {
-		String sql="select* from 수강내역 where 스케줄번호_fk=?;"; //
+		String sql="select* from 수강내역 where 스케줄번호_fk=? and 회원번호_fk=?;"; //
 		
 		try {
 			ps=con.prepareStatement(sql);
 			ps.setInt(1, ch);
+			ps.setInt(2, logsession);
 			rs=ps.executeQuery();
 			
 			if(rs.next()) {//있으면 중복
@@ -52,7 +53,7 @@ public class 수강내역dao extends Dao{
 
 
 
-	public boolean reservation(int logsession,int ch) {
+	public boolean reservation(int ch) {
 			
 			String sql="insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( ? , ? );";
 			try {
