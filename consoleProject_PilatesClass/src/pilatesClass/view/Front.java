@@ -56,7 +56,7 @@ public class Front {
 			
 			System.out.printf("1.예약 2.예약내역보기 3.로그아웃");
 			int ch=scanner.nextInt();
-			if(ch==1) {수강내역View.getInstance().reservation();}
+			if(ch==1) {pay();수강내역View.getInstance().reservation();}
 			else if(ch==2) {
 				수강내역View.getInstance().res_print();
 				cancel_page(); //학생은 예약을 하기때문에 취소가 가능
@@ -97,6 +97,19 @@ public class Front {
 		 스케줄View.getInstance().classView();
 		 student_page(); //이렇게했을때 문제가 있는지 확인할것
 	}
+ }
+ 
+ 
+ public void pay() {//결제하기페이지
+	 System.out.println("1.결제하기 2.취소하기");
+	 int ch=scanner.nextInt();
+	 if(ch==1) {
+		 
+	 }else if (ch==2) {
+		 스케줄View.getInstance().classView(); 
+		Front.getInstance().student_page();
+	}
+	 
  }
  
  //////////////////////////////////////////////////////////

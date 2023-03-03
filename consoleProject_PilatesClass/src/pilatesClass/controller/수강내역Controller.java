@@ -26,7 +26,7 @@ public class 수강내역Controller {
 		
 		
 		
-		if(수강내역dao.getInstance().re_check(ch) == false) {return false;}
+		if(수강내역dao.getInstance().re_check(ch) == false) {return false;}//결제하기로 옮길것
 		
 		boolean result=수강내역dao.getInstance().reservation(ch);
 		return result;
