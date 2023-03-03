@@ -111,7 +111,7 @@ public class 스케줄dao extends Dao {
 		ArrayList<스케줄dto> relist=new ArrayList<>();
 		public ArrayList<스케줄dto> te_print(int logsession){
 			relist=new ArrayList<>();
-			String spl="select 스케줄번호_pk,수강일시,금액, 이름 from 회원 m ,스케줄 s  where m.회원번호_pk=?;";
+			String spl="select 스케줄번호_pk,수강일시,금액, 이름 from 회원 m ,스케줄 s  where m.회원번호_pk = s.회원번호_fk and m.회원번호_pk=?;";
 				
 			
 			try {

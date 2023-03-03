@@ -89,4 +89,3 @@ insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 6 , 3 )
 
 -- 수강번호 스케줄 일시 , 금액 , 아이디 출력
 select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk , 스케줄번호_pk from 회원 m , 스케줄 s , 수강내역 r where m.회원번호_pk = s.회원번호_fk and s.스케줄번호_pk = r.스케줄번호_fk;
-ㄴ
