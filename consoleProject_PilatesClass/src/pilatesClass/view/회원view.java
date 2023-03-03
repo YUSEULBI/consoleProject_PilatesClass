@@ -145,35 +145,16 @@ public class 회원view {
 		}
 		
 //////////////////////////////////////////////////////////
-		// 관리자 페이지
+		// 관리자페이지
+
+		// 관리자로그인
 		public void admin_login() {
 			System.out.println("================ 관리자 로그인 ================");
 			System.out.println("비밀번호 : ");		String pw = scanner.next();
 			boolean result =  회원controller.getInstance().admin_login(pw);
-			if ( result ) { System.out.println("[관리자 로그인 성공]");	admin_page(); }
+			if ( result ) { System.out.println("[관리자 로그인 성공]");	Front.getInstance().admin_page(); }
 			else { System.out.println("[관리자 로그인 실패]");	}
 		}
-		
-		
-		public void admin_page() {
-			while(true) {
-				System.out.println("================ 관리자 페이지 ================");
-				System.out.println("1.수업조회 2.회원조회 3.강사조회 4.로그아웃");
-				try {
-					int sc = scanner.nextInt();
-					if ( sc == 1 ) { 스케줄View.getInstance().classPage();	}
-					else if ( sc == 2 ) { PMemberView();	}
-					else if ( sc == 3 ) { PteacherView();	}
-					else if ( sc == 4 ) { break;	}
-					else {	}
-				}catch (Exception e) {
-					System.out.println("[메뉴 번호에 맞게 입력하세요.]");
-					scanner=new Scanner(System.in);
-				}
-			}
-			
-		}
-		
 		
 }
 		

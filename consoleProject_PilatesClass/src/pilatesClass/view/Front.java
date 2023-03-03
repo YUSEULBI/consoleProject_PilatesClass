@@ -50,15 +50,6 @@ public class Front {
 
 	
 
-	public void admin_page() {
-		System.out.println("1.수업조회 2.회원조회 3.강사조회");
-		int sc = scanner.nextInt();
-		if ( sc == 1 ) { 스케줄View.getInstance().classPage();	}
-		else if ( sc == 2 ) {회원view.getInstance().PMemberView();	}
-		else if ( sc == 3 ) {회원view.getInstance().PteacherView();	}
-		
-	}
-
 	
 	public void student_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
 		while (true) {
@@ -107,6 +98,34 @@ public class Front {
 		 student_page(); //이렇게했을때 문제가 있는지 확인할것
 	}
  }
+ 
+ //////////////////////////////////////////////////////////
+ 
+ // 관리자페이지
+
+		// 관리자 로그인[파일위치 : 회원View] --> 관리자페이지[파일위치 : Front]
+		
+ 		// 관리자페이지
+		public void admin_page() {
+			while(true) {
+				System.out.println("================ 관리자 페이지 ================");
+				System.out.println("1.수업조회 2.회원조회 3.강사조회 4.매출관리 5.로그아웃");
+				try {
+					int sc = scanner.nextInt();
+					if ( sc == 1 ) { 스케줄View.getInstance().classPage();	}
+					else if ( sc == 2 ) { 회원view.getInstance().PMemberView();	}
+					else if ( sc == 3 ) { 회원view.getInstance().PteacherView();	}
+					else if ( sc == 4 ) { 수강내역View.getInstance().sales_page();	} //매출관리
+					else if ( sc == 5 ) { break;	}
+					else {	}
+				}catch (Exception e) {
+					System.out.println("[메뉴 번호에 맞게 입력하세요.]");
+					scanner=new Scanner(System.in);
+				}
+			}
+			
+		}
+		
 	
 	
 }

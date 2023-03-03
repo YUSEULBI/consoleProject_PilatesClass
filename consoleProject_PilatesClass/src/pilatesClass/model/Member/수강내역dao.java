@@ -91,7 +91,20 @@ public class 수강내역dao extends Dao{
 	}
 	
 	
-	
+	public ArrayList<SalesnRankDto> Sales(){
+		ArrayList<SalesnRankDto> list = new ArrayList<>();
+		String sql ="select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk , 스케줄번호_pk from 회원 m , 스케줄 s , 수강내역 r where m.회원번호_pk = s.회원번호_fk and s.스케줄번호_pk = r.스케줄번호_fk;";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while ( rs.next() ) {
+				SalesnRankDto dto = new SalesnRankDto(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getInt(6));
+				list.add(dto);
+			}
+		}catch (Exception e) {
+			System.out.println(e);
+		}return list;
+	}
 	
 	
 	
