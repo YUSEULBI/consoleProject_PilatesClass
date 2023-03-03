@@ -5,7 +5,7 @@ import java.util.Scanner;
 import pilatesClass.controller.회원controller;
 
 public class Front {
-	
+	 
 	
 	private static Front front=new Front();
 	private Front() {};

@@ -34,7 +34,7 @@ public class 수강내역dao extends Dao{
 	
 	
 	public boolean cancel(int ch) { //수강내역취소함수(예약 완료후 예약내역보기 다음에 넣기)
-		String sql="delete from 수강내역 where 수강내역번호=?";
+		String sql="delete from 수강내역 where 스케줄번호_fk=?";
 		
 		try {
 			ps=con.prepareStatement(sql);
@@ -69,7 +69,7 @@ public class 수강내역dao extends Dao{
 	ArrayList<스케줄dto> relist=new ArrayList<>();
 	public ArrayList<스케줄dto> print(int logsession){//내가 신청한 수업 목록
 		relist=new ArrayList<>();
-		String spl="select 수강내역번호,수강일시,금액, 이름 from 회원 m ,스케줄 s,수강내역 r "
+		String spl="select 스케줄번호_pk,수강일시,금액, 이름 from 회원 m ,스케줄 s,수강내역 r "
 				+  " where m.회원번호_pk=s.회원번호_fk  and r.스케줄번호_fk = s.스케줄번호_pk and r.회원번호_fk=?;";
 			
 		
