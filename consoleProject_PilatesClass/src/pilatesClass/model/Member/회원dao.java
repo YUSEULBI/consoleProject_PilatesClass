@@ -188,6 +188,39 @@ public class 회원dao extends Dao{
 		}return false;
 		
 	}
+	
+	
+	// 회원명으로 회원번호 찾기
+		public int memberNoFind( String name ) {
+			String sql = "select 회원번호_pk from 회원 where 회원.이름 = ?;";
+			try {
+				ps = con.prepareStatement(sql);
+				ps.setString(1, name);
+				rs = ps.executeQuery();
+				if ( rs.next() ) {
+					return rs.getInt(1);
+				}
+			}catch (Exception e) {
+				System.out.println(e);
+			}
+			return -1;
+		}
+		
+	// 강사명으로 회원번호 찾기
+			public int teacher_NumFind( String name ) {
+				String sql = "select 회원번호_pk from 회원 where 회원.등급 =2 and 회원.이름 = ?;";
+				try {
+					ps = con.prepareStatement(sql);
+					ps.setString(1, name);
+					rs = ps.executeQuery();
+					if ( rs.next() ) {
+						return rs.getInt(1);
+					}
+				}catch (Exception e) {
+					System.out.println(e);
+				}
+				return -1;
+			}
 }
 
 	

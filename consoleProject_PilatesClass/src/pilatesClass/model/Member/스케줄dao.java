@@ -35,26 +35,13 @@ public class 스케줄dao extends Dao {
 		return null;
 	}
 	
-	// 나중에 MemberDao로 옮길예정
-	// 회원명으로 회원번호 찾기
-	public int memberNoFind( String name ) {
-		String sql = "select 회원번호_pk from 회원 where 회원.이름 = ?;";
-		try {
-			ps = con.prepareStatement(sql);
-			ps.setString(1, name);
-			rs = ps.executeQuery();
-			if ( rs.next() ) {
-				return rs.getInt(1);
-			}
-		}catch (Exception e) {
-			System.out.println(e);
-		}
-		return -1;
-	}
+	
+	
 	
 	// 수업등록
 	public boolean classAdd( 스케줄dto dto ) {
-		int 회원번호 = memberNoFind(dto.get강사명());
+		int 회원번호 = 회원dao.getInstance().teacher_NumFind(dto.get강사명());
+		if ( 회원번호 == -1 ) { return false;	} // 강사명이 잘못됨
 		String sql = "insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( ? , ? , ? );";
 		try {
 			ps = con.prepareStatement(sql);
@@ -73,7 +60,7 @@ public class 스케줄dao extends Dao {
 	
 	// 수업수정
 		public int classEdit( 스케줄dto dto , int 수업번호 ) {
-			int 회원번호 = memberNoFind(dto.get강사명());
+			int 회원번호 = 회원dao.getInstance().teacher_NumFind(dto.get강사명());
 			if ( 회원번호 == -1 ) { return 3;	} // 강사명이 잘못됨
 			String sql = "update 스케줄 set 수강일시 =? , 금액=? , 회원번호_fk =? where 스케줄번호_pk =?;";
 			try {

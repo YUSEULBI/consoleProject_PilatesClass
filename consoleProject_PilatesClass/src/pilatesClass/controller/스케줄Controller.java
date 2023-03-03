@@ -6,6 +6,7 @@ import pilatesClass.model.Member.수강내역dao;
 import pilatesClass.model.Member.수강내역dto;
 import pilatesClass.model.Member.스케줄dao;
 import pilatesClass.model.Member.스케줄dto;
+import pilatesClass.model.Member.회원dao;
 
 public class 스케줄Controller {
 	private static 스케줄Controller controller = new 스케줄Controller();
@@ -39,9 +40,9 @@ public class 스케줄Controller {
 		return 스케줄dao.getInstance().classDelete(ch);
 	}
 	
-	// 존재하는 회원명인지 확인하기{}
-	public boolean memberNoFind( String name ) {
-		int result = 스케줄dao.getInstance().memberNoFind(name);
+	// 존재하는 강사명인지 확인하기{}
+	public boolean teacher_NumFind( String name ) {
+		int result = 회원dao.getInstance().teacher_NumFind(name);
 		if ( result == -1 ) { return false;	}
 		else { return true;	}
 		
