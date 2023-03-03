@@ -99,3 +99,10 @@ create table 강사순위(
     foreign key( 회원번호_fk ) references 회원( 회원번호_pk )
 );
 select * from 강사순위;
+
+-- 수강내역에 존재하는 스케줄 들 
+select * from 수강내역 a , 스케줄 b where a.스케줄번호_fk = b.스케줄번호_pk;
+-- 수강내역에 존재하는 스케줄이면 강사 정보 
+select * from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk;
+-- 회원번호 별 그룹 후 이름과 레코드수 표시 후 레코드수 기준으로 내림차순 
+select c.이름 as 강사명 , count(*) as 누적수강생 , sum( b.금액) as 총매출액  from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk group by c.회원번호_pk order by count(*) desc ;
