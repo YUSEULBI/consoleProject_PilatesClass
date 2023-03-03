@@ -24,10 +24,6 @@ public class 수강내역Controller {
 	public boolean reservation(int ch) {
 		
 		
-		
-		
-		if(수강내역dao.getInstance().re_check(ch) == false) {return false;}//결제하기로 옮길것
-		
 		boolean result=수강내역dao.getInstance().reservation(ch);
 		return result;
 		}
@@ -45,6 +41,13 @@ public class 수강내역Controller {
 		return list;
 	}
 	
+	public boolean re_check(int ch) {
+		return 수강내역dao.getInstance().re_check(ch);
+	}
 	
+	public int pay(int money,int ch) {
+		
+		return 수강내역dao.getInstance().pay(money, ch);
+	}
 	
 }

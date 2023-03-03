@@ -83,9 +83,9 @@ select * from 스케줄;
 select * from 수강내역;
 -- 예약
 insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 1 , 1 );
-insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 5 , 4 );
-insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 6 , 5 );
-insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 6 , 3 );
+insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 2 , 4 );
+insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 3 , 5 );
+insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 3 , 3 );
 
 -- 수강번호 스케줄 일시 , 금액 , 아이디 출력
 select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk , 스케줄번호_pk from 회원 m , 스케줄 s , 수강내역 r where m.회원번호_pk = s.회원번호_fk and s.스케줄번호_pk = r.스케줄번호_fk;
@@ -94,7 +94,7 @@ select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk 
 
 drop table if exists 강사순위;
 create table 강사순위(
-	회원번호_fk int,
+   회원번호_fk int,
     예약수 int ,
     순위 int ,
     foreign key( 회원번호_fk ) references 회원( 회원번호_pk )
@@ -105,5 +105,6 @@ select * from 스케줄;
 select * from 수강내역 a , 스케줄 b where a.스케줄번호_fk = b.스케줄번호_pk;
 -- 수강내역에 존재하는 스케줄이면 강사 정보 
 select * from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk;
+
 -- 회원번호 별 그룹 후 이름과 레코드수 표시 후 레코드수 기준으로 내림차순 
 select c.이름 as 강사명 , count(*) as 누적수강생 , sum( b.금액) as 총매출액  from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk group by c.회원번호_pk order by count(*) desc ;

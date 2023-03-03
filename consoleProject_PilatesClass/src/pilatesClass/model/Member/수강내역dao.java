@@ -55,6 +55,9 @@ public class 수강내역dao extends Dao{
 
 	public boolean reservation(int ch) {
 			
+			
+		
+			
 			String sql="insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( ? , ? );";
 			try {
 			ps=con.prepareStatement(sql);
@@ -65,6 +68,31 @@ public class 수강내역dao extends Dao{
 		}catch (Exception e) {System.out.println(e);}
 			return false;
 		}
+	
+	public int pay(int money,int ch) {
+		String sql="select 금액 from  스케줄 where 스케줄번호_pk=?";
+		
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, ch);
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				if(rs.getInt(1)<=money) {
+				
+					return 1;
+					
+				}else if (rs.getInt(1)>money) {
+					return 2;
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}return 3;
+		
+	}
 	
 	
 	ArrayList<스케줄dto> relist=new ArrayList<>();
