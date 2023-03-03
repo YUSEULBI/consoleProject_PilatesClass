@@ -6,9 +6,7 @@ import java.util.Scanner;
 
 import pilatesClass.controller.수강내역Controller;
 import pilatesClass.controller.회원controller;
-import pilatesClass.model.Member.RankDto;
 import pilatesClass.model.Member.SalesnRankDto;
-import pilatesClass.model.Member.수강내역dao;
 import pilatesClass.model.Member.스케줄dto;
 
 
@@ -75,17 +73,13 @@ public class 수강내역View {
 	public void dailySales() throws Exception {
 	int year = Calendar.getInstance().get(Calendar.YEAR);
 	int month = Calendar.getInstance().get(Calendar.MONTH)+1;
-	ArrayList<RankDto> list = 수강내역dao.getInstance().강사순위();
-	for ( RankDto dto : list ) {
-		System.out.println(dto.get회원번호_fk()+"의 예약수 : "+dto.get예약수());
-	}
 		while(true) {
 			System.out.println("================== 월별 매출 ===================");
 			System.out.printf("%d년 %d월 매출\n",year,month);
-			
-			
-			
-			
+			ArrayList<SalesnRankDto> list = 수강내역Controller.getInstance().Sales();
+			for ( SalesnRankDto dto : list ) {
+				System.out.println(dto.get아이디());
+			}
 			System.out.println("=============================================");
 			System.out.println("1.이전달 2.다음달");
 			int ch = scanner.nextInt();
