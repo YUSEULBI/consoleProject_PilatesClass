@@ -116,7 +116,8 @@ public class Front {
  
  // 관리자페이지
 
-		// 관리자 로그인[파일위치 : 회원View] --> 관리자페이지[파일위치 : Front]
+		// 관리자 로그인
+ 		// [파일위치 : 회원View] --> 관리자페이지[파일위치 : Front]
 		
  		// 관리자페이지
 		public void admin_page() {
@@ -128,7 +129,7 @@ public class Front {
 					if ( sc == 1 ) { 스케줄View.getInstance().classPage();	}
 					else if ( sc == 2 ) { 회원view.getInstance().PMemberView();	}
 					else if ( sc == 3 ) { 회원view.getInstance().PteacherView();	}
-					else if ( sc == 4 ) { 수강내역View.getInstance().sales_page();	} //매출관리
+					else if ( sc == 4 ) { SalesView.getInstance().sales_page();	} //매출관리
 					else if ( sc == 5 ) { break;	}
 					else {	}
 				}catch (Exception e) {
