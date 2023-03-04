@@ -123,7 +123,10 @@ public class Front {
 		public void admin_page() {
 			while(true) {
 				System.out.println("================ 관리자 페이지 ================");
+				System.out.println();
 				System.out.println("1.수업조회 2.회원조회 3.강사조회 4.매출관리 5.로그아웃");
+				System.out.println();
+				System.out.println("===========================================");
 				try {
 					int sc = scanner.nextInt();
 					if ( sc == 1 ) { 스케줄View.getInstance().classPage();	}

@@ -1,14 +1,14 @@
 package pilatesClass.model.Member;
 
-public class TotalDto {
+public class SalesDto {
 	int 누적예약수;
 	int 총매출액;
 	
-	public TotalDto() {
+	public SalesDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TotalDto(int 누적예약수, int 총매출액) {
+	public SalesDto(int 누적예약수, int 총매출액) {
 		super();
 		this.누적예약수 = 누적예약수;
 		this.총매출액 = 총매출액;

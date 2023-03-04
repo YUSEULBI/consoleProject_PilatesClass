@@ -16,12 +16,8 @@ import pilatesClass.model.Member.스케줄dto;
 public class 스케줄View {
 
 	private static 스케줄View view = new 스케줄View();
-	private 스케줄View() {
-		// TODO Auto-generated constructor stub
-	}
-	public static 스케줄View getInstance() {
-		return view;
-	}
+	private 스케줄View() {	}
+	public static 스케줄View getInstance() {	return view;	}
 	
 	Scanner scanner = new Scanner(System.in);
 	
@@ -64,6 +60,7 @@ public class 스케줄View {
 		
 		// 날짜
 		System.out.print("년[yyyy] : ");	int year = scanner.nextInt();
+		if ( year < 1 || year > 9999 ) { System.out.println("[연도를 올바르게 입력하세요]");return null;	}
 		
 		System.out.print("월 : ");	int month = scanner.nextInt();
 		if ( month > 12 || month < 1) { System.out.println("[날짜를 올바르게 입력하세요]"); return null;	}
