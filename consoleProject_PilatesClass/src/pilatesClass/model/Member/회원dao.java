@@ -190,21 +190,6 @@ public class 회원dao extends Dao{
 	}
 	
 	
-	// 회원명으로 회원번호 찾기
-		public int memberNoFind( String name ) {
-			String sql = "select 회원번호_pk from 회원 where 회원.이름 = ?;";
-			try {
-				ps = con.prepareStatement(sql);
-				ps.setString(1, name);
-				rs = ps.executeQuery();
-				if ( rs.next() ) {
-					return rs.getInt(1);
-				}
-			}catch (Exception e) {
-				System.out.println(e);
-			}
-			return -1;
-		}
 		
 	// 강사명으로 회원번호 찾기
 			public int teacher_NumFind( String name ) {
@@ -221,6 +206,38 @@ public class 회원dao extends Dao{
 				}
 				return -1;
 			}
+			
+	// 회원번호로 회원명 찾기
+	public String memberNameFind( int num ) {
+		String sql = "select 회원.이름 from 회원 where 회원번호_pk = ?;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, num);
+			rs = ps.executeQuery();
+			if ( rs.next() ) {
+				return rs.getString(1);
+			}
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	// 회원명으로 회원번호 찾기
+	public int memberNoFind( String name ) {
+		String sql = "select 회원번호_pk from 회원 where 회원.이름 = ?;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			if ( rs.next() ) {
+				return rs.getInt(1);
+			}
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
 }
 
 	

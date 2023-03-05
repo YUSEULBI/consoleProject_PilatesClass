@@ -125,8 +125,6 @@ public class SalesView {
 					System.out.println("[존재하지 않는 날짜입니다.]"); return;
 				}
 			}else if ( ch == 4 ) { return; }
-			
-			
 		}// while end
 	} // 일자별 매출 end
 	

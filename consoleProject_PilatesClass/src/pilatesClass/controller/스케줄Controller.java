@@ -36,17 +36,11 @@ public class 스케줄Controller {
 	}
 	
 	//수업삭제
-	public int classDelete( int ch ) {
+	public boolean classDelete( int ch ) {
 		return 스케줄dao.getInstance().classDelete(ch);
 	}
 	
-	// 존재하는 강사명인지 확인하기{}
-	public boolean teacher_NumFind( String name ) {
-		int result = 회원dao.getInstance().teacher_NumFind(name);
-		if ( result == -1 ) { return false;	}
-		else { return true;	}
-		
-	}
+	
 	
 	public ArrayList<스케줄dto> te_print(){
 		int logsession=회원controller.getInstance().getLogSession();
