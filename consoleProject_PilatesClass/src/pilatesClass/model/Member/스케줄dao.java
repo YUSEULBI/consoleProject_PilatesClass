@@ -141,7 +141,7 @@ public class 스케줄dao extends Dao {
 				ps=con.prepareStatement(sql);
 				rs=ps.executeQuery();
 				while(rs.next()) {return false;}
-			} catch (SQLException e) {System.out.println(e);}return true;
+			} catch (Exception e) {System.out.println(e);}return true;
 			
 			
 		}

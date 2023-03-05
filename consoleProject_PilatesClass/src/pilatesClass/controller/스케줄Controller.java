@@ -20,7 +20,7 @@ public class 스케줄Controller {
 	
 	// 수업보기
 	public ArrayList<스케줄dto> classView(){
-	
+		
 		return 스케줄dao.getInstance().classView();
 	
 	}
@@ -59,7 +59,7 @@ public class 스케줄Controller {
 	
 	public boolean x_print() {
 	
-	if(스케줄dao.getInstance().x_print()==false) {return false;}
+	if(스케줄dao.getInstance().x_print()==false) return false;
 	return false;
 	}
 }

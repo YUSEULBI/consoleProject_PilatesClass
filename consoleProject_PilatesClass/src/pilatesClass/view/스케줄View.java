@@ -44,7 +44,7 @@ public class 스케줄View {
 	}
 	
 	public void classView() {
-	
+		
 		System.out.println("================= 전체 수업목록 ==================");
 		System.out.printf("%s\t%-10s\t%s\t %s\n","수업번호","수강일시","금액","강사");
 		ArrayList<스케줄dto> classList = 스케줄Controller.getInstance().classView();
