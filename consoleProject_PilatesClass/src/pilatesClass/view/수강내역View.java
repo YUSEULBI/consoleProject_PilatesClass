@@ -1,5 +1,6 @@
 package pilatesClass.view;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -63,7 +64,8 @@ public class 수강내역View {
 			System.err.println("금액이 부족합니다");
 			
 		}else if (result>0) {//거스름돈은 0보다 클꺼니까!
-			System.out.println("거스름돈은 : "+ result+"원 입니다.");
+			NumberFormat nf=NumberFormat.getNumberInstance();
+			System.out.println("거스름돈은 : "+nf.format(result)+"원 입니다."); //3번째 자리 콤마찍기
 			reservation(ch);
 		}
 		

@@ -80,7 +80,7 @@ public class 수강내역dao extends Dao{
 				if(rs.getInt(1)<money) {//입력값이 db값 보다 클경우 거스름돈을 리턴 [성공]
 					
 					int change=money-rs.getInt(1);
-					return change;//차액을 바로 리턴
+					return change  ;//차액을 바로 리턴
 					
 			 	}else if (rs.getInt(1)==money) {//입력값이 db값 과 같을 경우 [성공]
 						return -1;
