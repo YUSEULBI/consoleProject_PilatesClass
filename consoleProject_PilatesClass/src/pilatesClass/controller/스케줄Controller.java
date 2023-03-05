@@ -59,7 +59,7 @@ public class 스케줄Controller {
 	
 	public boolean x_print() {
 	
-	if(스케줄dao.getInstance().x_print()==false) return false;
-	return false;
+	return 스케줄dao.getInstance().x_print(); 
+	
 	}
 }
