@@ -45,7 +45,7 @@ public class 수강내역View {
 	}
 	
 	
-	  public void pay() {//결제
+	  public void pay() {//결제 및 거스름돈
 		  
 		System.out.println("수강번호를 입력해 주세요");int ch=scanner.nextInt();
 		
@@ -57,11 +57,14 @@ public class 수강내역View {
 		System.out.println("결제금액을 써주세용"); int money=scanner.nextInt();
 		
 		int result=수강내역Controller.getInstance().pay(money, ch);
-		if(result==1) {
+		if(result==-1) {
 			reservation(ch);
-		}else if (result==2) {
-			System.out.println("금액이 부족합니다");
+		}else if (result==-2) {
+			System.err.println("금액이 부족합니다");
 			
+		}else if (result>0) {//거스름돈은 0보다 클꺼니까!
+			System.out.println("거스름돈은 : "+ result+"원 입니다.");
+			reservation(ch);
 		}
 		
 		
