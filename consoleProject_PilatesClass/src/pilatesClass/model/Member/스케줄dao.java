@@ -133,7 +133,18 @@ public class 스케줄dao extends Dao {
 		
 		
 		
-		
+		public boolean x_print() {
+			
+			String sql="select 수강일시 from  스케줄 where 수강일시 between date_add(now(),interval -35 day) and now();";
+															
+			try {
+				ps=con.prepareStatement(sql);
+				rs=ps.executeQuery();
+				while(rs.next()) {return false;}
+			} catch (SQLException e) {System.out.println(e);}return true;
+			
+			
+		}
 		
 		
 		

@@ -20,7 +20,7 @@ public class 스케줄Controller {
 	
 	// 수업보기
 	public ArrayList<스케줄dto> classView(){
-			
+	
 		return 스케줄dao.getInstance().classView();
 	
 	}
@@ -49,9 +49,17 @@ public class 스케줄Controller {
 	}
 	
 	public ArrayList<스케줄dto> te_print(){
+		
 		int logsession=회원controller.getInstance().getLogSession();
+		
 		
 		return 스케줄dao.getInstance().te_print(logsession);
 	}
 	
+	
+	public boolean x_print() {
+	
+	if(스케줄dao.getInstance().x_print()==false) {return false;}
+	return false;
+	}
 }
