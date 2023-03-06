@@ -125,47 +125,6 @@ public class 수강내역dao extends Dao{
 	}
 	
 	
-	public ArrayList<SalesnRankDto> Sales(){
-		ArrayList<SalesnRankDto> list = new ArrayList<>();
-		String sql ="select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk , 스케줄번호_pk from 회원 m , 스케줄 s , 수강내역 r where m.회원번호_pk = s.회원번호_fk and s.스케줄번호_pk = r.스케줄번호_fk;";
-		try {
-			ps = con.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while ( rs.next() ) {
-				SalesnRankDto dto = new SalesnRankDto(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getInt(6));
-				list.add(dto);
-			}
-		}catch (Exception e) {
-			System.out.println(e);
-		}return list;
-	}
-	
-	public ArrayList<RankDto> 강사순위() {
-		ArrayList<SalesnRankDto> list = Sales();
-		ArrayList<Integer> 회원번호리스트 = new ArrayList<>();
-		ArrayList<RankDto> 강사순위리스트 = new ArrayList<>();
-		for ( SalesnRankDto dto : list ) {
-			if ( 회원번호리스트.indexOf(dto.get회원번호()) < 0 ) {	
-				회원번호리스트.add(dto.get회원번호());
-			}
-		}
-		for ( int i : 회원번호리스트) {
-			String sql = "select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk , 스케줄번호_pk from 회원 m , 스케줄 s , 수강내역 r where m.회원번호_pk = s.회원번호_fk and s.스케줄번호_pk = r.스케줄번호_fk and s.회원번호_fk = ?;";
-			try {
-				ps = con.prepareStatement(sql);
-				ps.setInt(1, i);
-				rs = ps.executeQuery();
-				int 예약수 = 0;
-				while (rs.next()) { 예약수 ++; }
-				RankDto rankDto = new RankDto(i, 예약수);
-				강사순위리스트.add(rankDto);
-			}catch (Exception e) {
-				System.out.println(e);
-			}
-		}
-		return 강사순위리스트;
-		
-	}
 	
 	
 	

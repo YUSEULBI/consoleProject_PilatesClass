@@ -30,6 +30,18 @@ create table 수강내역(
     foreign key( 스케줄번호_fk ) references 스케줄( 스케줄번호_pk ) on delete set null -- 수업을 삭제하면 해당수업 예약도 삭제
 );
 
+drop table if exists message;
+create table message(
+   mno int auto_increment primary key ,
+   title varchar(200) not null,
+    content longtext not null ,
+    state boolean not null,
+    회원번호_fk int ,
+    foreign key ( 회원번호_fk ) references 회원( 회원번호_pk ) on delete set null
+);
+
+
+
 -- 1. 회원가입
 insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'qwe' ,'qwe' ,'010-4444-4444' ,'유재석' , 1 );
 insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'qqq' ,'qqq' ,'010-1234-1234' ,'김현수' , 1 );
@@ -53,22 +65,17 @@ insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-0
 insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-15 17:00:00' , 30000 , 5 );
 insert into 스케줄( 수강일시 , 금액 , 회원번호_fk ) values( '2023-03-16 14:00:00' , 30000 , 5 );
 
-select * from 회원;
-select * from 스케줄;
 
 -- 3. 회원이 수강신청 
 insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( 1 , 2 );
-
 
 --  전체 강사들의 스케줄 
 select * from 회원 , 스케줄 where 회원.회원번호_pk = 스케줄.회원번호_fk;
 
 -- 4. 특정 강사의 스케줄만 확인 
 select * from 회원 , 스케줄 where 회원.회원번호_pk = 스케줄.회원번호_fk and 스케줄.회원번호_fk = 2; -- 강사 본인것만
-select * from 회원;
-select * from 스케줄;
-select * from 수강내역;
 
+-- 5. 
 select * from 회원 , 수강내역 where 회원.회원번호_pk = 수강내역.회원번호_fk and 수강내역.회원번호_fk = 1; -- 학생 본인것만
 
 -- 모든 강사 출력
@@ -92,19 +99,29 @@ select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk 
 
 select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk , 스케줄번호_pk from 회원 m , 스케줄 s , 수강내역 r where m.회원번호_pk = s.회원번호_fk and s.스케줄번호_pk = r.스케줄번호_fk and s.회원번호_fk = 4;
 
-drop table if exists 강사순위;
-create table 강사순위(
-   회원번호_fk int,
-    예약수 int ,
-    순위 int ,
-    foreign key( 회원번호_fk ) references 회원( 회원번호_pk )
-);
-select * from 강사순위;
-select * from 회원;
-select * from 스케줄;
-select * from 수강내역 a , 스케줄 b where a.스케줄번호_fk = b.스케줄번호_pk;
+
+
+
+
+
+
 -- 수강내역에 존재하는 스케줄이면 강사 정보 
 select * from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk;
 
 -- 회원번호 별 그룹 후 이름과 레코드수 표시 후 레코드수 기준으로 내림차순 
 select c.이름 as 강사명 , count(*) as 누적수강생 , sum( b.금액) as 총매출액  from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk group by c.회원번호_pk order by count(*) desc ;
+
+-- 총매출액 수강내역의 총매출액
+select count(*) as 누적예약수 , sum(스케줄.금액) as 누적매출액 from 회원,스케줄,수강내역 where 회원.회원번호_pk = 스케줄.회원번호_fk and 스케줄.스케줄번호_pk = 수강내역.스케줄번호_fk ;
+
+-- 예약건의 수강일시 , 금액
+select 수강일시,금액 from 스케줄,수강내역 where 스케줄.스케줄번호_pk = 수강내역.스케줄번호_fk;
+
+-- 3월 예약건 수강일시
+select 수강일시 , 금액 from 스케줄,수강내역 where 스케줄.스케줄번호_pk = 수강내역.스케줄번호_fk and date_format(수강일시,'%Y-%m') = '2023-03';
+-- 입력한 월의 예약건수, 매출액
+select count(*) as 해당월예약건 , sum(스케줄.금액) as 해당월총매출액 from 스케줄,수강내역 where 스케줄.스케줄번호_pk = 수강내역.스케줄번호_fk and date_format(수강일시,'%Y') = 2023 and date_format(수강일시,'%m') = 3 and date_format(수강일시,'%d') = 2;
+
+
+
+

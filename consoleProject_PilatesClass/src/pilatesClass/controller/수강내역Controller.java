@@ -2,8 +2,7 @@ package pilatesClass.controller;
 
 import java.util.ArrayList;
 
-import pilatesClass.model.Member.Dao;
-import pilatesClass.model.Member.SalesnRankDto;
+
 import pilatesClass.model.Member.수강내역dao;
 import pilatesClass.model.Member.스케줄dto;
 
@@ -34,13 +33,7 @@ public class 수강내역Controller {
 		return 수강내역dao.getInstance().print(logsession);
 	}
 	
-	// 매출계산
-	public ArrayList<SalesnRankDto> Sales(){
-		ArrayList<SalesnRankDto> list = 수강내역dao.getInstance().Sales();
-		System.out.println(list);
-		return list;
-	}
-	
+		
 	public boolean re_check(int ch) {
 		return 수강내역dao.getInstance().re_check(ch);
 	}

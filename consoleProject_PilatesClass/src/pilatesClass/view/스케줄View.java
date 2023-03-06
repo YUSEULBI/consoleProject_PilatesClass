@@ -25,7 +25,8 @@ public class 스케줄View {
 	
 	public void classPage() {
 		while(true) {
-			classView();
+			
+			alphaClassView();
 			System.out.println("1.수업등록 2.수업변경 3.수업삭제 4.뒤로가기");
 			try {
 				int ch = scanner.nextInt();
@@ -40,10 +41,11 @@ public class 스케줄View {
 		}
 	}
 	
-	public void classView() {
+	public void alphaClassView() {
+		 
 		System.out.println("================= 전체 수업목록 ==================");
 		System.out.printf("%s\t%-10s\t%s\t %s\n","수업번호","수강일시","금액","강사");
-		ArrayList<스케줄dto> classList = 스케줄Controller.getInstance().classView();
+		ArrayList<스케줄dto> classList = 스케줄Controller.getInstance().alphaClassView();
 		for ( 스케줄dto d : classList) {
 			String DateTime =  d.get수강일시();
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

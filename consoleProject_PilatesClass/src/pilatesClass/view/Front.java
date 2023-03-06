@@ -95,7 +95,7 @@ public class Front {
 	 int ch=scanner.nextInt();
 	 if(ch==1) {수강내역View.getInstance().cancel(); }
 	 else if (ch==2) {
-		 스케줄View.getInstance().classView();
+		 스케줄View.getInstance().alphaClassView();
 		 student_page(); //이렇게했을때 문제가 있는지 확인할것
 	}
  }
@@ -107,7 +107,7 @@ public class Front {
 	 if(ch==1) {
 		 수강내역View.getInstance().pay();
 	 }else if (ch==2) {
-		 스케줄View.getInstance().classView(); 
+		 스케줄View.getInstance().alphaClassView(); 
 		Front.getInstance().student_page();
 	}
 	 

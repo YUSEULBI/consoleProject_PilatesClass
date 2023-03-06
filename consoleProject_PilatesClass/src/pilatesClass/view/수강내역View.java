@@ -1,5 +1,6 @@
 package pilatesClass.view;
 
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,7 +8,6 @@ import java.util.Scanner;
 
 import pilatesClass.controller.수강내역Controller;
 import pilatesClass.controller.회원controller;
-import pilatesClass.model.Member.SalesnRankDto;
 import pilatesClass.model.Member.수강내역dao;
 import pilatesClass.model.Member.스케줄dto;
 
