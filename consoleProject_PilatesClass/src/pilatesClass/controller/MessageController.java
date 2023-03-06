@@ -24,6 +24,13 @@ public class MessageController {
 		
 	}
 	
+	// 전체 회원번호 반환하기
+	public ArrayList<Integer> allMember(){
+		return MessageDao.getInstance().allMember();
+	}
+	
+	
+	
 	// 선택한 여러 회원에게 공통메시지 보내기
 	public boolean sendMessage( ArrayList<Integer> MemList  , String title , String content ) {
 		ArrayList<MessageDto> messageList = new ArrayList<>();

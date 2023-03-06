@@ -43,4 +43,9 @@ public class 수강내역Controller {
 		return 수강내역dao.getInstance().pay(money, ch);
 	}
 	
+	// 결제 예정금액 체크
+	public int payMoneyCheck( int ch ) {
+		return 수강내역dao.getInstance().payMoneyCheck(ch);
+	}
+	
 }

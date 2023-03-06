@@ -2,8 +2,11 @@ package pilatesClass.model.Member;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import pilatesClass.controller.PointController;
 import pilatesClass.controller.회원controller;
+import pilatesClass.view.PointView;
 
 public class 수강내역dao extends Dao{
 	
@@ -77,10 +80,10 @@ public class 수강내역dao extends Dao{
 			ps.setInt(1, ch);
 			rs=ps.executeQuery();
 			if(rs.next()) {
-				if(rs.getInt(1)<money) {//입력값이 db값 보다 클경우 거스름돈을 리턴 [성공]
-					
-					int change=money-rs.getInt(1);
-					return change  ;//차액을 바로 리턴
+				
+				if(rs.getInt(1) < money) {//입력값이 db값 보다 클경우 거스름돈을 리턴 [성공]
+					int change = money-rs.getInt(1);
+					return change; //차액을 바로 리턴
 					
 			 	}else if (rs.getInt(1)==money) {//입력값이 db값 과 같을 경우 [성공]
 						return -1;
@@ -88,8 +91,7 @@ public class 수강내역dao extends Dao{
 					
 				else if (rs.getInt(1)>money) {//입력값이 db값보다 작을 경우 [실패]
 					return -2;
-				}
-				
+				}	
 			}
 			
 		} catch (SQLException e) {
@@ -97,6 +99,21 @@ public class 수강내역dao extends Dao{
 			e.printStackTrace();
 		}return 3;
 		
+	}
+	
+	// 결제 예정금액 체크
+	public int payMoneyCheck( int ch ) {
+		String sql="select 금액 from  스케줄 where 스케줄번호_pk=?";
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, ch);
+			rs=ps.executeQuery();
+			if ( rs.next() ) {
+				return rs.getInt(1);
+			}
+		}catch (Exception e) {
+			System.out.println(e);
+		}return 0;
 	}
 	
 	

@@ -16,6 +16,22 @@ public class MessageView {
 	
 	Scanner scanner = new Scanner(System.in);
 	
+	// 관리자 메시지 창
+	public void adminMessage_page() {
+		while(true) {
+			System.out.println("1.회원1명메시지 2.전체메시지 3.뒤로가기");
+			try {
+				int ch = scanner.nextInt();
+				if ( ch == 1 ) { sendMessageOne();	}
+				else if ( ch == 2 ) { sendMessageAll();	}
+				else if ( ch == 3 ) { break;	}
+			}catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+	}
+	
+	
 	// 수업삭제 전 [수업유무확인,예약수강생 회원번호 가져와서] 메세지 보내기
 		public boolean reser_Member( int 스케줄번호 ){
 			ArrayList<Integer> reserMemList =MessageController.getInstance().reser_Member(스케줄번호);
@@ -27,9 +43,13 @@ public class MessageView {
 			System.out.print("제목 [자동작성] : " + title);
 			System.out.println();
 			System.out.print("보낼메시지 : ");
-			String content = scanner.nextLine();
-			
-			return sendMessage(reserMemList , title , content);
+			String content = "임시";
+			try {
+				content = scanner.nextLine();
+				
+			}catch (Exception e) {
+				System.out.println(e);
+			}return sendMessage(reserMemList , title , content);
 		}
 		
 	// 여러 회원에게 메세지 보내기
@@ -97,7 +117,7 @@ public class MessageView {
 	}
 	
 	// 1명에게 메시지 보내기
-	public void sendMessageOne() {
+	public void sendMessageOne() throws Exception {
 		System.out.println("메시지를 보낼 회원명을 입력하세요.");
 		String name = scanner.next();
 		// 존재하는 회원명인지 체크
@@ -113,5 +133,21 @@ public class MessageView {
 			boolean result = MessageController.getInstance().sendMessageOne(dto);
 			if ( result ) { System.out.println("["+no+"번 "+name+" 회원에게 메시지를 보냈습니다.]");	}
 		}
+	}
+	
+	// 회원 전체에게 메시지 보내기
+	public void sendMessageAll() throws Exception {
+		
+		System.out.print("제목 : ");
+		scanner.nextLine();
+		String title = scanner.nextLine();
+		System.out.print("보낼메시지 : ");
+		String content = scanner.nextLine();
+		ArrayList<Integer> memNumList = MessageController.getInstance().allMember();
+		
+		boolean result = 
+				MessageController.getInstance().sendMessage(memNumList, title, content);
+		if ( result ) { System.out.println("[모든 회원에게 메시지를 보냈습니다.]");	}
+		
 	}
 }

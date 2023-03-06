@@ -146,9 +146,7 @@ public class 스케줄View {
 				
 		boolean result = 스케줄Controller.getInstance().classDelete(ch);
 		if ( result ) { System.out.println("["+ch+"번 수업을 삭제했습니다.]");	}
-		else { System.out.println("[수업삭제 실패]-관리자문의");	}
-		
-				
+		else { System.out.println("[수업삭제 실패]-관리자문의");	}	
 	}
 	
 
