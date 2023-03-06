@@ -3,32 +3,24 @@ package pilatesClass.model.Member;
 public class RankDto {
 	
 	//필드
-	private int 회원번호_fk;
 	private String 회원이름;
 	private int 예약수;
+	private int 랭킹;
 	
 	public RankDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RankDto(int 회원번호_fk, String 회원이름, int 예약수) {
+	public RankDto(String 회원이름, int 예약수, int 랭킹) {
 		super();
-		this.회원번호_fk = 회원번호_fk;
 		this.회원이름 = 회원이름;
 		this.예약수 = 예약수;
+		this.랭킹 = 랭킹;
 	}
 
 	@Override
 	public String toString() {
-		return "RankDto [회원번호_fk=" + 회원번호_fk + ", 회원이름=" + 회원이름 + ", 예약수=" + 예약수 + "]";
-	}
-
-	public int get회원번호_fk() {
-		return 회원번호_fk;
-	}
-
-	public void set회원번호_fk(int 회원번호_fk) {
-		this.회원번호_fk = 회원번호_fk;
+		return "RankDto [회원이름=" + 회원이름 + ", 예약수=" + 예약수 + ", 랭킹=" + 랭킹 + "]";
 	}
 
 	public String get회원이름() {
@@ -46,6 +38,15 @@ public class RankDto {
 	public void set예약수(int 예약수) {
 		this.예약수 = 예약수;
 	}
+
+	public int get랭킹() {
+		return 랭킹;
+	}
+
+	public void set랭킹(int 랭킹) {
+		this.랭킹 = 랭킹;
+	}
+	
 	
 	
 	

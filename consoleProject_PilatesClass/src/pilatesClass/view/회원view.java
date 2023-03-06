@@ -147,19 +147,16 @@ public class 회원view {
 		}
 		
 		public void getTchRank() {
-			int rank = 1;
-			while(true) {
 			System.out.println("================= 강사 인기순위 =================");
 			System.out.printf("%s\t%s\t%s\n","강사이름","누적수강생","랭킹");
 			ArrayList<RankDto> teacherRankList = 회원controller.getInstance().teacherRank();
 			for(RankDto rn : teacherRankList ) {
-				System.out.printf("%s\t%d\t%s\n" , rn.get회원이름() , rn.get예약수() , rank++ );	
+				System.out.printf("%s\t%d\t%s\n" , rn.get회원이름() , rn.get예약수() , rn.get랭킹() );	
 			}
 			System.out.println("============================================");
-			System.out.println("1.뒤로가기");
-			int ch = scanner.nextInt();
-			if(ch==1) { break;}
-			}
+			System.out.println("아무키나 입력하십시오 (뒤로가기)");
+			String ch = scanner.next();
+			
 			
 		}
 //////////////////////////////////////////////////////////
