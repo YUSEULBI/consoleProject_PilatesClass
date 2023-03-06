@@ -74,5 +74,22 @@ public class 회원controller {
 		return 회원dao.getInstance().admin_login(pw);
 	}
 	
+	// 존재하는 강사명인지 확인하기{}
+		public boolean teacher_NumFind( String name ) {
+			int result = 회원dao.getInstance().teacher_NumFind(name);
+			if ( result == -1 ) { return false;	}
+			else { return true;	}
+			
+		}
+	
+	// 회원번호로 회원명 알기
+	public String memberNameFind( int num ) {
+		return 회원dao.getInstance().memberNameFind(num);
+	}
+	
+	// 회원명으로 회원번호 찾기
+	public int memberNoFind( String name ) {
+		return 회원dao.getInstance().memberNoFind(name);
+	}
 
 }

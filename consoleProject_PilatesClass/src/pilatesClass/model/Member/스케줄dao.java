@@ -93,18 +93,17 @@ public class 스케줄dao extends Dao {
 	}
 		
 	// 수업삭제
-		public int classDelete( int ch ) {
-			if ( !deleteCheck(ch) ) { return 2; } // 수업이 없음 , 스케줄번호 잘못입력 
+		public boolean classDelete( int ch ) {
 			String sql = "delete from 스케줄 where 스케줄번호_pk = ?;";
 			try {
 				ps = con.prepareStatement(sql);
 				ps.setInt(1, ch);
 				ps.executeUpdate();
-				return 1; // 삭제 성공
+				return true; // 삭제 성공
 			}catch (Exception e) {
 				System.out.println(e);
 			}
-			return 3; // 실패 관리자문의
+			return false; // 실패 관리자문의
 		}
 		
 		
@@ -130,18 +129,6 @@ public class 스케줄dao extends Dao {
 			
 			return null;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		
 }

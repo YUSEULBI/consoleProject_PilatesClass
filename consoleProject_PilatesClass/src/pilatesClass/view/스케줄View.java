@@ -8,20 +8,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import pilatesClass.controller.MessageController;
 import pilatesClass.controller.수강내역Controller;
 import pilatesClass.controller.스케줄Controller;
+import pilatesClass.controller.회원controller;
 import pilatesClass.model.Member.스케줄dao;
 import pilatesClass.model.Member.스케줄dto;
 
 public class 스케줄View {
 
 	private static 스케줄View view = new 스케줄View();
-	private 스케줄View() {
-		// TODO Auto-generated constructor stub
-	}
-	public static 스케줄View getInstance() {
-		return view;
-	}
+	private 스케줄View() {	}
+	public static 스케줄View getInstance() {	return view;	}
 	
 	Scanner scanner = new Scanner(System.in);
 	
@@ -64,6 +62,7 @@ public class 스케줄View {
 		
 		// 날짜
 		System.out.print("년[yyyy] : ");	int year = scanner.nextInt();
+		if ( year < 1 || year > 9999 ) { System.out.println("[연도를 올바르게 입력하세요]");return null;	}
 		
 		System.out.print("월 : ");	int month = scanner.nextInt();
 		if ( month > 12 || month < 1) { System.out.println("[날짜를 올바르게 입력하세요]"); return null;	}
@@ -97,7 +96,7 @@ public class 스케줄View {
 		if ( price < 30000  ) { System.out.println("[3만원 이상의 수강료를 기입해주세요.]"); return null; } // 기본금액 3만원 이상
 		
 		System.out.print("강사명 : "); String tName = scanner.next();
-		if ( !(스케줄Controller.getInstance().teacher_NumFind(tName))) { System.out.println("[존재하지 않는 강사입니다.]"); return null;		} // 강사이름이 없으면 null;
+		if ( !(회원controller.getInstance().teacher_NumFind(tName))) { System.out.println("[존재하지 않는 강사입니다.]"); return null;		} // 강사이름이 없으면 null;
 		
 				
 		
@@ -138,10 +137,14 @@ public class 스케줄View {
 		System.out.println("================ 수업삭제 페이지 ================");
 		System.out.println("삭제할 스케줄번호를 입력하세요");
 		int ch = scanner.nextInt();
-		int result = 스케줄Controller.getInstance().classDelete(ch);
-		if ( result == 1 ) { System.out.println("["+ch+"번 수업을 삭제했습니다.]");	}
-		else if ( result == 2 ) { System.out.println("[존재하지 않는 수업번호 입니다.]");	}
-		else if ( result == 3 ) { System.out.println("[수업삭제 실패]-관리자문의");	}
+		
+		// 메시지 발송 [ 인수: 스케줄번호 / 결과 true false ]
+		boolean messageResult = MessageView.getInstance().reser_Member(ch);
+		if ( !messageResult ) { return;	}
+				
+		boolean result = 스케줄Controller.getInstance().classDelete(ch);
+		if ( result ) { System.out.println("["+ch+"번 수업을 삭제했습니다.]");	}
+		else { System.out.println("[수업삭제 실패]-관리자문의");	}
 		
 				
 	}
