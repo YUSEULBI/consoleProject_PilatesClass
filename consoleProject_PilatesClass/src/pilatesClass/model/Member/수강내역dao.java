@@ -72,7 +72,7 @@ public class 수강내역dao extends Dao{
 			return false;
 		}
 	
-	public int pay(int money,int ch) {//결제 및 거스름돈
+	public int pay(int point , int money,int ch) {//결제 및 거스름돈
 		String sql="select 금액 from  스케줄 where 스케줄번호_pk=?";
 		
 		try {
@@ -80,16 +80,17 @@ public class 수강내역dao extends Dao{
 			ps.setInt(1, ch);
 			rs=ps.executeQuery();
 			if(rs.next()) {
-				
-				if(rs.getInt(1) < money) {//입력값이 db값 보다 클경우 거스름돈을 리턴 [성공]
-					int change = money-rs.getInt(1);
+				//amount = 결제해야할 금액(수업금액-사용포인트)
+				int amount = rs.getInt(1)-point;
+				if(amount < money) {//입력값이 db값 보다 클경우 거스름돈을 리턴 [성공]
+					int change = money-amount;
 					return change; //차액을 바로 리턴
 					
-			 	}else if (rs.getInt(1)==money) {//입력값이 db값 과 같을 경우 [성공]
+			 	}else if (amount==money) {//입력값이 db값 과 같을 경우 [성공]
 						return -1;
 					}
 					
-				else if (rs.getInt(1)>money) {//입력값이 db값보다 작을 경우 [실패]
+				else if (amount>money) {//입력값이 db값보다 작을 경우 [실패]
 					return -2;
 				}	
 			}

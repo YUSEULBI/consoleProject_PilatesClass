@@ -35,54 +35,7 @@ public class 회원view {
 			}
 	}
 			
-	public void PMemberView() {
-		while(true) {
-		String RaitingName;
-		System.out.println("================= 회원 목록 =================");
-		System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
-		ArrayList<회원dto> PMemberList = 회원controller.getInstance().PMemberView();
-		for (회원dto Pm : PMemberList) {
-			if(Pm.get등급() == 1) {RaitingName="일반회원";}
-			else {RaitingName=null;}
-			System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
-		}
-		System.out.println("==========================================");
-		
-		System.out.println("1.뒤로가기 2.처음으로 3.메시지보내기"); int 채널 = scanner.nextInt();
-		if(채널 == 1) { break;	}
-		else if(채널 == 2) {Front.getInstance().index();}
-		else if(채널 == 3) { MessageView.getInstance().adminMessage_page();}//메시지 보내기 기능
-		else {System.out.println(
-				".╭◜◝ ͡ ◜◝\r\n"
-				+ "(    ´ㅅ` )\r\n"
-				+ "╰◟◞ ͜  「제대로 입력해주세요」 :)\r\n"
-				+ "");}
-		}
-	}
-			
-	public void PteacherView() {
-		while(true) {
-		String RaitingName;
-		System.out.println("================= 회원 목록 =================");
-		System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
-		ArrayList<회원dto> PteacherList = 회원controller.getInstance().PteacherView();
-		for (회원dto Pm : PteacherList) {
-			if(Pm.get등급()==2) {RaitingName="강사";}
-			else {RaitingName=null;}
-			System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
-		}
-		System.out.println("==========================================");
-		
-		System.out.println("1.뒤로가기 2.처음으로"); int 채널 = scanner.nextInt();
-		if(채널 == 1) {Front.getInstance().admin_page();	}
-		else if(채널 == 2) {Front.getInstance().index();}
-		else {System.out.println(
-				".╭◜◝ ͡ ◜◝\r\n"
-				+ "(    ´ㅅ` )\r\n"
-				+ "╰◟◞ ͜  「제대로 입력해주세요」 :)\r\n"
-				+ "");}
-		}
-	}			
+	
 			
 			
 			
@@ -99,7 +52,7 @@ public class 회원view {
 					회원controller.getInstance().login(아이디, 비밀번호);
 			if(result==1) {
 				System.out.println(회원dao.getInstance().findName()+" 회원님 어서오세요!");
-				스케줄View.getInstance().classView(); // 기존 classview로 수정해주시면 되세요~
+				
 				Front.getInstance().student_page(); //수강생 로그인 성공시 예약하기 및 예약보기가 나와야함
 			}else if(result==0) {
 				System.out.println("비밀번호가 잘못되었습니다.");
@@ -107,7 +60,7 @@ public class 회원view {
 				System.out.println("없는 회원 입니다.");
 			}else if (result==2) {
 				System.out.println(회원dao.getInstance().findName()+" 강사님 어서오세요!");
-				스케줄View.getInstance().classView(); // 기존 classview로 수정해주시면 되세요~
+				
 				Front.getInstance().teacher_page();
 				//강사 로그인 성공시 예약은 x 본인의 수업만 출력해야함 reservation_page(); 사용불가
 				
@@ -157,6 +110,56 @@ public class 회원view {
 			else { System.out.println("[관리자 로그인 실패]");	}
 		}
 		
+		// 회원조회
+		public void PMemberView() {
+			while(true) {
+				String RaitingName;
+				System.out.println("================= 회원 목록 =================");
+				System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
+				ArrayList<회원dto> PMemberList = 회원controller.getInstance().PMemberView();
+				for (회원dto Pm : PMemberList) {
+					if(Pm.get등급() == 1) {RaitingName="일반회원";}
+					else {RaitingName=null;}
+					System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
+				}
+				System.out.println("==========================================");
+				
+				System.out.println("1.뒤로가기 2.처음으로 3.메시지보내기"); int 채널 = scanner.nextInt();
+				if(채널 == 1) { break;	}
+				else if(채널 == 2) {Front.getInstance().index();}
+				else if(채널 == 3) { MessageView.getInstance().adminMessage_page();}//메시지 보내기 기능
+				else {System.out.println(
+						".╭◜◝ ͡ ◜◝\r\n"
+						+ "(    ´ㅅ` )\r\n"
+						+ "╰◟◞ ͜  「제대로 입력해주세요」 :)\r\n"
+						+ "");}
+			}
+		}
+		
+		// 강사조회
+		public void PteacherView() {
+			while(true) {
+				String RaitingName;
+				System.out.println("================= 회원 목록 =================");
+				System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
+				ArrayList<회원dto> PteacherList = 회원controller.getInstance().PteacherView();
+				for (회원dto Pm : PteacherList) {
+					if(Pm.get등급()==2) {RaitingName="강사";}
+					else {RaitingName=null;}
+					System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
+				}
+				System.out.println("==========================================");
+				
+				System.out.println("1.뒤로가기 2.처음으로"); int 채널 = scanner.nextInt();
+				if(채널 == 1) {Front.getInstance().admin_page();	}
+				else if(채널 == 2) {Front.getInstance().index();}
+				else {System.out.println(
+						".╭◜◝ ͡ ◜◝\r\n"
+						+ "(    ´ㅅ` )\r\n"
+						+ "╰◟◞ ͜  「제대로 입력해주세요」 :)\r\n"
+						+ "");}
+			}
+		}			
 }
 		
 

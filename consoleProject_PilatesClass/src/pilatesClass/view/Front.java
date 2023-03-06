@@ -37,13 +37,17 @@ public class Front {
 	public void member_page() {
 		
 		while (true) {
-			System.out.println("1.회원가입  2.로그인  3.아이디찾기  4.비밀번호찾기" );
-			int ch=scanner.nextInt();
-			if(ch==1) { 회원view.getInstance().signup ();}
-			else if(ch==2) {회원view.getInstance().login(); }	
-			else if(ch==3) {회원view.getInstance().findId();}	
-			else if(ch==4) {회원view.getInstance().findPw();}	
-			
+			System.out.println("1.회원가입  2.로그인  3.아이디찾기  4.비밀번호찾기  5.뒤로가기" );
+			try {
+				int ch=scanner.nextInt();
+				if(ch==1) { 회원view.getInstance().signup ();}
+				else if(ch==2) {회원view.getInstance().login(); }	
+				else if(ch==3) {회원view.getInstance().findId();}	
+				else if(ch==4) {회원view.getInstance().findPw();}	
+				else if(ch==5) {break;}
+			}catch (Exception e) {
+				System.out.println(e);
+			}
 		}
 	}
 	
@@ -53,28 +57,30 @@ public class Front {
 	
 	public void student_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
 		while (true) {
+			스케줄View.getInstance().classView();
 			MessageView.getInstance().messageCount(); // 메시지 알림 추가 ////////////
-			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지"); // 메시지 추가 ////////////
+			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지 6.포인트조회"); // 메시지 추가 ////////////
 			int ch=scanner.nextInt();
 			if(ch==1) { 수강내역View.getInstance().pay();}
 			else if(ch==2) {
 				수강내역View.getInstance().res_print();
 				cancel_page(); //학생은 예약을 하기때문에 취소가 가능
-			}else if (ch==3) {	logout();		}
+			}else if (ch==3) {	logout(); break;		}
 			else if (ch==4) {	MessageView.getInstance().message_Page();		}
+			else if (ch==6) {	PointView.getInstance().viewPoint();		}
 		}
 
 }
 	
 	public void teacher_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
 		while (true) {
-			
+			스케줄View.getInstance().classView();
 			System.out.printf("1.나의수업보기 2.로그아웃");
 			int ch=scanner.nextInt();
 			if(ch==1) {
 				스케줄View.getInstance().te_print(); //강사는 예약이 없음->취소도없음(취소는관리자만 가능)
 			}
-			else if(ch==2) {logout();}
+			else if(ch==2) {logout(); break;}
 		}
 		
 	}
@@ -84,7 +90,6 @@ public class Front {
 		 int login=회원controller.getInstance().getLogSession(); //확인용 주석처리할것
 		 System.out.println("로그세션확인:"+login);//확인용 주석처리할것
 		 System.out.println("정상 로그아웃 되었습니다~!");
-		 member_page();
 	 
 	}
 
@@ -95,8 +100,7 @@ public class Front {
 	 int ch=scanner.nextInt();
 	 if(ch==1) {수강내역View.getInstance().cancel(); }
 	 else if (ch==2) {
-		 스케줄View.getInstance().classView();
-		 student_page(); //이렇게했을때 문제가 있는지 확인할것
+		return;
 	}
  }
  
@@ -107,8 +111,7 @@ public class Front {
 	 if(ch==1) {
 		 수강내역View.getInstance().pay();
 	 }else if (ch==2) {
-		 스케줄View.getInstance().classView(); 
-		Front.getInstance().student_page();
+		 return;
 	}
 	 
  }
@@ -125,7 +128,7 @@ public class Front {
 			while(true) {
 				System.out.println("================ 관리자 페이지 ================");
 				System.out.println();
-				System.out.println("1.수업조회 2.회원조회 3.강사조회 4.매출관리 5.로그아웃");
+				System.out.println("1.수업관리 2.회원관리 3.강사관리 4.매출관리 5.로그아웃");
 				System.out.println();
 				System.out.println("===========================================");
 				try {

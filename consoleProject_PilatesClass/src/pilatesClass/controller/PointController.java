@@ -20,12 +20,14 @@ public class PointController {
 	// 포인트 사용
 	public boolean pointUse( int point ) {
 		int loginsession = 회원controller.getInstance().getLogSession();
-		return PointDao.getInstance().pointUse(point, loginsession);
+		return PointDao.getInstance().pointUse(point, "사용" ,loginsession);
 	}
 	
+	// 포인트 적립
 	public int addPoint( int amount  , String reason ) {
 		// 결제금액10% 포인트 만들기 
 		double point = amount*0.1;
+		System.out.println("int로 만들기전 point : "+ point);
 		int intPoint = (int)point;
 		int loginsession = 회원controller.getInstance().getLogSession();
 		boolean result = PointDao.getInstance().addPoint(intPoint, reason, loginsession);

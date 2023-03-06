@@ -57,7 +57,7 @@ public class 수강내역View {
 		
 		// 결제금액 조회 ( amount = 결제예정금액 )
 		int amount = 수강내역Controller.getInstance().payMoneyCheck(ch);
-		System.out.println("[결제예정금액 : " + amount +"]");
+		
 		//사용할 포인트
 		int Point =  PointView.getInstance().wannaUsePoint(amount);
 		// 선택한 포인트만큼 결제금액 차감
@@ -68,7 +68,7 @@ public class 수강내역View {
 		
 		System.out.println("지불금액을 써주세용"); int money=scanner.nextInt();
 		
-		int result=수강내역Controller.getInstance().pay(money, ch);
+		int result=수강내역Controller.getInstance().pay(Point,money, ch);
 		if(result==-1) {
 			//사용한 포인트 차감
 			PointView.getInstance().pointUse(Point);
@@ -82,6 +82,12 @@ public class 수강내역View {
 		}else if (result>0) {//거스름돈은 0보다 클꺼니까!
 			NumberFormat nf=NumberFormat.getNumberInstance();
 			System.out.println("거스름돈은 : "+nf.format(result)+"원 입니다."); //3번째 자리 콤마찍기
+			
+			//사용한 포인트 차감
+			PointView.getInstance().pointUse(Point);
+			//포인트추가
+			PointView.getInstance().addPoint(amount);
+			
 			reservation(ch);
 		}
 		

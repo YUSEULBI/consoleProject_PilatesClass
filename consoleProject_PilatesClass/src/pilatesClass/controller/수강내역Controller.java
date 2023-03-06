@@ -38,9 +38,9 @@ public class 수강내역Controller {
 		return 수강내역dao.getInstance().re_check(ch);
 	}
 	
-	public int pay(int money,int ch) {//결제 및 거스름돈
+	public int pay(int point ,int money,int ch) {//결제 및 거스름돈
 		
-		return 수강내역dao.getInstance().pay(money, ch);
+		return 수강내역dao.getInstance().pay(point, money, ch);
 	}
 	
 	// 결제 예정금액 체크
