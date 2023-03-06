@@ -148,7 +148,7 @@ create table point(
     daterecord datetime default now() ,
     회원번호_fk int ,
     foreign key ( 회원번호_fk ) references 회원(회원번호_pk)
-);
+); 
 select * from point;
 select * from point where 회원번호_fk = 1;
 insert into point(point,reason,회원번호_fk) values( 100 , '구매' , 1 );
