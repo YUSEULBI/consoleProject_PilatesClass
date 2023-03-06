@@ -16,9 +16,9 @@ public class 스케줄dao extends Dao {
 	ArrayList<스케줄dto> classList  = new ArrayList<>();
 	
 	// 전체수업출력
-	public ArrayList<스케줄dto> classView(){
+	public ArrayList<스케줄dto> classView(){//과거 수업은 안보임
 		classList  = new ArrayList<>();
-		String sql = "select 스케줄번호_pk , 수강일시 , 금액 , 이름 from 회원 , 스케줄 where 회원.회원번호_pk = 스케줄.회원번호_fk;";
+		String sql = "select 스케줄번호_pk , 수강일시 , 금액 , 이름 from 회원 , 스케줄 where 회원.회원번호_pk = 스케줄.회원번호_fk AND 스케줄.수강일시 >=date_add(now(),interval -1 day) and now()";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -133,7 +133,7 @@ public class 스케줄dao extends Dao {
 		
 		
 		
-		public boolean x_print() {
+	/*	public boolean x_print() {
 			
 			String sql="select 수강일시 from  스케줄 where 수강일시 >=date_add(now(),interval -1 day) and now();";
 															
@@ -143,7 +143,7 @@ public class 스케줄dao extends Dao {
 				while(rs.next()) {return true;}
 			} catch (Exception e) {System.out.println(e);}return false;
 			
-			
+			*/
 		}
 		
 	//	"select 수강일시 from  스케줄 where 수강일시 between date_add(now(),interval -35 day) and now();";
