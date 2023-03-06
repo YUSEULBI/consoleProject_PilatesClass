@@ -25,9 +25,6 @@ public class 스케줄Controller {
 	
 	}
 	
-	public ArrayList<스케줄dto> alphaClassView(){
-		return 스케줄dao.getInstance().alphaClassView();
-	}
 	
 	//수업등록
 	public boolean classAdd( 스케줄dto dto ) {

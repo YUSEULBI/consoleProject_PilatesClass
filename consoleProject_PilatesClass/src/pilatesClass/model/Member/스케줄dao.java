@@ -35,26 +35,6 @@ public class 스케줄dao extends Dao {
 		return null;
 	}
 	
-	// 전체수업출력
-		public ArrayList<스케줄dto> alphaClassView(){
-			classList  = new ArrayList<>();
-			String sql = "select 스케줄번호_pk , 수강일시 , 금액 , 이름 from 회원 , 스케줄 where 회원.회원번호_pk = 스케줄.회원번호_fk;";
-			try {
-				ps = con.prepareStatement(sql);
-				rs = ps.executeQuery();
-				
-				while ( rs.next() ) {
-					스케줄dto 스케줄dto = new 스케줄dto(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4));
-					classList.add(스케줄dto);
-				}
-				return classList;
-				
-			}catch (Exception e) {
-				// TODO: handle exception
-			}
-			return null;
-		}
-	
 	
 	// 수업등록
 	public boolean classAdd( 스케줄dto dto ) {
