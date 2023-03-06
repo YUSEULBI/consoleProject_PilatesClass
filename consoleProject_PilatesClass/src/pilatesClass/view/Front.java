@@ -59,7 +59,7 @@ public class Front {
 		while (true) {
 			스케줄View.getInstance().classView();
 			MessageView.getInstance().messageCount(); // 메시지 알림 추가 ////////////
-			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지 6.포인트조회"); // 메시지 추가 ////////////
+			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지 5.강사인기순위 6.포인트조회"); // 메시지 추가 ////////////
 			int ch=scanner.nextInt();
 			if(ch==1) { 수강내역View.getInstance().pay();}
 			else if(ch==2) {
@@ -67,6 +67,7 @@ public class Front {
 				cancel_page(); //학생은 예약을 하기때문에 취소가 가능
 			}else if (ch==3) {	logout(); break;		}
 			else if (ch==4) {	MessageView.getInstance().message_Page();		}
+			else if (ch==5) {	회원view.getInstance().getTchRank();}
 			else if (ch==6) {	PointView.getInstance().viewPoint();		}
 		}
 

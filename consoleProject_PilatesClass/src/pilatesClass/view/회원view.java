@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import pilatesClass.controller.회원controller;
 import pilatesClass.controller.회원controller;
+import pilatesClass.model.Member.RankDto;
 import pilatesClass.model.Member.회원dao;
 import pilatesClass.model.Member.회원dto;
 import pilatesClass.model.Member.회원dao;
@@ -98,6 +99,19 @@ public class 회원view {
 			
 		}
 		
+		public void getTchRank() {
+			System.out.println("================= 강사 인기순위 =================");
+			System.out.printf("%s\t%s\t%s\n","강사이름","누적수강생","랭킹");
+			ArrayList<RankDto> teacherRankList = 회원controller.getInstance().teacherRank();
+			for(RankDto rn : teacherRankList ) {
+				System.out.printf("%s\t%d\t%s\n" , rn.get회원이름() , rn.get예약수() , rn.get랭킹() );	
+			}
+			System.out.println("============================================");
+			System.out.println("아무키나 입력하십시오 (뒤로가기)");
+			String ch = scanner.next();
+			
+			
+		}
 //////////////////////////////////////////////////////////
 		// 관리자페이지
 

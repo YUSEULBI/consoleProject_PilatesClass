@@ -49,6 +49,7 @@ insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) 
 select * from 회원;
 -- 2. 강사가입
 insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'asd' ,'asd' ,'010-5555-5555' ,'강호동' , 2 );
+insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'ghj' ,'ghj' ,'010-6555-5555' ,'김현수' , 2 );
 insert into 회원( 아이디 , 비밀번호 , 전화번호 , 이름 , 등급 ) values( 'zxc' ,'zxc' ,'010-1234-4897' ,'신동엽' , 2 );
 
 -- 2-1. 관리자 비밀번호 등록
@@ -109,7 +110,8 @@ select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk 
 select * from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk;
 
 -- 회원번호 별 그룹 후 이름과 레코드수 표시 후 레코드수 기준으로 내림차순 
-select c.이름 as 강사명 , count(*) as 누적수강생 , sum( b.금액) as 총매출액  from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk group by c.회원번호_pk order by count(*) desc ;
+select c.이름 as 강사명 , count(*) as 누적수강생  , rank() over ( order by count(*) desc ) as 랭킹
+from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk group by c.회원번호_pk order by count(*) desc ;
 
 -- 총매출액 수강내역의 총매출액
 select count(*) as 누적예약수 , sum(스케줄.금액) as 누적매출액 from 회원,스케줄,수강내역 where 회원.회원번호_pk = 스케줄.회원번호_fk and 스케줄.스케줄번호_pk = 수강내역.스케줄번호_fk ;
