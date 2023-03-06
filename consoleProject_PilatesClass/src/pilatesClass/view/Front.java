@@ -54,7 +54,7 @@ public class Front {
 	public void student_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
 		while (true) {
 			MessageView.getInstance().messageCount(); // 메시지 알림 추가 ////////////
-			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지"); // 메시지 추가 ////////////
+			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지 5.강사인기순위"); // 메시지 추가 ////////////
 			int ch=scanner.nextInt();
 			if(ch==1) { 수강내역View.getInstance().pay();}
 			else if(ch==2) {
@@ -62,6 +62,7 @@ public class Front {
 				cancel_page(); //학생은 예약을 하기때문에 취소가 가능
 			}else if (ch==3) {	logout();		}
 			else if (ch==4) {	MessageView.getInstance().message_Page();		}
+			else if(ch==5) {	회원view.getInstance().getTchRank();}
 		}
 
 }

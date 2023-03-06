@@ -2,6 +2,7 @@ package pilatesClass.controller;
 
 import java.util.ArrayList;
 
+import pilatesClass.model.Member.RankDto;
 import pilatesClass.model.Member.회원dao;
 import pilatesClass.model.Member.회원dto;
 
@@ -67,6 +68,10 @@ public class 회원controller {
 	public String findPw(String 아이디 , String 이름) {//비밀번호찾기
 		
 		return 회원dao.getInstance().findPw(아이디, 이름);
+	}
+	
+	public ArrayList<RankDto> teacherRank(){
+		return 회원dao.getInstance().getTchRank();
 	}
 	
 	///관리자로그인//////////////////////////////////////////////////////

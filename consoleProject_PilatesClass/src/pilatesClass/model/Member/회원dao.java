@@ -171,12 +171,13 @@ public class 회원dao extends Dao{
 	
 	public ArrayList<RankDto> getTchRank(){
 		ArrayList<RankDto> rankList = new ArrayList<>();
-		String sql ="select 회원.이름 as 강사명 , count(*) as 누적수강생  from 수강내역 , 스케줄 , 회원 where 수강내역.스케줄번호_fk = 스케줄.스케줄번호_pk and 스케줄.회원번호_fk = 회원.회원번호_pk group by 회원.회원번호_pk order by count(*) desc ";
+		String sql ="select  회원.회원번호_pk as 회원번호 ,회원.이름 as 강사명 , count(*) as 누적수강생  from 수강내역 , 스케줄 , 회원 where 수강내역.스케줄번호_fk = 스케줄.스케줄번호_pk and 스케줄.회원번호_fk = 회원.회원번호_pk group by 회원.회원번호_pk order by count(*) desc ";
 		try {
 			ps=con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				RankDto rankDto = new RankDto(rs.getInt(1), rs.getInt(2));
+				RankDto rankDto = new RankDto(rs.getInt(1), rs.getString(2) , rs.getInt(3));
+				rankList.add(rankDto);
 			}
 			return rankList;
 		}catch (Exception e) {System.out.println(e);}
