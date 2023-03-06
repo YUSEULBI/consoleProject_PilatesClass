@@ -169,6 +169,20 @@ public class 회원dao extends Dao{
 		} return null;
 	}
 	
+	public ArrayList<RankDto> getTchRank(){
+		ArrayList<RankDto> rankList = new ArrayList<>();
+		String sql ="select 회원.이름 as 강사명 , count(*) as 누적수강생  from 수강내역 , 스케줄 , 회원 where 수강내역.스케줄번호_fk = 스케줄.스케줄번호_pk and 스케줄.회원번호_fk = 회원.회원번호_pk group by 회원.회원번호_pk order by count(*) desc ";
+		try {
+			ps=con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				RankDto rankDto = new RankDto(rs.getInt(1), rs.getInt(2));
+			}
+			return rankList;
+		}catch (Exception e) {System.out.println(e);}
+		return null;
+	}
+	
 	//////////////////////////////////////////////////////////////////
 	// 관리자페이지
 	public boolean admin_login( String pw ) {
