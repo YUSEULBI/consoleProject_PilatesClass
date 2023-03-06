@@ -57,9 +57,5 @@ public class 스케줄Controller {
 	}
 	
 	
-	public boolean x_print() {
 	
-	return 스케줄dao.getInstance().x_print(); 
-	
-	}
 }
