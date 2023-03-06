@@ -94,7 +94,7 @@ select 수강내역번호 , 수강일시 , 금액 , 아이디 , 회원번호_pk 
 
 drop table if exists 강사순위;
 create table 강사순위(
-	회원번호_fk int,
+   회원번호_fk int,
     예약수 int ,
     순위 int ,
     foreign key( 회원번호_fk ) references 회원( 회원번호_pk )

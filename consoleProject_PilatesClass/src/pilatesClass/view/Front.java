@@ -56,7 +56,7 @@ public class Front {
 			MessageView.getInstance().messageCount(); // 메시지 알림 추가 ////////////
 			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지"); // 메시지 추가 ////////////
 			int ch=scanner.nextInt();
-			if(ch==1) {pay();수강내역View.getInstance().reservation();}
+			if(ch==1) { 수강내역View.getInstance().pay();}
 			else if(ch==2) {
 				수강내역View.getInstance().res_print();
 				cancel_page(); //학생은 예약을 하기때문에 취소가 가능
@@ -105,7 +105,7 @@ public class Front {
 	 System.out.println("1.결제하기 2.취소하기");
 	 int ch=scanner.nextInt();
 	 if(ch==1) {
-		 
+		 수강내역View.getInstance().pay();
 	 }else if (ch==2) {
 		 스케줄View.getInstance().classView(); 
 		Front.getInstance().student_page();

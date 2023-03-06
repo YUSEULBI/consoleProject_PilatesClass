@@ -1,5 +1,6 @@
 package pilatesClass.view;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 import pilatesClass.controller.수강내역Controller;
 import pilatesClass.controller.회원controller;
 import pilatesClass.model.Member.SalesnRankDto;
+import pilatesClass.model.Member.수강내역dao;
 import pilatesClass.model.Member.스케줄dto;
 
 
@@ -19,13 +21,6 @@ public class 수강내역View {
 	
 	Scanner scanner=new Scanner(System.in);
 	
-	public void reservation(){
-		System.out.println("수강번호 를 입력해주세요");int ch=scanner.nextInt();
-		 boolean result=수강내역Controller.getInstance().reservation(ch);
-		 if(result) {System.out.println("수강할 수업이 등록되었습니다.");}
-		 else {System.err.println("이미 수업에 등록 되어있습니다");}
-		
-	}
 	
 	
 	public void res_print() {
@@ -49,6 +44,56 @@ public class 수강내역View {
 		}
 		
 	}
+	
+	
+	  public void pay() {//결제 및 거스름돈
+		  
+		System.out.println("수강번호를 입력해 주세요");int ch=scanner.nextInt();
+		
+		boolean result1=re_check(ch);
+		if(result1==false) {
+			return;
+		}//이미 등록한 수업이 아니면 밑에 실행
+
+		System.out.println("결제금액을 써주세용"); int money=scanner.nextInt();
+		
+		int result=수강내역Controller.getInstance().pay(money, ch);
+		if(result==-1) {
+			reservation(ch);
+		}else if (result==-2) {
+			System.err.println("금액이 부족합니다");
+			
+		}else if (result>0) {//거스름돈은 0보다 클꺼니까!
+			NumberFormat nf=NumberFormat.getNumberInstance();
+			System.out.println("거스름돈은 : "+nf.format(result)+"원 입니다."); //3번째 자리 콤마찍기
+			reservation(ch);
+		}
+		
+		
+	}
+	
+	public void reservation(int ch){
+		
+		boolean result=수강내역Controller.getInstance().reservation(ch);
+		if(result) {System.out.println("수강할 수업이 등록되었습니다.");}
+	}
+	
+	
+	public boolean re_check(int ch) { // 수업등록 유효성
+		if(수강내역dao.getInstance().re_check(ch) == false) {
+			
+			System.err.println("이미 등록하신 수업입니다.");
+			
+			return false;
+			
+		}else {
+			return true;
+		}
+		
+	}
+	
+	
+	
 	
 	
 	
