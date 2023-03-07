@@ -44,7 +44,7 @@ public class 스케줄View {
 	public void classView() {
 		 
 		System.out.println("================= 전체 수업목록 ==================");
-		System.out.printf("%s\t%-10s\t%s\t %s\n","수업번호","수강일시","금액","강사");
+		System.out.printf("%-10s\t%-10s\t%-10s\t %s\n","수업번호","수강일시","금액","강사");
 		ArrayList<스케줄dto> classList = 스케줄Controller.getInstance().classView();
 		for ( 스케줄dto d : classList) {
 			String DateTime =  d.get수강일시();
@@ -55,7 +55,7 @@ public class 스케줄View {
 			int bPrice = d.get금액();
 			DecimalFormat df = new DecimalFormat("#,##0원");
 			 
-			System.out.printf("%d\t%s\t%s\t %s\n",d.get스케줄번호(),time2,df.format(bPrice),d.get강사명());
+			System.out.printf("%-10d\t%-10s\t%-10s\t %s\n",d.get스케줄번호(),time2,df.format(bPrice),d.get강사명());
 		}
 		System.out.println("==============================================");
 	}
@@ -155,7 +155,7 @@ public class 스케줄View {
 		System.out.printf("%s\t %10s\t %10s %6s \n","수업번호","수강일시","금액","강사");
 		ArrayList<스케줄dto> relist=스케줄Controller.getInstance().te_print();
 		for(스케줄dto d: relist) {
-			System.out.printf("%d\t%s\t%d\t%s \n",d.get스케줄번호(),d.get수강일시(),d.get금액(),d.get강사명());
+			System.out.printf("%d\t %10s\t %10d %6s \n",d.get스케줄번호(),d.get수강일시(),d.get금액(),d.get강사명());
 		}
 	}
 	

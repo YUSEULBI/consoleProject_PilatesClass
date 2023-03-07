@@ -101,10 +101,10 @@ public class 회원view {
 		
 		public void getTchRank() {
 			System.out.println("================= 강사 인기순위 =================");
-			System.out.printf("%s\t%s\t%s\n","강사이름","누적수강생","랭킹");
+			System.out.printf("%-10s\t%-5s\t%s\n","강사이름","누적수강생","랭킹");
 			ArrayList<RankDto> teacherRankList = 회원controller.getInstance().teacherRank();
 			for(RankDto rn : teacherRankList ) {
-				System.out.printf("%s\t%d\t%s\n" , rn.get회원이름() , rn.get예약수() , rn.get랭킹() );	
+				System.out.printf("%-10s\t%-5d\t%s\n" , rn.get회원이름() , rn.get예약수() , rn.get랭킹() );	
 			}
 			System.out.println("============================================");
 			System.out.println("아무키나 입력하십시오 (뒤로가기)");
@@ -134,7 +134,7 @@ public class 회원view {
 				for (회원dto Pm : PMemberList) {
 					if(Pm.get등급() == 1) {RaitingName="일반회원";}
 					else {RaitingName=null;}
-					System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
+					System.out.printf("%s\t%s\t%-15s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
 				}
 				System.out.println("==========================================");
 				
@@ -160,7 +160,7 @@ public class 회원view {
 				for (회원dto Pm : PteacherList) {
 					if(Pm.get등급()==2) {RaitingName="강사";}
 					else {RaitingName=null;}
-					System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
+					System.out.printf("%s\t%s\t%-15s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
 				}
 				System.out.println("==========================================");
 				

@@ -41,10 +41,10 @@ public class SalesView {
 	
 	//총 예약수
 	public void total() {
-		System.out.printf("%s\t%s\n","누적예약건","총매출액");
+		System.out.printf("%-5s\t%s\n","누적예약건","총매출액");
 		System.out.println("--------------------");
 		SalesDto dto = SalesController.getInstance().total();
-		System.out.printf("%s건\t%s\n",dto.get누적예약수(),df.format(dto.get총매출액()) );
+		System.out.printf("%-5s건\t%s\n",dto.get누적예약수(),df.format(dto.get총매출액()) );
 	}
 	
 	// 월별 매출
@@ -57,9 +57,9 @@ public class SalesView {
 			System.out.printf("[ %d년 %d월 매출 ]\n",year,month);
 			SalesDto dto = SalesController.getInstance().monthTotal(year, month);
 			System.out.println("--------------------");
-			System.out.printf("%s\t  %s\n",month+"월 예약건",month+"월 매출액");
+			System.out.printf("%-10s\t  %s\n",month+"월 예약건",month+"월 매출액");
 			System.out.println("--------------------");
-			System.out.printf("%s건\t  %s\n",dto.get누적예약수(),df.format(dto.get총매출액()) );
+			System.out.printf("%-10d건\t  %d\n",dto.get누적예약수(),df.format(dto.get총매출액()) );
 			System.out.println();
 			System.out.println("=============================================");
 			System.out.println("1.이전달 2.다음달 3.직접날짜입력 4.뒤로가기");
@@ -90,7 +90,7 @@ public class SalesView {
 			System.out.println("--------------------");
 			System.out.printf("%s\t  %s\n","예약건","매출액");
 			System.out.println("--------------------");
-			System.out.printf("%s건\t  %s\n",dto.get누적예약수(),df.format(dto.get총매출액()) );
+			System.out.printf("%d건\t  %d\n",dto.get누적예약수(),df.format(dto.get총매출액()) );
 			System.out.println();
 			System.out.println("=============================================");
 			System.out.println("1.이전날 2.다음날 3.직접날짜입력 4.뒤로가기");

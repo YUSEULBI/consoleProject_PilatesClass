@@ -171,7 +171,7 @@ public class 회원dao extends Dao{
 	
 	public ArrayList<RankDto> getTchRank(){
 		ArrayList<RankDto> rankList = new ArrayList<>();
-		String sql ="select c.이름 as 강사명 , count(*) as 누적수강생  , rank() over ( order by count(*) desc ) as 랭킹 from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk group by c.회원번호_pk order by count(*) desc" ;
+		String sql ="select c.이름 as 강사명 , count(*) as 누적수강생  , rank() over ( order by count(*) desc ) as 랭킹 from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk group by c.회원번호_pk" ;
 		try {
 			ps=con.prepareStatement(sql);
 			rs = ps.executeQuery();

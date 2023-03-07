@@ -22,10 +22,10 @@ public class Front {
 		while (true) {	
 			System.out.println("    PilatesClass");
 			System.out.println(""
-					+ "┊　　┊　　┊　　┊　　┊　　┊　　┊\r\n"
-					+ "┊　　┊　　┊　　☆　　┊　　┊　　┊\r\n"
-					+ "┊　　┊　　✬ 　  　✬　　┊ 　┊\r\n"
-					+ "┊　　★ 　  　  　  　★ 　┊\r\n"
+					+ "|　　|　　|　　|　　|　　|　　|\r\n"
+					+ "|　　|　　|　　☆　　|　　|　　|\r\n"
+					+ "|　　|　　✬ 　  　✬　　| 　|\r\n"
+					+ "|　　★ 　  　  　  　★ 　|\r\n"
 					+ "☆ 　  　  　  　  　  　☆");
 			System.out.println(" 1.관리자페이지 2.회원페이지");
 			int ch = scanner.nextInt();
@@ -38,6 +38,7 @@ public class Front {
 	public void member_page() {
 		
 		while (true) {
+			System.out.println();
 			System.out.println("1.회원가입  2.로그인  3.아이디찾기  4.비밀번호찾기  5.뒤로가기" );
 			try {
 				int ch=scanner.nextInt();
@@ -58,8 +59,10 @@ public class Front {
 	
 	public void student_page() { // 수강생 로그인 완료후 페이지가 되어야할것 강사로그인 성공시 예약이 없기때문
 		while (true) {
+			System.out.println();
 			스케줄View.getInstance().classView();
 			MessageView.getInstance().messageCount(); // 메시지 알림 추가 ////////////
+			System.out.println();
 			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지 5.강사인기순위 6.포인트조회"); // 메시지 추가 ////////////
 			int ch=scanner.nextInt();
 			if(ch==1) { 수강내역View.getInstance().pay();}
