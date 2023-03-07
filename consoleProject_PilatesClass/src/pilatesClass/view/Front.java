@@ -28,9 +28,14 @@ public class Front {
 					+ "|　　★ 　  　  　  　★ 　|\r\n"
 					+ "☆ 　  　  　  　  　  　☆");
 			System.out.println(" 1.관리자페이지 2.회원페이지");
-			int ch = scanner.nextInt();
-			if ( ch == 1 ) { 회원view.getInstance().admin_login();	}
-			else if ( ch == 2 ) { member_page();	}
+			try {
+				int ch = scanner.nextInt();
+				if ( ch == 1 ) { 회원view.getInstance().admin_login();	}
+				else if ( ch == 2 ) { member_page();	}
+			}catch (Exception e) {
+				System.out.println(e);
+				scanner=new Scanner(System.in);
+			}
 		}
 		
 	}
@@ -49,6 +54,7 @@ public class Front {
 				else if(ch==5) {break;}
 			}catch (Exception e) {
 				System.out.println(e);
+				scanner=new Scanner(System.in);
 			}
 		}
 	}
@@ -133,7 +139,7 @@ public class Front {
 			while(true) {
 				System.out.println("================ 관리자 페이지 ================");
 				System.out.println();
-				System.out.println("1.수업관리 2.회원관리 3.강사관리 4.매출관리 5.로그아웃");
+				System.out.println("1.수업관리 2.회원관리 3.강사목록 4.매출관리 5.로그아웃");
 				System.out.println();
 				System.out.println("===========================================");
 				try {

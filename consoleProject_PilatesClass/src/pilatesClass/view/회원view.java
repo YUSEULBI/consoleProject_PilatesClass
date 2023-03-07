@@ -24,7 +24,7 @@ public class 회원view {
 			System.out.println("비밀번호:"); String 비밀번호=scanner.next();
 			System.out.println("전화번호:");	String 전화번호=scanner.next();
 			System.out.println("이름:");	String 이름=scanner.next();
-			System.out.println("회원=> 1입력 , 관리자=> 2입력"); int 등급=scanner.nextInt();
+			System.out.println("회원=> 1입력 , 강사=> 2입력"); int 등급=scanner.nextInt();
 			
 			boolean result=
 					회원controller.getInstance().signup(아이디, 비밀번호, 전화번호, 이름, 등급);
@@ -101,15 +101,19 @@ public class 회원view {
 		
 		public void getTchRank() {
 			System.out.println("================= 강사 인기순위 =================");
-			System.out.printf("%-10s\t%-5s\t%s\n","강사이름","누적수강생","랭킹");
+			System.out.printf("%s\t%s\t%s\n","강사이름","누적수강생","랭킹");
 			ArrayList<RankDto> teacherRankList = 회원controller.getInstance().teacherRank();
 			for(RankDto rn : teacherRankList ) {
-				System.out.printf("%-10s\t%-5d\t%s\n" , rn.get회원이름() , rn.get예약수() , rn.get랭킹() );	
+				System.out.printf("%s\t%d\t%s\n" , rn.get회원이름() , rn.get예약수() , rn.get랭킹() );	
 			}
 			System.out.println("============================================");
 			System.out.println("아무키나 입력하십시오 (뒤로가기)");
-			String ch = scanner.next();
-			
+			try {
+				String ch = scanner.next();
+			}catch (Exception e) {
+				System.out.println(e);
+				scanner=new Scanner(System.in);
+			}
 			
 		}
 //////////////////////////////////////////////////////////
@@ -134,11 +138,12 @@ public class 회원view {
 				for (회원dto Pm : PMemberList) {
 					if(Pm.get등급() == 1) {RaitingName="일반회원";}
 					else {RaitingName=null;}
-					System.out.printf("%s\t%s\t%-15s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
+					System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
 				}
 				System.out.println("==========================================");
 				
-				System.out.println("1.뒤로가기 2.처음으로 3.메시지보내기"); int 채널 = scanner.nextInt();
+				System.out.println("1.뒤로가기 2.처음으로 3.메시지보내기"); 
+				int 채널 = scanner.nextInt();
 				if(채널 == 1) { break;	}
 				else if(채널 == 2) {Front.getInstance().index();}
 				else if(채널 == 3) { MessageView.getInstance().adminMessage_page();}//메시지 보내기 기능
@@ -160,7 +165,7 @@ public class 회원view {
 				for (회원dto Pm : PteacherList) {
 					if(Pm.get등급()==2) {RaitingName="강사";}
 					else {RaitingName=null;}
-					System.out.printf("%s\t%s\t%-15s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
+					System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
 				}
 				System.out.println("==========================================");
 				
@@ -181,4 +186,3 @@ public class 회원view {
 		
 	
 	
-

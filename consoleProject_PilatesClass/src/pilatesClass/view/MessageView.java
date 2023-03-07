@@ -27,6 +27,7 @@ public class MessageView {
 				else if ( ch == 3 ) { break;	}
 			}catch (Exception e) {
 				System.out.println(e);
+				scanner=new Scanner(System.in);
 			}
 		}
 	}
@@ -49,6 +50,7 @@ public class MessageView {
 				
 			}catch (Exception e) {
 				System.out.println(e);
+				scanner=new Scanner(System.in);
 			}return sendMessage(reserMemList , title , content);
 		}
 		
@@ -93,6 +95,7 @@ public class MessageView {
 				else { message_content(mno);	}
 			}catch (Exception e) {
 				System.out.println(e);
+				scanner=new Scanner(System.in);
 			}
 		}
 	}

@@ -80,6 +80,7 @@ public class PointView {
 				if ( ch == 1 ) { return;	}
 			}catch (Exception e) {
 				System.out.println(e);
+				scanner=new Scanner(System.in);
 			}
 		}
 	}
