@@ -20,9 +20,10 @@ public class Front {
 	
 	public void index() {
 		while (true) {	
-			System.out.println("     PilatesClass");
-			System.out.println("┊　　┊　　┊　　┊　　┊　　┊　　┊\r\n"
-					+ "┊　　┊　　┊　　☆　 ┊　　┊　　┊\r\n"
+			System.out.println("    PilatesClass");
+			System.out.println(""
+					+ "┊　　┊　　┊　　┊　　┊　　┊　　┊\r\n"
+					+ "┊　　┊　　┊　　☆　　┊　　┊　　┊\r\n"
 					+ "┊　　┊　　✬ 　  　✬　　┊ 　┊\r\n"
 					+ "┊　　★ 　  　  　  　★ 　┊\r\n"
 					+ "☆ 　  　  　  　  　  　☆");

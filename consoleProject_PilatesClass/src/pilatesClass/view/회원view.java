@@ -52,7 +52,7 @@ public class 회원view {
 			int result=
 					회원controller.getInstance().login(아이디, 비밀번호);
 			if(result==1) {
-				System.out.println(회원dao.getInstance().findName()+" 회원님 어서오세요!");
+				System.out.println(회원controller.getInstance().findName()+" 회원님 어서오세요!");
 				
 				Front.getInstance().student_page(); //수강생 로그인 성공시 예약하기 및 예약보기가 나와야함
 			}else if(result==0) {

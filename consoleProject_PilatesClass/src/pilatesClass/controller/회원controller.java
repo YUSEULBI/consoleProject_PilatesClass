@@ -70,6 +70,10 @@ public class 회원controller {
 		return 회원dao.getInstance().findPw(아이디, 이름);
 	}
 	
+	public String findName() {
+		return 회원dao.getInstance().findName();
+	}
+	
 	public ArrayList<RankDto> teacherRank(){
 		return 회원dao.getInstance().getTchRank();
 	}

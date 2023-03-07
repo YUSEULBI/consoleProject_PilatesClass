@@ -3,6 +3,7 @@ package pilatesClass.view;
 import java.util.Scanner;
 
 import pilatesClass.controller.PointController;
+import pilatesClass.controller.회원controller;
 
 
 public class PointView {
@@ -72,7 +73,7 @@ public class PointView {
 		while(true) {
 			//현재 포인트 체크
 			int point = PointController.getInstance().pointCheck();
-			System.out.println("회원님의 포인트 : "+point+" point");
+			System.out.println(회원controller.getInstance().findName()+" 회원님의 포인트 : "+point+" point");
 			System.out.println("1. 뒤로가기");
 			try {
 				int ch = scanner.nextInt();
