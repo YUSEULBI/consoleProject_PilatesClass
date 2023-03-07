@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 import pilatesClass.controller.SalesController;
-import pilatesClass.model.Member.SalesDto;
+import pilatesClass.model.SalesDto;
 
 
 

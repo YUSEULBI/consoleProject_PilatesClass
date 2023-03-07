@@ -1,6 +1,6 @@
 package pilatesClass.controller;
 
-import pilatesClass.model.Member.PointDao;
+import pilatesClass.model.PointDao;
 
 public class PointController {
 	private static PointController controller = new PointController();

@@ -1,4 +1,4 @@
-package pilatesClass.model.Member;
+package pilatesClass.model;
 
 public class SalesDto {
 	int 누적예약수;

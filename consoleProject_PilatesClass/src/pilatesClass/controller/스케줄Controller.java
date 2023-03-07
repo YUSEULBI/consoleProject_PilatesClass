@@ -2,11 +2,11 @@ package pilatesClass.controller;
 
 import java.util.ArrayList;
 
-import pilatesClass.model.Member.수강내역dao;
-import pilatesClass.model.Member.수강내역dto;
-import pilatesClass.model.Member.스케줄dao;
-import pilatesClass.model.Member.스케줄dto;
-import pilatesClass.model.Member.회원dao;
+import pilatesClass.model.수강내역dao;
+import pilatesClass.model.수강내역dto;
+import pilatesClass.model.스케줄dao;
+import pilatesClass.model.스케줄dto;
+import pilatesClass.model.회원dao;
 
 public class 스케줄Controller {
 	private static 스케줄Controller controller = new 스케줄Controller();

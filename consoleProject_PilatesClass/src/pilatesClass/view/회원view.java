@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import pilatesClass.controller.회원controller;
+import pilatesClass.model.RankDto;
+import pilatesClass.model.회원dao;
+import pilatesClass.model.회원dto;
 import pilatesClass.controller.회원controller;
-import pilatesClass.model.Member.RankDto;
-import pilatesClass.model.Member.회원dao;
-import pilatesClass.model.Member.회원dto;
-import pilatesClass.model.Member.회원dao;
 
 public class 회원view {
 	

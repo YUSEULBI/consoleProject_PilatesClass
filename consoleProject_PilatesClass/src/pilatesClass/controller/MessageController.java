@@ -3,9 +3,9 @@ package pilatesClass.controller;
 
 import java.util.ArrayList;
 
-import pilatesClass.model.Member.MessageDao;
-import pilatesClass.model.Member.MessageDto;
-import pilatesClass.model.Member.스케줄dao;
+import pilatesClass.model.MessageDao;
+import pilatesClass.model.MessageDto;
+import pilatesClass.model.스케줄dao;
 
 public class MessageController {
 	private static MessageController controller = new MessageController();

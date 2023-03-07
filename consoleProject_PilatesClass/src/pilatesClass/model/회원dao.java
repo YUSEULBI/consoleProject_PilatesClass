@@ -1,4 +1,4 @@
-package pilatesClass.model.Member;
+package pilatesClass.model;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

@@ -1,7 +1,7 @@
 package pilatesClass.controller;
 
-import pilatesClass.model.Member.SalesDao;
-import pilatesClass.model.Member.SalesDto;
+import pilatesClass.model.SalesDao;
+import pilatesClass.model.SalesDto;
 
 public class SalesController {
 	

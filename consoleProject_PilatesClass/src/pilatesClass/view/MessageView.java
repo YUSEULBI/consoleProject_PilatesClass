@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import pilatesClass.controller.MessageController;
 import pilatesClass.controller.회원controller;
-import pilatesClass.model.Member.MessageDto;
+import pilatesClass.model.MessageDto;
 
 public class MessageView {
 	private static MessageView messageView = new MessageView();
@@ -45,13 +45,9 @@ public class MessageView {
 			System.out.println();
 			System.out.print("보낼메시지 : ");
 			String content = "임시";
-			try {
-				content = scanner.nextLine();
-				
-			}catch (Exception e) {
-				System.out.println(e);
-				scanner=new Scanner(System.in);
-			}return sendMessage(reserMemList , title , content);
+			content = scanner.nextLine();
+		
+			return sendMessage(reserMemList , title , content);
 		}
 		
 	// 여러 회원에게 메세지 보내기

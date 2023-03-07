@@ -2,9 +2,8 @@ package pilatesClass.controller;
 
 import java.util.ArrayList;
 
-
-import pilatesClass.model.Member.수강내역dao;
-import pilatesClass.model.Member.스케줄dto;
+import pilatesClass.model.수강내역dao;
+import pilatesClass.model.스케줄dto;
 
 public class 수강내역Controller {
 

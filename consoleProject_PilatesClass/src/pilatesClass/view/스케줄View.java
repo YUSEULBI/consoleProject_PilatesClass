@@ -12,8 +12,8 @@ import pilatesClass.controller.MessageController;
 import pilatesClass.controller.수강내역Controller;
 import pilatesClass.controller.스케줄Controller;
 import pilatesClass.controller.회원controller;
-import pilatesClass.model.Member.스케줄dao;
-import pilatesClass.model.Member.스케줄dto;
+import pilatesClass.model.스케줄dao;
+import pilatesClass.model.스케줄dto;
 
 public class 스케줄View {
 

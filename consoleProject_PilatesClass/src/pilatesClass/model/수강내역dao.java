@@ -1,4 +1,4 @@
-package pilatesClass.model.Member;
+package pilatesClass.model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

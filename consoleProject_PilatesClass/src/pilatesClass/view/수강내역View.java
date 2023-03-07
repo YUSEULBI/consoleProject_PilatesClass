@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 import pilatesClass.controller.수강내역Controller;
 import pilatesClass.controller.회원controller;
-import pilatesClass.model.Member.수강내역dao;
-import pilatesClass.model.Member.스케줄dto;
+import pilatesClass.model.수강내역dao;
+import pilatesClass.model.스케줄dto;
 
 
 public class 수강내역View {

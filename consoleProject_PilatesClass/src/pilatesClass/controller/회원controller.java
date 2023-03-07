@@ -2,9 +2,9 @@ package pilatesClass.controller;
 
 import java.util.ArrayList;
 
-import pilatesClass.model.Member.RankDto;
-import pilatesClass.model.Member.회원dao;
-import pilatesClass.model.Member.회원dto;
+import pilatesClass.model.RankDto;
+import pilatesClass.model.회원dao;
+import pilatesClass.model.회원dto;
 
 public class 회원controller {
 	

@@ -1,4 +1,4 @@
-package pilatesClass.model.Member;
+package pilatesClass.model;
 
 public class PointDao extends Dao {
 	private static PointDao dao = new PointDao();
