@@ -18,7 +18,7 @@ public class 스케줄dao extends Dao {
 	// 전체수업출력
 	public ArrayList<스케줄dto> classView(){//과거 수업은 안보임
 		classList  = new ArrayList<>();
-		String sql = "select 스케줄번호_pk , 수강일시 , 금액 , 이름 from 회원 , 스케줄 where 회원.회원번호_pk = 스케줄.회원번호_fk AND 스케줄.수강일시 >=date_add(now(),interval -1 day) and now()";
+		String sql = "select 스케줄번호_pk , 수강일시 , 금액 , 이름 from 회원 , 스케줄 where 회원.회원번호_pk = 스케줄.회원번호_fk AND 스케줄.수강일시 > date_add(now(),interval +1 day) and now() order by 수강일시 asc;";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
