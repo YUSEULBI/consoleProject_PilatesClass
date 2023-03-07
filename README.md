@@ -85,5 +85,6 @@ MVC 디자인 패턴과 CRUD(생성, 읽기, 갱신, 삭제)를 Java와 MySQL을
 
 
 ## 컨트롤 구조도
-![image](https://user-images.githubusercontent.com/121651792/223458287-6ec59817-50a3-4af0-9178-9cee4755c6c2.png)
+![image](https://user-images.githubusercontent.com/121651792/223458848-f51b2b78-5d70-4176-8ba4-e3596c5f475b.jpg)
+
 
