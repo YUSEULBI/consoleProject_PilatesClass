@@ -1,6 +1,6 @@
 
 시연영상
-https://youtu.be/5pEmvgHlyIA
+https://youtu.be/c9EKat2oErY
 
 # 콘솔프로젝트_PilatesClass
 
