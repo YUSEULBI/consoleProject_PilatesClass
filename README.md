@@ -1,3 +1,7 @@
+
+시연영상
+https://youtu.be/5pEmvgHlyIA
+
 # 콘솔프로젝트_PilatesClass
 
 ## 주제
