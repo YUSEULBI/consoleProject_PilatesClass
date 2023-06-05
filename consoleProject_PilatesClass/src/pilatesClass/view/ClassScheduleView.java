@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import pilatesClass.controller.MessageController;
-import pilatesClass.controller.수강내역Controller;
-import pilatesClass.controller.스케줄Controller;
-import pilatesClass.controller.회원controller;
-import pilatesClass.model.스케줄dao;
-import pilatesClass.model.스케줄dto;
+import pilatesClass.controller.ReservationController;
+import pilatesClass.controller.ClassScheduleController;
+import pilatesClass.controller.MemberController;
+import pilatesClass.model.ClassScheduleDao;
+import pilatesClass.model.ClassScheduleDto;
 
-public class 스케줄View {
+public class ClassScheduleView {
 
-	private static 스케줄View view = new 스케줄View();
-	private 스케줄View() {	}
-	public static 스케줄View getInstance() {	return view;	}
+	private static ClassScheduleView view = new ClassScheduleView();
+	private ClassScheduleView() {	}
+	public static ClassScheduleView getInstance() {	return view;	}
 	
 	Scanner scanner = new Scanner(System.in);
 	
@@ -45,22 +45,22 @@ public class 스케줄View {
 		 
 		System.out.println("================= 전체 수업목록 ==================");
 		System.out.printf("%s\t%-10s\t%s\t %s\n","수업번호","수강일시","금액","강사");
-		ArrayList<스케줄dto> classList = 스케줄Controller.getInstance().classView();
-		for ( 스케줄dto d : classList) {
-			String DateTime =  d.get수강일시();
+		ArrayList<ClassScheduleDto> classList = ClassScheduleController.getInstance().classView();
+		for ( ClassScheduleDto d : classList) {
+			String DateTime =  d.getSdate();
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yy.MM.dd HH:mm");
 			LocalDateTime time = LocalDateTime.parse(DateTime,dtf);
 			String time2 = time.format(dtf2);
-			int bPrice = d.get금액();
+			int bPrice = d.getSprice();
 			DecimalFormat df = new DecimalFormat("#,##0원");
 			 
-			System.out.printf("%d\t%s\t%s\t %s\n",d.get스케줄번호(),time2,df.format(bPrice),d.get강사명());
+			System.out.printf("%d\t%s\t%s\t %s\n",d.getSno(),time2,df.format(bPrice),d.getTeacherName());
 		}
 		System.out.println("==============================================");
 	}
 	
-	public 스케줄dto classAddandEditInput() {
+	public ClassScheduleDto classAddandEditInput() {
 		
 		// 날짜
 		System.out.print("년[yyyy] : ");	int year = scanner.nextInt();
@@ -98,7 +98,7 @@ public class 스케줄View {
 		if ( price < 30000  ) { System.out.println("[3만원 이상의 수강료를 기입해주세요.]"); return null; } // 기본금액 3만원 이상
 		
 		System.out.print("강사명 : "); String tName = scanner.next();
-		if ( !(회원controller.getInstance().teacher_NumFind(tName))) { System.out.println("[존재하지 않는 강사입니다.]"); return null;		} // 강사이름이 없으면 null;
+		if ( !(MemberController.getInstance().teacher_NumFind(tName))) { System.out.println("[존재하지 않는 강사입니다.]"); return null;		} // 강사이름이 없으면 null;
 		
 				
 		
@@ -106,15 +106,15 @@ public class 스케줄View {
 		//2023-02-24 11:00:00
 		String stime = time.format(dtf);
 				
-		return (new 스케줄dto(0, stime, price, tName));
+		return (new ClassScheduleDto(0, stime, price, tName));
 		
 	}
 	
 	public void classAdd() {
 		System.out.println("================ 수업등록 페이지 ================");
-		스케줄dto 스케줄dto = classAddandEditInput();
+		ClassScheduleDto 스케줄dto = classAddandEditInput();
 		if ( 스케줄dto != null ) {
-			boolean result = 스케줄Controller.getInstance().classAdd(스케줄dto);
+			boolean result = ClassScheduleController.getInstance().classAdd(스케줄dto);
 			if ( result ) { System.out.println("[수업이 등록되었습니다.]");	}
 			else { System.out.println("[수업이 등록실패] - 관리자 문의");	}
 		}
@@ -124,9 +124,9 @@ public class 스케줄View {
 		System.out.println("================ 수업수정 페이지 ================");
 		System.out.println("수정할 스케줄번호 입력하세요 : ");
 		int ch = scanner.nextInt();
-		스케줄dto 스케줄dto = classAddandEditInput();
+		ClassScheduleDto 스케줄dto = classAddandEditInput();
 		if ( 스케줄dto != null ) {
-			int result = 스케줄Controller.getInstance().classEdit(스케줄dto, ch);
+			int result = ClassScheduleController.getInstance().classEdit(스케줄dto, ch);
 			if ( result == 1 ) { System.out.println("["+ch+"번 수업을 변경했습니다.]");	}
 			else if ( result == 2 ) { System.out.println("[강사명을 바르게 입력하세요.]");	}
 			else if ( result == 3 ) { System.out.println("[수업 변경 실패] - 관리자 문의");	}
@@ -144,7 +144,7 @@ public class 스케줄View {
 		boolean messageResult = MessageView.getInstance().reser_Member(ch);
 		if ( !messageResult ) { return;	}
 				
-		boolean result = 스케줄Controller.getInstance().classDelete(ch);
+		boolean result = ClassScheduleController.getInstance().classDelete(ch);
 		if ( result ) { System.out.println("["+ch+"번 수업을 삭제했습니다.]");	}
 		else { System.out.println("[수업삭제 실패]-관리자문의");	}	
 	}
@@ -153,9 +153,9 @@ public class 스케줄View {
 	public void te_print() {
 		System.out.println("==================강사 수업목록===================");
 		System.out.printf("%s\t %10s\t %10s %6s \n","수업번호","수강일시","금액","강사");
-		ArrayList<스케줄dto> relist=스케줄Controller.getInstance().te_print();
-		for(스케줄dto d: relist) {
-			System.out.printf("%d\t%s\t%d\t%s \n",d.get스케줄번호(),d.get수강일시(),d.get금액(),d.get강사명());
+		ArrayList<ClassScheduleDto> relist=ClassScheduleController.getInstance().te_print();
+		for(ClassScheduleDto d: relist) {
+			System.out.printf("%d\t%s\t%d\t%s \n",d.getSno(),d.getSdate(),d.getSprice(),d.getTeacherName());
 		}
 	}
 	

@@ -12,12 +12,12 @@ public class MessageDao extends Dao {
 
 	
 	// 수업삭제 전 수업을 예약했던 수강생번호 구하기
-	public ArrayList<Integer> reser_Member( int 스케줄번호 ){
+	public ArrayList<Integer> reser_Member( int sno ){
 		ArrayList<Integer> reserMemList = new ArrayList<>();
-		String sql = "select * from 수강내역 where 스케줄번호_fk = ?;";
+		String sql = "select * from reservation where sno = ?;";
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, 스케줄번호);
+			ps.setInt(1, sno);
 			rs = ps.executeQuery();
 			while ( rs.next()) {
 				reserMemList.add(rs.getInt(2));
@@ -30,7 +30,7 @@ public class MessageDao extends Dao {
 	// 전체 회원번호 구하기
 	public ArrayList<Integer> allMember(){
 		ArrayList<Integer> allMemList = new ArrayList<>();
-		String sql = "select 회원번호_pk from 회원 where 등급 =1;";
+		String sql = "select mno from member where mrole =1;";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -45,12 +45,12 @@ public class MessageDao extends Dao {
 	// [선택]한 [여러회원]에게 [공통메세지] 보내기
 	public boolean sendMessage( ArrayList<MessageDto> messageList ) {
 		for ( MessageDto d : messageList ) {
-			String sql = "insert into message( title , content , state , 회원번호_fk )  values ( ? , ? , false , ? );";
+			String sql = "insert into message( title , content , state , mno )  values ( ? , ? , false , ? );";
 			try {
 				ps = con.prepareStatement(sql);
 				ps.setString(1, d.getTitle());
 				ps.setString(2, d.getContent());
-				ps.setInt(3, d.get회원번호_fk());
+				ps.setInt(3, d.getMno());
 				ps.executeUpdate();
 				
 			}catch (Exception e) {
@@ -63,12 +63,12 @@ public class MessageDao extends Dao {
 	
 	// 선택한 [회원1명] 에게 메시지 보내기
 	public boolean sendMessageOne(MessageDto dto ) {
-		String sql = "insert into message( title , content , state , 회원번호_fk )  values ( ? , ? , false , ? );";
+		String sql = "insert into message( title , content , state , mno )  values ( ? , ? , false , ? );";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, dto.getTitle());
 			ps.setString(2, dto.getContent());
-			ps.setInt(3, dto.get회원번호_fk());
+			ps.setInt(3, dto.getMno());
 			ps.executeUpdate();
 			return true;
 		}catch (Exception e) {
@@ -79,7 +79,7 @@ public class MessageDao extends Dao {
 	// 로그인한 회원 메시지 가져오기
 	public ArrayList<MessageDto> message( int loginsession ){
 		ArrayList<MessageDto> messageList = new ArrayList<>();
-		String sql = "select * from message where 회원번호_fk = ?;";
+		String sql = "select * from message where mno = ?;";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, loginsession);

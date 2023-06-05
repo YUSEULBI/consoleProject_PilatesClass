@@ -1,40 +1,40 @@
 package pilatesClass.model;
 
 public class MessageDto {
-	private int mno;
+	private int msgno;
 	private String title;
 	private String content;
 	private boolean state;
-	private int 회원번호_fk;
+	private int mno;
     
     
     public MessageDto() {	}
 
 
-	public MessageDto(int mno, String title, String content, boolean state, int 회원번호_fk) {
+	public MessageDto(int msgno, String title, String content, boolean state, int mno) {
 		super();
-		this.mno = mno;
+		this.msgno = msgno;
 		this.title = title;
 		this.content = content;
 		this.state = state;
-		this.회원번호_fk = 회원번호_fk;
+		this.mno = mno;
 	}
 
-    
+
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "MessageDto [msgno=" + msgno + ", title=" + title + ", content=" + content + ", state=" + state
+				+ ", mno=" + mno + "]";
 	}
 
 
-	public int getMno() {
-		return mno;
+	public int getMsgno() {
+		return msgno;
 	}
 
 
-	public void setMno(int mno) {
-		this.mno = mno;
+	public void setMsgno(int msgno) {
+		this.msgno = msgno;
 	}
 
 
@@ -68,14 +68,16 @@ public class MessageDto {
 	}
 
 
-	public int get회원번호_fk() {
-		return 회원번호_fk;
+	public int getMno() {
+		return mno;
 	}
 
 
-	public void set회원번호_fk(int 회원번호_fk) {
-		this.회원번호_fk = 회원번호_fk;
+	public void setMno(int mno) {
+		this.mno = mno;
 	}
+
+    
 	
 	
 	

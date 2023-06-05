@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import pilatesClass.model.MessageDao;
 import pilatesClass.model.MessageDto;
-import pilatesClass.model.스케줄dao;
+import pilatesClass.model.ClassScheduleDao;
 
 public class MessageController {
 	private static MessageController controller = new MessageController();
@@ -16,7 +16,7 @@ public class MessageController {
 	
 	// 수업삭제 전 , 수업유무확인 , 수업을 예약한 수강생 확인
 	public ArrayList<Integer> reser_Member( int 스케줄번호 ){
-		if ( !스케줄dao.getInstance().deleteCheck(스케줄번호) ) { 
+		if ( !ClassScheduleDao.getInstance().deleteCheck(스케줄번호) ) { 
 			return null;	//수업이 없으면 null 반환
 		}else {
 			return MessageDao.getInstance().reser_Member(스케줄번호);
@@ -48,7 +48,7 @@ public class MessageController {
 	
 	// 로그인한 회원 메시지 가져오기
 	public ArrayList<MessageDto> message(){
-		int loginsession = 회원controller.getInstance().getLogSession();
+		int loginsession = MemberController.getInstance().getLogSession();
 		return MessageDao.getInstance().message(loginsession);
 		
 	}

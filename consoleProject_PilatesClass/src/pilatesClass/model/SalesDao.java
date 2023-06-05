@@ -6,10 +6,10 @@ public class SalesDao extends Dao {
 	private SalesDao() { 	}
 	public static SalesDao getInstance() { return dao;  }
 	
-	// 누적예약수,총매출액 [ count(*) , sum(스케줄.금액) ]
+	// 누적예약수,총매출액 [ count(*) , sum(스케줄.sprice) ]
 	public SalesDto total() {
 		SalesDto dto = new SalesDto();
-		String sql = "select count(*) as 누적예약수 , sum(스케줄.금액) as 누적매출액 from 회원,스케줄,수강내역 where 회원.회원번호_pk = 스케줄.회원번호_fk and 스케줄.스케줄번호_pk = 수강내역.스케줄번호_fk ;";
+		String sql = "select count(*) as 누적예약수 , sum(classschedule.sprice) as 누적매출액 from member,classschedule,reservation where member.mno = classschedule.mno and classschedule.sno = reservation.sno ;";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -29,11 +29,11 @@ public class SalesDao extends Dao {
 		 * = String.valueOf(month); } System.out.println("년 : "+year +" / 월 : "+smonth);
 		 */
 		SalesDto dto = new SalesDto();
-		String sql ="select count(*) as 해당월예약건 , sum(스케줄.금액) as 해당월총매출액 "
-				+ "from 스케줄,수강내역 "
-				+ "where 스케줄.스케줄번호_pk = 수강내역.스케줄번호_fk "
-				+ "and date_format(수강일시,'%Y') = ? "
-				+ "and date_format(수강일시,'%m') = ? ;";
+		String sql ="select count(*) as 해당월예약건 , sum(classschedule.sprice) as 해당월총매출액 "
+				+ "from classschedule,reservation "
+				+ "where classschedule.sno = reservation.sno "
+				+ "and date_format(sdate,'%Y') = ? "
+				+ "and date_format(sdate,'%m') = ? ;";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, year);
@@ -51,11 +51,11 @@ public class SalesDao extends Dao {
 	// 일자별 매출액
 	public SalesDto dailySales( int year , int month , int day ) {
 		SalesDto dto = new SalesDto();
-		String sql = "select count(*) as 해당월예약건 , sum(스케줄.금액) as 해당월총매출액 from 스케줄,수강내역 "
-				+ "where 스케줄.스케줄번호_pk = 수강내역.스케줄번호_fk "
-				+ "and date_format(수강일시,'%Y') = ? "
-				+ "and date_format(수강일시,'%m') = ? "
-				+ "and date_format(수강일시,'%d') = ?;";
+		String sql = "select count(*) as 해당월예약건 , sum(classschedule.sprice) as 해당월총매출액 from classschedule,reservation "
+				+ "where classschedule.sno = reservation.sno "
+				+ "and date_format(sdate,'%Y') = ? "
+				+ "and date_format(sdate,'%m') = ? "
+				+ "and date_format(sdate,'%d') = ?;";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, year);

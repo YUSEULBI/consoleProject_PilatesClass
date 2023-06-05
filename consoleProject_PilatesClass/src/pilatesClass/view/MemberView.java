@@ -3,17 +3,17 @@ package pilatesClass.view;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import pilatesClass.controller.회원controller;
+import pilatesClass.controller.MemberController;
 import pilatesClass.model.RankDto;
-import pilatesClass.model.회원dao;
-import pilatesClass.model.회원dto;
-import pilatesClass.controller.회원controller;
+import pilatesClass.model.MemberDao;
+import pilatesClass.model.MemberDto;
+import pilatesClass.controller.MemberController;
 
-public class 회원view {
+public class MemberView {
 	
-	private static 회원view 회원view = new 회원view();
-	private 회원view() { }
-	public static 회원view getInstance() { 	return 회원view; 	}
+	private static MemberView 회원view = new MemberView();
+	private MemberView() { }
+	public static MemberView getInstance() { 	return 회원view; 	}
 	
 	Scanner scanner=new Scanner(System.in);
 
@@ -26,7 +26,7 @@ public class 회원view {
 			System.out.println("회원=> 1입력 , 강사=> 2입력"); int 등급=scanner.nextInt();
 			
 			boolean result=
-					회원controller.getInstance().signup(아이디, 비밀번호, 전화번호, 이름, 등급);
+					MemberController.getInstance().signup(아이디, 비밀번호, 전화번호, 이름, 등급);
 			
 			if(result==true) {
 				System.out.println("회원가입성공");
@@ -49,9 +49,9 @@ public class 회원view {
 			System.out.println("비밀번호:"); String 비밀번호=scanner.next();
 			
 			int result=
-					회원controller.getInstance().login(아이디, 비밀번호);
+					MemberController.getInstance().login(아이디, 비밀번호);
 			if(result==1) {
-				System.out.println(회원controller.getInstance().findName()+" 회원님 어서오세요!");
+				System.out.println(MemberController.getInstance().findName()+" 회원님 어서오세요!");
 				
 				Front.getInstance().student_page(); //수강생 로그인 성공시 예약하기 및 예약보기가 나와야함
 			}else if(result==0) {
@@ -59,7 +59,7 @@ public class 회원view {
 			}else if (result==-1) {
 				System.out.println("없는 회원 입니다.");
 			}else if (result==2) {
-				System.out.println(회원dao.getInstance().findName()+" 강사님 어서오세요!");
+				System.out.println(MemberDao.getInstance().findName()+" 강사님 어서오세요!");
 				
 				Front.getInstance().teacher_page();
 				//강사 로그인 성공시 예약은 x 본인의 수업만 출력해야함 reservation_page(); 사용불가
@@ -75,7 +75,7 @@ public class 회원view {
 		public void findId() {//아이디 찾기
 			System.out.println("이름:"); String 이름=scanner.next();
 			System.out.println("전화번호:"); String 전화번호=scanner.next();
-			String id=회원controller.getInstance().findId(이름, 전화번호);
+			String id=MemberController.getInstance().findId(이름, 전화번호);
 			if(id==null) {
 				System.err.println("잘못된 정보 입니다");
 			}else {
@@ -88,7 +88,7 @@ public class 회원view {
 		public void findPw() {//비밀번호 찾기
 			System.out.println("아이디:"); String 아이디=scanner.next();
 			System.out.println("이름:"); String 이름=scanner.next();
-			String 비밀번호=회원controller.getInstance().findPw(아이디, 이름);
+			String 비밀번호=MemberController.getInstance().findPw(아이디, 이름);
 			if(비밀번호==null) {
 				System.err.println("잘못된 정보 입니다");
 			}else {
@@ -101,7 +101,7 @@ public class 회원view {
 		public void getTchRank() {
 			System.out.println("================= 강사 인기순위 =================");
 			System.out.printf("%s\t%s\t%s\n","강사이름","누적수강생","랭킹");
-			ArrayList<RankDto> teacherRankList = 회원controller.getInstance().teacherRank();
+			ArrayList<RankDto> teacherRankList = MemberController.getInstance().teacherRank();
 			for(RankDto rn : teacherRankList ) {
 				System.out.printf("%s\t%d\t%s\n" , rn.get회원이름() , rn.get예약수() , rn.get랭킹() );	
 			}
@@ -122,7 +122,7 @@ public class 회원view {
 		public void admin_login() {
 			System.out.println("================ 관리자 로그인 ================");
 			System.out.println("비밀번호 : ");		String pw = scanner.next();
-			boolean result =  회원controller.getInstance().admin_login(pw);
+			boolean result =  MemberController.getInstance().admin_login(pw);
 			if ( result ) { System.out.println("[관리자 로그인 성공]");	Front.getInstance().admin_page(); }
 			else { System.out.println("[관리자 로그인 실패]");	}
 		}
@@ -133,11 +133,11 @@ public class 회원view {
 				String RaitingName;
 				System.out.println("================= 회원 목록 =================");
 				System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
-				ArrayList<회원dto> PMemberList = 회원controller.getInstance().PMemberView();
-				for (회원dto Pm : PMemberList) {
-					if(Pm.get등급() == 1) {RaitingName="일반회원";}
+				ArrayList<MemberDto> PMemberList = MemberController.getInstance().PMemberView();
+				for (MemberDto Pm : PMemberList) {
+					if(Pm.getMrole() == 1) {RaitingName="일반회원";}
 					else {RaitingName=null;}
-					System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
+					System.out.printf("%s\t%s\t%s\t%s\n",Pm.getMid() , Pm.getMname() , Pm.getMphone() , RaitingName);
 				}
 				System.out.println("==========================================");
 				
@@ -159,11 +159,11 @@ public class 회원view {
 				String RaitingName;
 				System.out.println("================= 회원 목록 =================");
 				System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
-				ArrayList<회원dto> PteacherList = 회원controller.getInstance().PteacherView();
-				for (회원dto Pm : PteacherList) {
-					if(Pm.get등급()==2) {RaitingName="강사";}
+				ArrayList<MemberDto> PteacherList = MemberController.getInstance().PteacherView();
+				for (MemberDto Pm : PteacherList) {
+					if(Pm.getMrole()==2) {RaitingName="강사";}
 					else {RaitingName=null;}
-					System.out.printf("%s\t%s\t%s\t%s\n",Pm.get아이디() , Pm.get이름() , Pm.get전화번호() , RaitingName);
+					System.out.printf("%s\t%s\t%s\t%s\n",Pm.getMid() , Pm.getMname() , Pm.getMphone() , RaitingName);
 				}
 				System.out.println("==========================================");
 				

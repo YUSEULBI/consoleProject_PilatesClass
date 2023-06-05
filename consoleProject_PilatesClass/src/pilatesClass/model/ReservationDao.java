@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import pilatesClass.controller.PointController;
-import pilatesClass.controller.회원controller;
+import pilatesClass.controller.MemberController;
 import pilatesClass.view.PointView;
 
-public class 수강내역dao extends Dao{
+public class ReservationDao extends Dao{
 	
-	private static 수강내역dao dao=new 수강내역dao();
-	private 수강내역dao () {};
-	public static 수강내역dao getInstance () {return dao;}
+	private static ReservationDao dao=new ReservationDao();
+	private ReservationDao () {};
+	public static ReservationDao getInstance () {return dao;}
 
-	int logsession=회원controller.getInstance().getLogSession();	
+	int logsession=MemberController.getInstance().getLogSession();	
 	
 	public boolean re_check(int ch) {
-		String sql="select* from 수강내역 where 스케줄번호_fk=? and 회원번호_fk=?;"; //
+		String sql="select * from reservation where sno=? and mno=?;"; //
 		
 		try {
 			ps=con.prepareStatement(sql);
@@ -37,8 +37,8 @@ public class 수강내역dao extends Dao{
 	
 	
 	
-	public boolean cancel(int ch) { //수강내역취소함수(예약 완료후 예약내역보기 다음에 넣기)
-		String sql="delete from 수강내역 where 스케줄번호_fk=?";
+	public boolean cancel(int ch) { //reservation취소함수(예약 완료후 예약내역보기 다음에 넣기)
+		String sql="delete from reservation where sno=?";
 		
 		try {
 			ps=con.prepareStatement(sql);
@@ -57,11 +57,8 @@ public class 수강내역dao extends Dao{
 
 
 	public boolean reservation(int ch) {
-			
-			
-		
-			
-			String sql="insert into 수강내역( 회원번호_fk , 스케줄번호_fk ) values( ? , ? );";
+
+			String sql="insert into reservation( mno , sno ) values( ? , ? );";
 			try {
 			ps=con.prepareStatement(sql);
 			ps.setInt(1, logsession);
@@ -73,7 +70,7 @@ public class 수강내역dao extends Dao{
 		}
 	
 	public int pay(int point , int money,int ch) {//결제 및 거스름돈
-		String sql="select 금액 from  스케줄 where 스케줄번호_pk=?";
+		String sql="select sprice from classschedule where sno=?";
 		
 		try {
 			ps=con.prepareStatement(sql);
@@ -95,16 +92,14 @@ public class 수강내역dao extends Dao{
 				}	
 			}
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}return 3;
+		} catch (SQLException e) { e.printStackTrace(); }
+		return 3;
 		
 	}
 	
 	// 결제 예정금액 체크
 	public int payMoneyCheck( int ch ) {
-		String sql="select 금액 from  스케줄 where 스케줄번호_pk=?";
+		String sql="select sprice from classschedule where sno=?";
 		try {
 			ps=con.prepareStatement(sql);
 			ps.setInt(1, ch);
@@ -118,11 +113,11 @@ public class 수강내역dao extends Dao{
 	}
 	
 	
-	ArrayList<스케줄dto> relist=new ArrayList<>();
-	public ArrayList<스케줄dto> print(int logsession){//내가 신청한 수업 목록
+	ArrayList<ClassScheduleDto> relist=new ArrayList<>();
+	public ArrayList<ClassScheduleDto> print(int logsession){//내가 신청한 수업 목록
 		relist=new ArrayList<>();
-		String spl="select 스케줄번호_pk,수강일시,금액, 이름 from 회원 m ,스케줄 s,수강내역 r "
-				+  " where m.회원번호_pk=s.회원번호_fk  and r.스케줄번호_fk = s.스케줄번호_pk and r.회원번호_fk=?;";
+		String spl="select sno,sdate,sprice,mname from member m ,classschedule s,reservation r "
+				+  " where m.mno=s.mno  and r.sno = s.sno and r.mno=?;";
 			
 		
 		try {
@@ -131,8 +126,8 @@ public class 수강내역dao extends Dao{
 			rs=ps.executeQuery();
 			
 			while(rs.next()) {
-				스케줄dto 스케줄dto=new 스케줄dto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getString(4));
-				relist.add(스케줄dto);
+				ClassScheduleDto classScheduleDto =new ClassScheduleDto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getInt(4));
+				relist.add( classScheduleDto );
 				
 			}
 			return relist;

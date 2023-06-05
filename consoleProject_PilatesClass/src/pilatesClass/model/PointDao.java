@@ -12,7 +12,7 @@ public class PointDao extends Dao {
 	
 	// 보유포인트 리턴
 	public int pointCheck( int loginsession ) {
-		String sql = "select sum(point.point) from point where 회원번호_fk = ?;";
+		String sql = "select sum(point.point) from point where mno = ?;";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, loginsession);
@@ -28,7 +28,7 @@ public class PointDao extends Dao {
 	// 포인트 적립
 	public boolean addPoint( int point  , String reason , int loginsession ) {
 		
-		String sql = "insert into point(point,reason,회원번호_fk) values( ? , ? , ? );";
+		String sql = "insert into point(point,reason,mno) values( ? , ? , ? );";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, point);
@@ -46,7 +46,7 @@ public class PointDao extends Dao {
 	// 포인트 사용
 	public boolean pointUse( int point , String reason , int loginsession ) {
 		
-		String sql = "insert into point(point,reason,회원번호_fk) values( ? , ? , ? );";
+		String sql = "insert into point(point,reason,mno) values( ? , ? , ? );";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, -point);

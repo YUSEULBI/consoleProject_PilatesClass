@@ -4,35 +4,34 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import pilatesClass.controller.회원controller;
+import pilatesClass.controller.MemberController;
 
 
-public class 회원dao extends Dao{
+public class MemberDao extends Dao{
 	
-	private static 회원dao dao = new 회원dao();
-	private 회원dao() {
-		// TODO Auto-generated constructor stub
-	}
-	public static 회원dao getInstance() {
-		return dao;
-	}
-	ArrayList<회원dto> PMemberList = new ArrayList<>();
+	// 싱글톤
+	private static MemberDao dao = new MemberDao();
+	private MemberDao() {	}
+	public static MemberDao getInstance() { return dao; 	}
+	
+	//
+	ArrayList<MemberDto> PMemberList = new ArrayList<>();
 	
 	//회원가입
-	public boolean signup(회원dto 회원) {//회원가입
+	public boolean signup(MemberDto memberDto) {//회원가입
 		
-		String sql="insert into 회원(아이디,비밀번호,전화번호,이름,등급) "
+		String sql="insert into member(mid,mpw,mphone,mname,mrole) "
 				+ "values(?,?,?,?,?)";
 		
 		
 		try {//ps는 상속받으면 해결
 			ps=con.prepareStatement(sql);
 			
-			ps.setString(1, 회원.get아이디());
-			ps.setString(2, 회원.get비밀번호());
-			ps.setString(3, 회원.get전화번호());
-			ps.setString(4, 회원.get이름());
-			ps.setInt(5, 회원.get등급());
+			ps.setString(1, memberDto.getMid());
+			ps.setString(2, memberDto.getMpw());
+			ps.setString(3, memberDto.getMphone());
+			ps.setString(4, memberDto.getMname());
+			ps.setInt(5, memberDto.getMrole());
 			
 			ps.executeUpdate();
 			
@@ -48,17 +47,17 @@ public class 회원dao extends Dao{
 		
 	}
 	
-	public ArrayList<회원dto> PMemberView(int PRating){
+	public ArrayList<MemberDto> PMemberView(int PRating){
 		PMemberList = new ArrayList<>();
-		String sql = "select * from 회원 where 회원.등급 = ?;";
+		String sql = "select * from member where member.mrole = ?;";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setLong( 1 ,  PRating);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				회원dto 회원dto = new 회원dto(rs.getInt(1) , rs.getString(2) , rs.getString(3) , rs.getString(4), rs.getString(5) , rs.getInt(6));
-				PMemberList.add(회원dto);
+				MemberDto memberDto = new MemberDto(rs.getInt(1) , rs.getString(2) , rs.getString(3) , rs.getString(4), rs.getString(5) , rs.getInt(6));
+				PMemberList.add(memberDto);
 			}
 			return PMemberList;
 		}catch (Exception e) {System.out.println(e);}
@@ -67,19 +66,19 @@ public class 회원dao extends Dao{
 
 	
 	
-	public int login(String 아이디,String 비밀번호) { //로그인
+	public int login(String mid,String mpw) { //로그인
 		
-		String sql="select 회원번호_pk,비밀번호,등급 from 회원 where 아이디=? ";
+		String sql="select mno,mpw,mrole from member where mid=? ";
 		
 		try {
 			ps=con.prepareStatement(sql);
-			ps.setString(1, 아이디);
+			ps.setString(1, mid);
 			rs=ps.executeQuery();
 			
 			if(rs.next()) {//출력이면..출력이 트루이면(?)
-				if(rs.getString(2).contentEquals(비밀번호)) {//출력된 rs1번과 작성하는 비밀번호와 같을시
+				if(rs.getString(2).contentEquals(mpw)) {//출력된 rs1번과 작성하는 비밀번호와 같을시
 					
-					회원controller.getInstance().setLogSession( rs.getInt(1) ) ; //1번이면 일반회원 로그인 성
+					MemberController.getInstance().setLogSession( rs.getInt(1) ) ; //1번이면 일반회원 로그인 성
 					
 					if(rs.getInt(3)==1) {//수강생 로그인
 						 //회원번호 pk를 대입 -> 정보를 꺼내온다던지 할때 추후에 문제가 없는지.. -> 문제없음!
@@ -108,19 +107,19 @@ public class 회원dao extends Dao{
 		return true;
 	}
 	
-	public ArrayList<수강내역dto> print(){
+	public ArrayList<ReservationDto> print(){
 		
 		return null;
 	}
 	
 	
 	
-	public String findId(String 이름 , String 전화번호) { // 이름과 전화번호 입력으로 아이디 찾기
-		 String sql="select 아이디 from 회원 where  이름=? and 전화번호=?";
+	public String findId(String mname , String mphone) { // 이름과 전화번호 입력으로 아이디 찾기
+		 String sql="select mid from member where mname=? and mphone=?";
 		 try {
 			ps=con.prepareStatement(sql);
-			ps.setString(1, 이름);
-			ps.setString(2, 전화번호);
+			ps.setString(1, mname);
+			ps.setString(2, mphone);
 			rs=ps.executeQuery();
 			if(rs.next()) {
 				return rs.getString(1);
@@ -133,30 +132,26 @@ public class 회원dao extends Dao{
 		
 	}
 	
-	public String findPw(String 아이디 , String 이름) { // 아이디와 이름으로 비밀번호 찾기
-		String sql="select 비밀번호 from 회원 where  아이디=? and 이름=?";
+	public String findPw(String mid , String mname) { // 아이디와 이름으로 비밀번호 찾기
+		String sql="select mpw from member where  mid=? and mname=?";
 		try {
 			ps=con.prepareStatement(sql);
-			ps.setString(1, 아이디);
-			ps.setString(2, 이름);
+			ps.setString(1, mid);
+			ps.setString(2, mname);
 			rs=ps.executeQuery();
-			if(rs.next()) {
-				return rs.getString(1);
-			}
+			if(rs.next()) { return rs.getString(1); }
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}return null;
+		} catch (SQLException e) { e.printStackTrace(); }
+		return null;
 		
 	}
 	
 	
 	public String findName() {//로그세션으로 이름 뽑아내는 함수 , 인수없이 이름만 리턴
-		String sql="select 이름 from 회원 where  회원번호_pk =?"  ;
+		String sql="select mname from member where mno =?" ;
 		try {
 			ps=con.prepareStatement(sql);
-			ps.setInt(1, 회원controller.getInstance().getLogSession());
+			ps.setInt(1, MemberController.getInstance().getLogSession());
 			rs=ps.executeQuery();
 			if(rs.next()) {
 				return rs.getString(1);
@@ -171,7 +166,7 @@ public class 회원dao extends Dao{
 	
 	public ArrayList<RankDto> getTchRank(){
 		ArrayList<RankDto> rankList = new ArrayList<>();
-		String sql ="select c.이름 as 강사명 , count(*) as 누적수강생  , rank() over ( order by count(*) desc ) as 랭킹 from 수강내역 a , 스케줄 b , 회원 c where a.스케줄번호_fk = b.스케줄번호_pk and b.회원번호_fk = c.회원번호_pk group by c.회원번호_pk" ;
+		String sql ="select c.mname as 강사명 , count(*) as 누적수강생  , rank() over ( order by count(*) desc ) as 랭킹 from reservation r , classschedule s , member m where r.sno = s.sno and s.mno = m.mno group by m.mno" ;
 		try {
 			ps=con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -188,7 +183,7 @@ public class 회원dao extends Dao{
 	// 관리자페이지
 	public boolean admin_login( String pw ) {
 		
-		String sql = "select * from 회원 where 등급 = 3 and 비밀번호 = ? ;";
+		String sql = "select * from member where mrole = 3 and mpw = ? ;";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, pw);
@@ -207,24 +202,26 @@ public class 회원dao extends Dao{
 	
 		
 	// 강사명으로 회원번호 찾기
-			public int teacher_NumFind( String name ) {
-				String sql = "select 회원번호_pk from 회원 where 회원.등급 =2 and 회원.이름 = ?;";
-				try {
-					ps = con.prepareStatement(sql);
-					ps.setString(1, name);
-					rs = ps.executeQuery();
-					if ( rs.next() ) {
-						return rs.getInt(1);
-					}
-				}catch (Exception e) {
-					System.out.println(e);
-				}
-				return -1;
+	public int teacher_NumFind( String name ) {
+		String sql = "select mno from member where member.mrole =2 and member.mname = ?;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			if ( rs.next() ) {
+				return rs.getInt(1);
 			}
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		return -1;
+	}
+	
+
 			
 	// 회원번호로 회원명 찾기
 	public String memberNameFind( int num ) {
-		String sql = "select 회원.이름 from 회원 where 회원번호_pk = ?;";
+		String sql = "select member.mname from member where mno = ?;";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, num);
@@ -240,7 +237,7 @@ public class 회원dao extends Dao{
 	
 	// 회원명으로 회원번호 찾기
 	public int memberNoFind( String name ) {
-		String sql = "select 회원번호_pk from 회원 where 회원.이름 = ?;";
+		String sql = "select mno from member where member.mname = ?;";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, name);

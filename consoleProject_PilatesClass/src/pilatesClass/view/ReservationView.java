@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import pilatesClass.controller.수강내역Controller;
-import pilatesClass.controller.회원controller;
-import pilatesClass.model.수강내역dao;
-import pilatesClass.model.스케줄dto;
+import pilatesClass.controller.ReservationController;
+import pilatesClass.controller.MemberController;
+import pilatesClass.model.ReservationDao;
+import pilatesClass.model.ClassScheduleDto;
 
 
-public class 수강내역View {
+public class ReservationView {
 
 	
-	private static 수강내역View view=new 수강내역View();
-	private 수강내역View() {};
-	public static 수강내역View getInstance() {return view;}
+	private static ReservationView view=new ReservationView();
+	private ReservationView() {};
+	public static ReservationView getInstance() {return view;}
 	
 	Scanner scanner=new Scanner(System.in);
 	
@@ -26,9 +26,9 @@ public class 수강내역View {
 	public void res_print() {
 		System.out.println("==================나의 수강목록===================");
 		System.out.printf("%s\t %10s\t %10s %6s \n","수강번호","수강일시","금액","강사");
-		ArrayList<스케줄dto> relist=수강내역Controller.getInstance().print();
-		for(스케줄dto d: relist) {
-			System.out.printf("%d\t%s\t%d\t%s \n",d.get스케줄번호(),d.get수강일시(),d.get금액(),d.get강사명());
+		ArrayList<ClassScheduleDto> relist=ReservationController.getInstance().print();
+		for(ClassScheduleDto d: relist) {
+			System.out.printf("%d\t%s\t%d\t%s \n",d.getSno(),d.getSdate(),d.getSprice(),d.getTeacherName());
 		}
 	}
 	
@@ -36,7 +36,7 @@ public class 수강내역View {
 	public void cancel() {//취소
 		System.out.println("취소하실 수강내역번호를 선택해주세요"); int ch=scanner.nextInt();
 		
-		boolean result=수강내역Controller.getInstance().cancel(ch);
+		boolean result=ReservationController.getInstance().cancel(ch);
 		if(result==true) {
 			System.out.println("수업취소완료");
 		}else {
@@ -56,7 +56,7 @@ public class 수강내역View {
 		}//이미 등록한 수업이 아니면 밑에 실행
 		
 		// 결제금액 조회 ( amount = 결제예정금액 )
-		int amount = 수강내역Controller.getInstance().payMoneyCheck(ch);
+		int amount = ReservationController.getInstance().payMoneyCheck(ch);
 		
 		//사용할 포인트
 		int Point =  PointView.getInstance().wannaUsePoint(amount);
@@ -68,7 +68,7 @@ public class 수강내역View {
 		
 		System.out.println("지불금액을 써주세용"); int money=scanner.nextInt();
 		
-		int result=수강내역Controller.getInstance().pay(Point,money, ch);
+		int result=ReservationController.getInstance().pay(Point,money, ch);
 		if(result==-1) {
 			//사용한 포인트 차감
 			PointView.getInstance().pointUse(Point);
@@ -96,13 +96,13 @@ public class 수강내역View {
 	
 	public void reservation(int ch){
 		
-		boolean result=수강내역Controller.getInstance().reservation(ch);
+		boolean result=ReservationController.getInstance().reservation(ch);
 		if(result) {System.out.println("수강할 수업이 등록되었습니다.");}
 	}
 	
 	
 	public boolean re_check(int ch) { // 수업등록 유효성
-		if(수강내역dao.getInstance().re_check(ch) == false) {
+		if(ReservationDao.getInstance().re_check(ch) == false) {
 			
 			System.err.println("이미 등록하신 수업입니다.");
 			

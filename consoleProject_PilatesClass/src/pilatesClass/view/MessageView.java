@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import pilatesClass.controller.MessageController;
-import pilatesClass.controller.회원controller;
+import pilatesClass.controller.MemberController;
 import pilatesClass.model.MessageDto;
 
 public class MessageView {
@@ -55,7 +55,7 @@ public class MessageView {
 			boolean result = MessageController.getInstance().sendMessage(MemList, title, content);
 			if ( result ) {
 				for ( Integer i : MemList ) {
-					System.out.println("회원번호 "+i+"번 "+회원controller.getInstance().memberNameFind(i)+" 회원에게 메세지를 보냈습니다.");
+					System.out.println("회원번호 "+i+"번 "+MemberController.getInstance().memberNameFind(i)+" 회원에게 메세지를 보냈습니다.");
 				}
 			}else { System.out.println("[메시지 발송 실패]");	}
 			return result;
@@ -120,7 +120,7 @@ public class MessageView {
 		System.out.println("메시지를 보낼 회원명을 입력하세요.");
 		String name = scanner.next();
 		// 존재하는 회원명인지 체크
-		int no = 회원controller.getInstance().memberNoFind(name);
+		int no = MemberController.getInstance().memberNoFind(name);
 		if ( no == -1 ) { System.out.println("없는 회원 입니다.");	}
 		else {
 			System.out.print("제목 : ");
