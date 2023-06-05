@@ -53,16 +53,18 @@ public class PointView {
 	}
 	
 	//포인트 사용
-	public void pointUse( int point ) {
-		boolean result = PointController.getInstance().pointUse( point );
+	public void pointUse( int point , int rno ) {
+		
+		boolean result = PointController.getInstance().pointUse( point , rno );
 		// 포인트 사용할때만 안내.
-		if ( result && point>0 ) { System.out.println(point +"포인트 사용했습니다.");	}
+		if ( result ) { System.out.println(point +"포인트 사용했습니다.");	}
+		
 	}
 	
 	// 결제후 포인트적립
-	public void addPoint( int amount ) {
+	public void addPoint( int amount , int reservationRno ) {
 		String reason = "결제금액의 1% 포인트적립 [결제금액"+amount+"]";
-		int point = PointController.getInstance().addPoint(amount, reason );
+		int point = PointController.getInstance().addPoint(amount, reason , reservationRno );
 		if ( point == -1 ) { System.out.println("[포인트적립 실패] - 관리자문의 ");	}
 		else { System.out.println(point+" 포인트 적립되었습니다."); }
 		

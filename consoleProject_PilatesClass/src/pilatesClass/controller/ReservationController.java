@@ -15,20 +15,17 @@ public class ReservationController {
 	
 	
 	public boolean cancel(int ch) { 
-		return ReservationDao.getInstance().cancel(ch);
+		int logsession=MemberController.getInstance().getLogSession();
+		return ReservationDao.getInstance().cancel(ch,logsession);
 	}
 	
-	
-	public boolean reservation(int ch) {
-		
-		
-		boolean result=ReservationDao.getInstance().reservation(ch);
-		return result;
+	// 수업예약
+	public int reservation(int ch) {		
+		return ReservationDao.getInstance().reservation(ch);
 		}
 	
 	public ArrayList<ClassScheduleDto> print(){
 		int logsession=MemberController.getInstance().getLogSession();
-		
 		return ReservationDao.getInstance().print(logsession);
 	}
 	
@@ -45,6 +42,12 @@ public class ReservationController {
 	// 결제 예정금액 체크
 	public int payMoneyCheck( int ch ) {
 		return ReservationDao.getInstance().payMoneyCheck(ch);
+	}
+	
+	// rno(수강번호)가 본인이 예약한 수강번호인지 확인
+	public boolean checkRno( int rno ) {
+		int mno = MemberController.getInstance().getLogSession();
+		return ReservationDao.getInstance().checkRno(rno, mno);
 	}
 	
 }

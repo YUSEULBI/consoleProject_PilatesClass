@@ -18,20 +18,26 @@ public class PointController {
 	}
 	
 	// 포인트 사용
-	public boolean pointUse( int point ) {
+	public boolean pointUse( int point , int rno ) {
 		int loginsession = MemberController.getInstance().getLogSession();
-		return PointDao.getInstance().pointUse(point, "사용" ,loginsession);
+		return PointDao.getInstance().pointUse(point, "사용" ,loginsession , rno);
 	}
 	
 	// 포인트 적립
-	public int addPoint( int amount  , String reason ) {
+	public int addPoint( int amount  , String reason , int rno ) {
 		// 결제금액10% 포인트 만들기 
 		double point = amount*0.01;
 		int intPoint = (int)point;
 		int loginsession = MemberController.getInstance().getLogSession();
-		boolean result = PointDao.getInstance().addPoint(intPoint, reason, loginsession);
-		if ( result ) { return intPoint;	}
+		boolean result = PointDao.getInstance().addPoint(intPoint, reason, loginsession , rno);
+		if ( result ) { return intPoint; }
 		else { return -1;}
+	}
+	
+	// 예약취소시 예약시 적립된 포인트 차감
+	public int cancelPoint( int rno ) {
+		int loginsession = MemberController.getInstance().getLogSession();
+		return PointDao.getInstance().cancelPoint(rno , loginsession);
 	}
 	
 }

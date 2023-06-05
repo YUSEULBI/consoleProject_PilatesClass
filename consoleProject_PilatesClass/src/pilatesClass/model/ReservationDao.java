@@ -1,8 +1,11 @@
 package pilatesClass.model;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+
 
 import pilatesClass.controller.PointController;
 import pilatesClass.controller.MemberController;
@@ -37,12 +40,13 @@ public class ReservationDao extends Dao{
 	
 	
 	
-	public boolean cancel(int ch) { //reservation취소함수(예약 완료후 예약내역보기 다음에 넣기)
-		String sql="delete from reservation where sno=?";
+	public boolean cancel(int sno , int mno) { //reservation취소함수(예약 완료후 예약내역보기 다음에 넣기)
+		String sql="delete from reservation where sno=? and mno = ?";
 		
 		try {
 			ps=con.prepareStatement(sql);
-			ps.setInt(1, ch);
+			ps.setInt(1, sno);
+			ps.setInt(2, mno);
 			ps.executeUpdate();
 			return true;
 			
@@ -56,19 +60,26 @@ public class ReservationDao extends Dao{
 
 
 
-	public boolean reservation(int ch) {
+	public int reservation(int ch) {
 
-			String sql="insert into reservation( mno , sno ) values( ? , ? );";
-			try {
-			ps=con.prepareStatement(sql);
+		String sql="insert into reservation( mno , sno ) values( ? , ? );";
+		int rno = 0;
+		
+		try {
+			ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, logsession);
 			ps.setInt(2, ch);
-			ps.executeUpdate();
-			return true;
-		}catch (Exception e) {System.out.println(e);}
-			return false;
-		}
+			int row = ps.executeUpdate();
+			if ( row > 0 ) {
+				rs = ps.getGeneratedKeys();
+				if( rs.next() ) { rno = rs.getInt(1); } 
+			}
+		} catch (Exception e) {System.out.println(e);}
+		
+		return rno;
+	}
 	
+	// 결제금액 DB에서 확인, 사용할 포인트를 뺀 결제금액과 지불금액과 비교
 	public int pay(int point , int money,int ch) {//결제 및 거스름돈
 		String sql="select sprice from classschedule where sno=?";
 		
@@ -116,7 +127,7 @@ public class ReservationDao extends Dao{
 	ArrayList<ClassScheduleDto> relist=new ArrayList<>();
 	public ArrayList<ClassScheduleDto> print(int logsession){//내가 신청한 수업 목록
 		relist=new ArrayList<>();
-		String spl="select r.sno,s.sdate,s.sprice,m.mname from member m ,classschedule s,reservation r "
+		String spl="select r.rno,s.sdate,s.sprice,m.mname from member m ,classschedule s,reservation r "
 				+  " where m.mno=s.mno  and r.sno = s.sno and r.mno=?";
 			
 		
@@ -138,7 +149,20 @@ public class ReservationDao extends Dao{
 	}
 	
 	
-	
+	// rno(수강번호)가 본인이 예약한 수강번호인지 확인
+	public boolean checkRno( int rno , int mno ) {
+		String sql = "select * from reservation where rno = ? and mno = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, rno);
+			ps.setInt(2, mno);
+			rs = ps.executeQuery();
+			if( rs.next() ) { return true; } // 본인이 예약한 수강번호임
+		} catch (Exception e) {
+			System.out.println("수강번호 본인확인 예외발생 : " +e);
+		}
+		return false; // 본인이 예약한 수강번호가 아님, 그 외
+	}
 	
 	
 }

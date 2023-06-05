@@ -9,6 +9,7 @@ import java.util.Scanner;
 import pilatesClass.controller.ReservationController;
 import pilatesClass.controller.ClassScheduleController;
 import pilatesClass.controller.MemberController;
+import pilatesClass.controller.PointController;
 import pilatesClass.model.ReservationDao;
 import pilatesClass.model.ClassScheduleDto;
 
@@ -39,6 +40,11 @@ public class ReservationView {
 	public void cancel() {//취소
 		System.out.println("수업 하루 전까지 취소가능합니다.");
 		System.out.println("취소하실 수강내역번호를 선택해주세요"); int ch=scanner.nextInt();
+		
+		// rno(수강번호)가 본인이 예약한 수강번호인지 확인
+		boolean checkRnoResult = ReservationController.getInstance().checkRno(ch);
+		if ( !checkRnoResult ) { System.out.println("예약하신 수강번호가 아닙니다."); return; }
+		
 		// 취소 불가능한 수업인지 확인
 		boolean checkResult = ClassScheduleController.getInstance().checkCancelAvailability(ch);
 		if ( checkResult == false ) { System.out.println("이미 사용한 수업입니다."); return; }
@@ -47,6 +53,16 @@ public class ReservationView {
 		boolean result=ReservationController.getInstance().cancel(ch);
 		if(result==true) {
 			System.out.println("수업취소완료");
+			
+			// 기존포인트 차감
+			int cancelPointResult = PointController.getInstance().cancelPoint(ch);
+			if ( cancelPointResult > 0 ) {
+				System.out.println("예약시 적립된 "+cancelPointResult+" 포인트가 적립취소되었습니다.");
+			}else if ( cancelPointResult == 0 ) { //차감할 포인트없음
+				
+			}else if ( cancelPointResult == -1 ) {
+				System.out.println("적립취소 오류 - 관리자문의");
+			}
 		}else {
 			System.out.println("수업 취소 실패");
 		}
@@ -74,45 +90,53 @@ public class ReservationView {
 		int amount = ReservationController.getInstance().payMoneyCheck(ch);
 		
 		//사용할 포인트
-		int Point =  PointView.getInstance().wannaUsePoint(amount);
+		int point =  PointView.getInstance().wannaUsePoint(amount);
 		// 선택한 포인트만큼 결제금액 차감
-		amount = amount-Point;
+		amount = amount-point;
 		//결제금액 안내
 		PointView.getInstance().payMoney_info(amount);
 		
 		
 		System.out.println("지불금액을 써주세요"); int money=scanner.nextInt();
 		
-		int result=ReservationController.getInstance().pay(Point,money, ch);
-		if(result==-1) {
-			//사용한 포인트 차감
-			PointView.getInstance().pointUse(Point);
-			//포인트추가
-			PointView.getInstance().addPoint(amount);
-			//예약
-			reservation(ch);
-		}else if (result==-2) {
+		int result=ReservationController.getInstance().pay(point,money, ch);
+		if (result==-2) {
 			System.err.println("금액이 부족합니다");
+			
+		}else if(result==-1) {
+			// 예약, 포인트사용, 포인트적립
+			reservation(ch , point , amount );
 			
 		}else if (result>0) {//거스름돈은 0보다 클꺼니까!
 			NumberFormat nf=NumberFormat.getNumberInstance();
 			System.out.println("거스름돈은 : "+nf.format(result)+"원 입니다."); //3번째 자리 콤마찍기
 			
-			//사용한 포인트 차감
-			PointView.getInstance().pointUse(Point);
-			//포인트추가
-			PointView.getInstance().addPoint(amount);
-			
-			reservation(ch);
+			// 예약, 포인트사용, 포인트적립
+			reservation(ch , point , amount );
 		}
+		
+		
+
 		
 		
 	}
 	
-	public void reservation(int ch){
+	public void reservation(int ch , int point , int amount ){
 		
-		boolean result=ReservationController.getInstance().reservation(ch);
-		if(result) {System.out.println("수강할 수업이 등록되었습니다.");}
+		int reservationRno = ReservationController.getInstance().reservation(ch);
+		System.out.println("reservationRno : "+reservationRno);
+		if( reservationRno > 0 ) {
+			System.out.println("수강할 수업이 등록되었습니다.");
+			
+			if ( point > 0 ) { // 포인트를 사용할 경우에만 포인트 차감
+				//사용한 포인트 차감
+				PointView.getInstance().pointUse(point , reservationRno);					
+			}
+			//포인트추가
+			PointView.getInstance().addPoint(amount , reservationRno );
+		}
+		else { System.out.println("수강 등록 실패 - 관리자문의"); }
+
 	}
 	
 	
