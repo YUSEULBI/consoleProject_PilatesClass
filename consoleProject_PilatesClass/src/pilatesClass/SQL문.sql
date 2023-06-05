@@ -89,8 +89,8 @@ insert into reservation( mno , sno ) values( 4 , 8 );
 
 
 -- 수강번호 스케줄 일시 , 금액 , 아이디 출력
-select hno , sdate , sprice , mid , m.mno , s.sno from member m , classschedule s , reservation r where m.mno = s.mno and s.sno = r.sno;
-select hno , sdate , sprice , mid , m.mno , s.sno from member m , classschedule s , reservation r where m.mno = s.mno and s.sno = r.sno and s.mno = 6;
+select rno , sdate , sprice , mid , m.mno , s.sno from member m , classschedule s , reservation r where m.mno = s.mno and s.sno = r.sno;
+select rno , sdate , sprice , mid , m.mno , s.sno from member m , classschedule s , reservation r where m.mno = s.mno and s.sno = r.sno and s.mno = 6;
 -- 수강내역 [스케줄+강사 정보]
 select * from reservation r , classschedule s , member m where r.sno = s.sno and s.mno = m.mno;
 
