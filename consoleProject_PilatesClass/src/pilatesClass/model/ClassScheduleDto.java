@@ -24,7 +24,7 @@ public class ClassScheduleDto {
 		this.mno = mno;
 	}
 	
-	// 수강등록시 생성자
+	// 수강등록, 수업출력시 생성자
 	public ClassScheduleDto(int sno, String sdate, int sprice, String teacherName) {
 		super();
 		this.sno = sno;

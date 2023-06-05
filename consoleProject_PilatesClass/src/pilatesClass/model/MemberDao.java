@@ -166,7 +166,7 @@ public class MemberDao extends Dao{
 	
 	public ArrayList<RankDto> getTchRank(){
 		ArrayList<RankDto> rankList = new ArrayList<>();
-		String sql ="select c.mname as 강사명 , count(*) as 누적수강생  , rank() over ( order by count(*) desc ) as 랭킹 from reservation r , classschedule s , member m where r.sno = s.sno and s.mno = m.mno group by m.mno" ;
+		String sql ="select m.mname as 강사명 , count(*) as 누적수강생  , rank() over ( order by count(*) desc ) as 랭킹 from reservation r , classschedule s , member m where r.sno = s.sno and s.mno = m.mno group by m.mno" ;
 		try {
 			ps=con.prepareStatement(sql);
 			rs = ps.executeQuery();

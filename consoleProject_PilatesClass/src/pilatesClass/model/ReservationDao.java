@@ -116,8 +116,8 @@ public class ReservationDao extends Dao{
 	ArrayList<ClassScheduleDto> relist=new ArrayList<>();
 	public ArrayList<ClassScheduleDto> print(int logsession){//내가 신청한 수업 목록
 		relist=new ArrayList<>();
-		String spl="select sno,sdate,sprice,mname from member m ,classschedule s,reservation r "
-				+  " where m.mno=s.mno  and r.sno = s.sno and r.mno=?;";
+		String spl="select r.sno,s.sdate,s.sprice,m.mname from member m ,classschedule s,reservation r "
+				+  " where m.mno=s.mno  and r.sno = s.sno and r.mno=?";
 			
 		
 		try {
@@ -126,7 +126,7 @@ public class ReservationDao extends Dao{
 			rs=ps.executeQuery();
 			
 			while(rs.next()) {
-				ClassScheduleDto classScheduleDto =new ClassScheduleDto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getInt(4));
+				ClassScheduleDto classScheduleDto =new ClassScheduleDto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getString(4));
 				relist.add( classScheduleDto );
 				
 			}

@@ -94,16 +94,16 @@ public class MemberView {
 			}else {
 				System.out.println("찾으실 비밀번호는:"+비밀번호);
 			}
-			
-			
 		}
 		
 		public void getTchRank() {
 			System.out.println("================= 강사 인기순위 =================");
 			System.out.printf("%s\t%s\t%s\n","강사이름","누적수강생","랭킹");
 			ArrayList<RankDto> teacherRankList = MemberController.getInstance().teacherRank();
-			for(RankDto rn : teacherRankList ) {
-				System.out.printf("%s\t%d\t%s\n" , rn.get회원이름() , rn.get예약수() , rn.get랭킹() );	
+			if ( teacherRankList != null ) {
+				for(RankDto rn : teacherRankList ) {
+					System.out.printf("%s\t%d\t%s\n" , rn.get회원이름() , rn.get예약수() , rn.get랭킹() );	
+				}
 			}
 			System.out.println("============================================");
 			System.out.println("아무키나 입력하십시오 (뒤로가기)");
@@ -113,7 +113,6 @@ public class MemberView {
 				System.out.println(e);
 				scanner=new Scanner(System.in);
 			}
-			
 		}
 //////////////////////////////////////////////////////////
 		// 관리자페이지

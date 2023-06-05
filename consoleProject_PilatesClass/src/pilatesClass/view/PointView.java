@@ -61,7 +61,7 @@ public class PointView {
 	
 	// 결제후 포인트적립
 	public void addPoint( int amount ) {
-		String reason = "결제금액의 10% 포인트적립 [결제금액"+amount+"]";
+		String reason = "결제금액의 1% 포인트적립 [결제금액"+amount+"]";
 		int point = PointController.getInstance().addPoint(amount, reason );
 		if ( point == -1 ) { System.out.println("[포인트적립 실패] - 관리자문의 ");	}
 		else { System.out.println(point+" 포인트 적립되었습니다."); }
@@ -73,7 +73,9 @@ public class PointView {
 		while(true) {
 			//현재 포인트 체크
 			int point = PointController.getInstance().pointCheck();
-			System.out.println(MemberController.getInstance().findName()+" 회원님의 포인트 : "+point+" point");
+			if ( point >= 0 ) { System.out.println(MemberController.getInstance().findName()+" 회원님의 포인트 : "+point+" point"); }
+			else if ( point == -1 ) { System.out.println("관리자문의 오류번호-1"); }
+			else if ( point == -2 ) { System.out.println("관리자문의 오류번호-2"); }
 			System.out.println("1. 뒤로가기");
 			try {
 				int ch = scanner.nextInt();

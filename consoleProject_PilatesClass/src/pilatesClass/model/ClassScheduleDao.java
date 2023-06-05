@@ -16,23 +16,68 @@ public class ClassScheduleDao extends Dao {
 	// 전체수업출력
 	public ArrayList<ClassScheduleDto> classView(){//과거 수업은 안보임
 		classList  = new ArrayList<>();
-		String sql = "select sno , sdate , sprice , mno from member , classschedule where member.mno = classschedule.mno AND classschedule.sdate >=date_add(now(),interval -1 day) and now()";
+		String sql = "select sno , sdate , sprice , mname from member , classschedule where member.mno = classschedule.mno and classschedule.sdate >= now() + interval 3 hour";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			
 			while ( rs.next() ) {
-				ClassScheduleDto classScheduleDto = new ClassScheduleDto(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4));
+				ClassScheduleDto classScheduleDto = new ClassScheduleDto(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4));
 				classList.add(classScheduleDto);
 			}
 			return classList;
 			
 		}catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("전체수업출력 예외발생: "+e);
 		}
 		return null;
 	}
 	
+	// 존재하는 수업인지 확인
+	public boolean checkExistSchedule( int sno ) {
+		String sql = "select * from classschedule where sno= "+sno;
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if ( rs.next() ) { return true; } // 수업 존재 
+		} catch (Exception e) {
+			System.out.println("수업예약시 수업번호확인 예외발생 :"+e);
+		}
+		return false;
+	}
+	
+	// 수업 예약전 예약가능한 수업시간인지 확인
+	public boolean checkClassDateTime( int sno ) {
+		String sql = "select sno from member , classschedule where member.mno = classschedule.mno and classschedule.sdate >= now() + interval 3 hour and sno = "+sno;
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if ( rs.next() ) { return true;}
+		} catch (Exception e) {
+			System.out.println("예약가능시간 여부확인 예외발생 : "+e);
+		}
+		return false;
+	}
+	
+	// 지나간수업출력
+	public ArrayList<ClassScheduleDto> completedClassView(){
+		classList  = new ArrayList<>();
+		String sql = "select sno , sdate , sprice , mname from member , classschedule where member.mno = classschedule.mno and classschedule.sdate < now() hour order by sdate desc";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while ( rs.next() ) {
+				ClassScheduleDto classScheduleDto = new ClassScheduleDto(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4));
+				classList.add(classScheduleDto);
+			}
+			return classList;
+			
+		}catch (Exception e) {
+			System.out.println("지난수업출력 예외발생: "+e);
+		}
+		return null;
+	}
 	
 	// 수업등록
 	public boolean classAdd( ClassScheduleDto dto ) {
@@ -46,8 +91,7 @@ public class ClassScheduleDao extends Dao {
 			ps.setInt(3, teacherMno);
 			ps.executeUpdate();
 			return true;
-		}catch (Exception e) {			System.out.println(e);
-		}
+		}catch (Exception e) { System.out.println(e); }
 		
 		return false;
 	}
@@ -124,7 +168,18 @@ public class ClassScheduleDao extends Dao {
 			
 			return null;
 		}
-	
+		
+	// 회원이 예약취소 가능한 수업인지 체크
+	public boolean checkCancelAvailability( int rno ) {
+		String sql = "select r.rno , r.mno , s.sno , s.sdate , s.sprice from reservation r , classschedule s where r.sno = s.sno and sdate > now() and  r.rno = "+rno;
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if ( rs.next() ) { return true; } // 예약취소가능
+		
+		} catch (Exception e) { System.out.println("예약취소 가능여부체크 예외발생 : "+e); }
+		return false;
+	}
 		
 }
 		

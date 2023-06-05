@@ -26,7 +26,7 @@ public class PointController {
 	// 포인트 적립
 	public int addPoint( int amount  , String reason ) {
 		// 결제금액10% 포인트 만들기 
-		double point = amount*0.1;
+		double point = amount*0.01;
 		int intPoint = (int)point;
 		int loginsession = MemberController.getInstance().getLogSession();
 		boolean result = PointDao.getInstance().addPoint(intPoint, reason, loginsession);

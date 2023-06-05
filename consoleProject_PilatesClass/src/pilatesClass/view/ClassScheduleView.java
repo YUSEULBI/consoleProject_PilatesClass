@@ -27,13 +27,14 @@ public class ClassScheduleView {
 		while(true) {
 			
 			classView();
-			System.out.println("1.수업등록 2.수업변경 3.수업삭제 4.뒤로가기");
+			System.out.println("1.수업등록 2.수업변경 3.수업삭제 4.지난수업 5.뒤로가기");
 			try {
 				int ch = scanner.nextInt();
 				if ( ch == 1 ) { classAdd();	}
 				else if ( ch == 2 ) { classEdit();	 }
 				else if ( ch == 3 ) { classDelete();	}
-				else if ( ch == 4 ) { break;	}
+				else if ( ch == 4 ) { completedClassView();	}
+				else if ( ch == 5 ) { break;	}
 			}catch (Exception e) {
 				System.out.println(e);
 				scanner = new Scanner(System.in);
@@ -41,21 +42,43 @@ public class ClassScheduleView {
 		}
 	}
 	
+	public void completedClassView() {
+		System.out.println("================= 완료된 수업목록 ==================");
+		System.out.printf("%s\t%-10s\t%s\t %s\n","수업번호","수강일시","금액","강사");
+		ArrayList<ClassScheduleDto> classList = ClassScheduleController.getInstance().completedClassView();
+		if ( classList != null) {
+			for ( ClassScheduleDto d : classList) {
+				String DateTime =  d.getSdate();
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yy.MM.dd HH:mm");
+				LocalDateTime time = LocalDateTime.parse(DateTime,dtf);
+				String time2 = time.format(dtf2);
+				int bPrice = d.getSprice();
+				DecimalFormat df = new DecimalFormat("#,##0원");
+				 
+				System.out.printf("%d\t%s\t%s\t %s\n",d.getSno(),time2,df.format(bPrice),d.getTeacherName());
+			}
+		}
+		System.out.println("==============================================");
+	}
+	
 	public void classView() {
 		 
 		System.out.println("================= 전체 수업목록 ==================");
 		System.out.printf("%s\t%-10s\t%s\t %s\n","수업번호","수강일시","금액","강사");
 		ArrayList<ClassScheduleDto> classList = ClassScheduleController.getInstance().classView();
-		for ( ClassScheduleDto d : classList) {
-			String DateTime =  d.getSdate();
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yy.MM.dd HH:mm");
-			LocalDateTime time = LocalDateTime.parse(DateTime,dtf);
-			String time2 = time.format(dtf2);
-			int bPrice = d.getSprice();
-			DecimalFormat df = new DecimalFormat("#,##0원");
-			 
-			System.out.printf("%d\t%s\t%s\t %s\n",d.getSno(),time2,df.format(bPrice),d.getTeacherName());
+		if ( classList != null) {
+			for ( ClassScheduleDto d : classList) {
+				String DateTime =  d.getSdate();
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yy.MM.dd HH:mm");
+				LocalDateTime time = LocalDateTime.parse(DateTime,dtf);
+				String time2 = time.format(dtf2);
+				int bPrice = d.getSprice();
+				DecimalFormat df = new DecimalFormat("#,##0원");
+				 
+				System.out.printf("%d\t%s\t%s\t %s\n",d.getSno(),time2,df.format(bPrice),d.getTeacherName());
+			}
 		}
 		System.out.println("==============================================");
 	}
