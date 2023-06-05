@@ -1,5 +1,7 @@
 package pilatesClass.model;
 
+import java.util.ArrayList;
+
 public class PointDao extends Dao {
 	private static PointDao dao = new PointDao();
 	private PointDao() {
@@ -45,13 +47,13 @@ public class PointDao extends Dao {
 	}
 	
 	// 포인트 사용
-	public boolean pointUse( int point , String reason , int loginsession, int rno ) {
+	public boolean pointUse( int point , int loginsession, int rno ) {
 		
 		String sql = "insert into point(pointvalue,reason,mno,rno) values( ? , ? , ? , ? );";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, -point);
-			ps.setString(2, reason);
+			ps.setString(2, "포인트사용[수강번호 "+rno+"번 수업예약]");
 			ps.setInt(3, loginsession);
 			ps.setInt(4, rno);
 			ps.executeUpdate();
@@ -78,7 +80,7 @@ public class PointDao extends Dao {
 				sql = "insert into point ( pointvalue , reason , mno , rno ) values( ? , ? , ? , ? )";
 				ps = con.prepareStatement(sql);
 				ps.setInt(1, -pointvalue);
-				ps.setString(2, "예약취소");
+				ps.setString(2, "적립취소[수강번호 "+rno+"번 예약취소]");
 				ps.setInt(3, loginsession);
 				ps.setInt(4, rno);
 				int row = ps.executeUpdate();
@@ -90,5 +92,22 @@ public class PointDao extends Dao {
 			System.out.println("예약취소시 포인트차감 예외발생 : "+e);
 		}
 		return -1; // 관리자문의
+	}
+	
+	// 포인트 출력
+	public ArrayList<PointDto> printPointHistory( int mno ){
+		String sql = "select daterecord , pointvalue , reason from point where mno = "+mno;
+		ArrayList<PointDto> pointList = new ArrayList<>();
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while( rs.next() ) {
+				PointDto pointDto = new PointDto(rs.getString(1), rs.getInt(2), rs.getString(3));
+				pointList.add(pointDto);
+			}
+		} catch (Exception e) {
+			System.out.println("포인트출력 예외발생 : "+e);
+		}
+		return pointList;
 	}
 }

@@ -1,8 +1,11 @@
 package pilatesClass.view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import pilatesClass.controller.PointController;
+import pilatesClass.model.PointDto;
+import pilatesClass.model.RankDto;
 import pilatesClass.controller.MemberController;
 
 
@@ -79,13 +82,39 @@ public class PointView {
 			else if ( point == -1 ) { System.out.println("관리자문의 오류번호-1"); }
 			else if ( point == -2 ) { System.out.println("관리자문의 오류번호-2"); }
 			System.out.println("1. 뒤로가기");
+			System.out.println("2. 포인트 이력");
 			try {
 				int ch = scanner.nextInt();
 				if ( ch == 1 ) { return;	}
+				else if ( ch == 2 ) { viewPointHistory();	}
 			}catch (Exception e) {
 				System.out.println(e);
 				scanner=new Scanner(System.in);
 			}
+		}
+	}
+	
+	// 포인트 이력 출력
+	public void viewPointHistory() {
+		
+		System.out.println("================= 포인트이력 =================");
+		System.out.printf("%-20s\t%s\t%s\n","날짜","포인트","상세");
+		ArrayList<PointDto> PointList = PointController.getInstance().printPointHistory();
+		if ( PointList != null ) {
+			for(PointDto point : PointList ) {
+				String pointvalue = null;
+				if ( point.getPointvalue() > 0 ) { pointvalue = "+"+point.getPointvalue(); }
+				else if ( point.getPointvalue() < 0 ) { pointvalue = Integer.toString( point.getPointvalue() ); }
+				System.out.printf("%-20s\t%s\t%s\n" , point.getDaterecord() , pointvalue , point.getReason() );	
+			}
+		}
+		System.out.println("============================================");
+		System.out.println("아무키나 입력하십시오 (뒤로가기)");
+		try {
+			scanner.next();
+		}catch (Exception e) {
+			System.out.println(e);
+			scanner=new Scanner(System.in);
 		}
 	}
 }

@@ -1,6 +1,9 @@
 package pilatesClass.controller;
 
+import java.util.ArrayList;
+
 import pilatesClass.model.PointDao;
+import pilatesClass.model.PointDto;
 
 public class PointController {
 	private static PointController controller = new PointController();
@@ -20,7 +23,7 @@ public class PointController {
 	// 포인트 사용
 	public boolean pointUse( int point , int rno ) {
 		int loginsession = MemberController.getInstance().getLogSession();
-		return PointDao.getInstance().pointUse(point, "사용" ,loginsession , rno);
+		return PointDao.getInstance().pointUse(point ,loginsession , rno);
 	}
 	
 	// 포인트 적립
@@ -40,4 +43,9 @@ public class PointController {
 		return PointDao.getInstance().cancelPoint(rno , loginsession);
 	}
 	
+	// 포인트 출력
+	public ArrayList<PointDto> printPointHistory(){
+		int loginsession = MemberController.getInstance().getLogSession();
+		return PointDao.getInstance().printPointHistory(loginsession);
+	}
 }
