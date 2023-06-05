@@ -44,7 +44,7 @@ create table classschedule(
 	mno int, -- 회원번호
 	foreign key( mno ) references member( mno ) on delete set null -- 회원탈퇴시 수업 보존
 );
-
+select * from classschedule;
 -- 2. 관리자가 수업 등록 
 insert into classschedule( sdate , sprice , mno ) values( '2023-02-02 10:00:00' , 70000 , 6 );
 insert into classschedule( sdate , sprice , mno ) values( '2023-03-02 11:00:00' , 30000 , 6 );
@@ -70,11 +70,12 @@ create table reservation(
 	foreign key( mno ) references member( mno ) on delete set null , -- 회원탈퇴시 예약내역 보존 , mno만 null
     foreign key( sno ) references classschedule( sno ) on delete set null -- 스케줄 삭제시 수강내역 보존, sno만 null
 );
-
+select * from reservation;
 -- 회원이 수강신청 
 insert into reservation( mno , sno ) values( 2 , 2 );
 -- 학생 본인의 수강내역만
 select * from member , reservation where member.mno = reservation.mno and reservation.mno = 2; 
+select r.rno,s.sdate,s.sprice,m.mname from member m ,classschedule s,reservation r where m.mno=s.mno  and r.sno = s.sno and r.mno=2;
 
 -- 예약 ( 회원 2,3,4,5  스케줄번호 1~9)
 insert into reservation( mno , sno ) values( 2 , 1 );
@@ -109,6 +110,15 @@ select sdate , sprice from classschedule s , reservation r where s.sno = r.sno a
 -- 입력한 날짜의 예약건수, 매출액
 select count(*) as 해당월예약건 , sum(s.sprice) as 해당월총매출액 from classschedule s , reservation r where s.sno = r.sno and date_format(sdate,'%Y') = 2023 and date_format(sdate,'%m') = 3 and date_format(sdate,'%d') = 2;
 
+select sno , sdate , sprice , mname from member , classschedule where member.mno = classschedule.mno AND classschedule.sdate >= NOW() + INTERVAL 3 HOUR;
+
+-- 예약 취소 가능한지 확인용
+select r.rno , r.mno , s.sno , s.sdate , s.sprice from reservation r , classschedule s where r.sno = s.sno and sdate > now() and  r.rno = 12;
+-- 로그인 한 사람의 수강번호가 맞는지 확인
+select * from reservation where rno = 12 and mno = 2;
+
+
+
 -- 메시지(공지 기능)
 drop table if exists message;
 create table message(
@@ -127,9 +137,16 @@ create table point(
     reason varchar(100) , -- 포인트변동사유
     daterecord datetime default now() , -- 포인트변동일시
     mno int , -- 회원번호 fk
-    foreign key ( mno ) references member(mno) on delete set null -- 회원탈퇴시 포인트 보존, mno만 null
+    rno int , -- 예약번호 fk 어떤 예약건에 의한 것인지 확인
+    foreign key ( mno ) references member(mno) on delete set null , -- 회원탈퇴시 포인트 보존, mno만 null
+    foreign key ( rno ) references reservation( rno) on delete set null
 ); 
 select * from point;
+select * from point where mno = 2;
+-- 예약취소시 예약시 적립된 포인트 다시 차감하도록
+select * from point where pointvalue > 0 and rno = 13 and mno = 2;
+insert into point ( pointvalue , reason , mno , rno ) values( 100 , "테스트" , 4 , 12 ) ;
+
 select * from point where mno = 1;
 insert into point(pointvalue,reason,mno) values( 100 , '구매' , 1 );
 insert into point(pointvalue,reason,mno) values( 200 , '구매2' , 1 );
