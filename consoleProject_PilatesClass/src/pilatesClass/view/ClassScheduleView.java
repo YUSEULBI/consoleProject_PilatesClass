@@ -60,6 +60,13 @@ public class ClassScheduleView {
 			}
 		}
 		System.out.println("==============================================");
+		System.out.println("아무키나 입력하십시오 (뒤로가기)");
+		try {
+			scanner.next();
+		}catch (Exception e) {
+			System.out.println(e);
+			scanner=new Scanner(System.in);
+		}
 	}
 	
 	public void classView() {

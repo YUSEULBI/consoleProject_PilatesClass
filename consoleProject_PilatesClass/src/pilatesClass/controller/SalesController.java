@@ -10,9 +10,9 @@ public class SalesController {
 	private SalesController() { 	}
 	public static SalesController getInstance() { return controller; 	}
 	
-	// 누적예약수,총매출액
-	public SalesDto total() {
-		return SalesDao.getInstance().total();
+	// 선택한 해의 누적예약수,총매출액
+	public SalesDto yearTotal( int year ) {
+		return SalesDao.getInstance().yearTotal(year);
 	}
 	
 	// 월매출액

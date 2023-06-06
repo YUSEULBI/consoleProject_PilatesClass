@@ -6,10 +6,10 @@ public class SalesDao extends Dao {
 	private SalesDao() { 	}
 	public static SalesDao getInstance() { return dao;  }
 	
-	// 누적예약수,총매출액 [ count(*) , sum(스케줄.sprice) ]
-	public SalesDto total() {
+	// 선택한 해의 누적예약수,총매출액 [ count(*) , sum(스케줄.sprice) ]
+	public SalesDto yearTotal( int year ) {
 		SalesDto dto = new SalesDto();
-		String sql = "select count(*) as 누적예약수 , sum(classschedule.sprice) as 누적매출액 from member,classschedule,reservation where member.mno = classschedule.mno and classschedule.sno = reservation.sno ;";
+		String sql = "select count(*) as 누적예약수 , sum(s.sprice) as 누적매출액 from member m , classschedule s , reservation r where m.mno = s.mno and s.sno = r.sno and sdate like \""+year+"%\"";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();

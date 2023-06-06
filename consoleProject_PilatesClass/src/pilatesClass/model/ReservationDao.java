@@ -20,7 +20,7 @@ public class ReservationDao extends Dao{
 	int logsession=MemberController.getInstance().getLogSession();	
 	
 	public boolean re_check(int ch) {
-		String sql="select * from reservation where sno=? and mno=?;"; //
+		String sql="select * from reservation where sno=? and mno=?"; //
 		
 		try {
 			ps=con.prepareStatement(sql);

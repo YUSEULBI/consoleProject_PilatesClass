@@ -75,17 +75,21 @@ public class ReservationView {
 		System.out.println("수강번호를 입력해 주세요");int ch=scanner.nextInt();
 		
 		// 존재하는 수업인지 확인
-		boolean result1 = ClassScheduleController.getInstance().checkExistSchedule(ch);
-		if(result1==false) { System.out.println("존재하지 않는 수업번호입니다."); return;}
-		
-		// 이미 등록한 수업이 아니면 밑에 실행
-		boolean result2=re_check(ch);
-		if(result2==false) { System.out.println("이미 수강한 수업입니다."); return; }
+		if ( ClassScheduleController.getInstance().checkExistSchedule(ch) == false ) {
+			System.err.println("존재하지 않는 수업번호입니다."); return;
+		}
 		
 		// 등록 가능한 수업인지 확인
-		boolean result3 = ClassScheduleController.getInstance().checkClassDateTime(ch);
-		if ( result3 == false ) { System.out.println("예약 가능시간이 지난 수업입니다."); return; }
+		if ( ClassScheduleController.getInstance().checkClassDateTime(ch) == false ) {
+			System.err.println("수업목록에 있는 수업번호를 선택해주세요."); return;
+		}
+
+		// 이미 등록한 수업이 아니면 밑에 실행
+		if( ReservationController.getInstance().re_check(ch) == false){ 
+			System.err.println("이미 수강한 수업입니다."); return; 
+		}
 		
+
 		// 결제금액 조회 ( amount = 결제예정금액 )
 		int amount = ReservationController.getInstance().payMoneyCheck(ch);
 		

@@ -62,7 +62,7 @@ public class ClassScheduleDao extends Dao {
 	// 지나간수업출력
 	public ArrayList<ClassScheduleDto> completedClassView(){
 		classList  = new ArrayList<>();
-		String sql = "select sno , sdate , sprice , mname from member , classschedule where member.mno = classschedule.mno and classschedule.sdate < now() hour order by sdate desc";
+		String sql = "select sno , sdate , sprice , mname from member , classschedule where member.mno = classschedule.mno and classschedule.sdate < now() order by sdate desc";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
