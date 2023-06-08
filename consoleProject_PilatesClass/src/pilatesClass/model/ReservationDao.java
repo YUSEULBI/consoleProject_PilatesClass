@@ -41,16 +41,17 @@ public class ReservationDao extends Dao{
 	
 	
 	public boolean cancel(int sno , int mno) { //reservation취소함수(예약 완료후 예약내역보기 다음에 넣기)
-		String sql="delete from reservation where sno=? and mno = ?";
+
+		String sql="delete from reservation where sno = ? and mno = ?";
 		
 		try {
 			ps=con.prepareStatement(sql);
 			ps.setInt(1, sno);
 			ps.setInt(2, mno);
-			ps.executeUpdate();
-			return true;
-			
-			
+			int row = ps.executeUpdate();
+			if ( row == 1 ) {
+				return true;
+			}
 		} catch (SQLException e) {
 			System.out.println("실패~");
 			e.printStackTrace();
@@ -127,7 +128,7 @@ public class ReservationDao extends Dao{
 	ArrayList<ClassScheduleDto> relist=new ArrayList<>();
 	public ArrayList<ClassScheduleDto> print(int logsession){//내가 신청한 수업 목록
 		relist=new ArrayList<>();
-		String spl="select r.rno,s.sdate,s.sprice,m.mname from member m ,classschedule s,reservation r "
+		String spl="select r.sno,s.sdate,s.sprice,m.mname from member m ,classschedule s,reservation r "
 				+  " where m.mno=s.mno  and r.sno = s.sno and r.mno=?";
 			
 		
@@ -149,19 +150,19 @@ public class ReservationDao extends Dao{
 	}
 	
 	
-	// rno(수강번호)가 본인이 예약한 수강번호인지 확인
-	public boolean checkRno( int rno , int mno ) {
-		String sql = "select * from reservation where rno = ? and mno = ?";
+	// 수업이 본인이 예약한 수업인지 확인 => 예약테이블 식별번호 rno 반환
+	public int checkRno( int sno , int mno ) {
+		String sql = "select * from reservation where sno = ? and mno = ?";
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, rno);
+			ps.setInt(1, sno);
 			ps.setInt(2, mno);
 			rs = ps.executeQuery();
-			if( rs.next() ) { return true; } // 본인이 예약한 수강번호임
+			if( rs.next() ) { return rs.getInt(1); } // 본인이 예약한 수강번호임
 		} catch (Exception e) {
 			System.out.println("수강번호 본인확인 예외발생 : " +e);
 		}
-		return false; // 본인이 예약한 수강번호가 아님, 그 외
+		return 0; // 본인이 예약한 수강번호가 아님, 그 외
 	}
 	
 	

@@ -170,8 +170,8 @@ public class ClassScheduleDao extends Dao {
 		}
 		
 	// 회원이 예약취소 가능한 수업인지 체크
-	public boolean checkCancelAvailability( int rno ) {
-		String sql = "select r.rno , r.mno , s.sno , s.sdate , s.sprice from reservation r , classschedule s where r.sno = s.sno and sdate > now() and  r.rno = "+rno;
+	public boolean checkCancelAvailability( int sno , int mno ) {
+		String sql = "select r.rno , r.mno , s.sno , s.sdate , s.sprice from reservation r , classschedule s where r.sno = s.sno and sdate > now() and  r.sno = "+sno+" and r.mno = "+mno;
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -180,7 +180,17 @@ public class ClassScheduleDao extends Dao {
 		} catch (Exception e) { System.out.println("예약취소 가능여부체크 예외발생 : "+e); }
 		return false;
 	}
-		
+	
+	// 수업번호로 해당 수업의 금액 확인하기
+	public int classAmount ( int sno ) {
+		String sql = "select sprice from classschedule where sno = "+sno;
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if ( rs.next() ) { return rs.getInt(1); }
+		} catch (Exception e) { System.out.println("수업금액 조회 예외발생 : " +e); }
+		return 0;
+	}
 }
 		
 		

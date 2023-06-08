@@ -140,10 +140,10 @@ public class MemberView {
 				}
 				System.out.println("==========================================");
 				
-				System.out.println("1.뒤로가기 2.처음으로 3.메시지보내기"); 
-				int 채널 = scanner.nextInt();
-				if(채널 == 1) { break;	}
-				else if(채널 == 3) { MessageView.getInstance().adminMessage_page();}//메시지 보내기 기능
+				System.out.println("1.뒤로가기 2.메시지보내기"); 
+				int ch = scanner.nextInt();
+				if(ch == 1) { break; }
+				else if(ch == 2) { MessageView.getInstance().adminMessage_page();}//메시지 보내기 기능
 				else {System.out.println(
 						".╭◜◝ ͡ ◜◝\r\n"
 						+ "(    ´ㅅ` )\r\n"

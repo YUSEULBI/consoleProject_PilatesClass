@@ -60,8 +60,9 @@ public class ClassScheduleController {
 	}
 	
 	// 회원이 예약취소 가능한 수업인지 체크
-	public boolean checkCancelAvailability( int rno ) {
-		return ClassScheduleDao.getInstance().checkCancelAvailability(rno);
+	public boolean checkCancelAvailability( int sno) {
+		int loginsession = MemberController.getInstance().getLogSession();
+		return ClassScheduleDao.getInstance().checkCancelAvailability(sno , loginsession);
 	}
 	
 	public ArrayList<ClassScheduleDto> te_print(){
@@ -72,6 +73,9 @@ public class ClassScheduleController {
 		return ClassScheduleDao.getInstance().te_print(logsession);
 	}
 	
-	
+	// 수업번호로 해당 수업의 금액 확인하기
+	public int classAmount ( int sno ) {
+		return ClassScheduleDao.getInstance().classAmount(sno);
+	}
 	
 }

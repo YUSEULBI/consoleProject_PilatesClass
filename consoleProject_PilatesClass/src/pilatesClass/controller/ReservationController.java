@@ -14,9 +14,9 @@ public class ReservationController {
 	
 	
 	
-	public boolean cancel(int ch) { 
+	public boolean cancel(int sno) { 
 		int logsession=MemberController.getInstance().getLogSession();
-		return ReservationDao.getInstance().cancel(ch,logsession);
+		return ReservationDao.getInstance().cancel(sno,logsession);
 	}
 	
 	// 수업예약
@@ -44,10 +44,13 @@ public class ReservationController {
 		return ReservationDao.getInstance().payMoneyCheck(ch);
 	}
 	
-	// rno(수강번호)가 본인이 예약한 수강번호인지 확인
-	public boolean checkRno( int rno ) {
+	// 수업이 본인이 예약한 수업인지 확인 => 예약테이블 식별번호 rno 반환
+	public int checkSno( int sno ) {
 		int mno = MemberController.getInstance().getLogSession();
-		return ReservationDao.getInstance().checkRno(rno, mno);
+		return ReservationDao.getInstance().checkRno(sno, mno);
 	}
+	
+
+	
 	
 }

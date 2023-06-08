@@ -31,7 +31,7 @@ public class PointView {
 			System.out.println("[결제예정금액 : " + amount +"]");
 			System.out.println("현재 포인트 : " + point);
 			if ( point >= 100 ) {
-				System.out.println("포인트는 100원 단위로 사용가능합니다.");
+				System.out.println("100원 단위로 포인트 사용가능. 포인트 미사용시 결제금액의 1% 적립.");
 				System.out.println("포인트사용을 원치않으시면 0을 입력해주세요");
 				System.out.println("사용할 포인트 : ");
 				int wannaPoint = scanner.nextInt();

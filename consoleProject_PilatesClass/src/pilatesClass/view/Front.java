@@ -19,15 +19,19 @@ public class Front {
 	Scanner scanner=new Scanner(System.in);
 	
 	public void index() {
-		while (true) {	
-			System.out.println("    PilatesClass");
+		while (true) {
+			
 			System.out.println(""
-					+ "|　　|　　|　　|　　|　　|　　|\r\n"
-					+ "|　　|　　|　　☆　　|　　|　　|\r\n"
-					+ "|　　|　　✬ 　  　✬　　| 　|\r\n"
-					+ "|　　★ 　  　  　  　★ 　|\r\n"
-					+ "☆ 　  　  　  　  　  　☆");
+					+ " ______ _ _                         _______ _                  \r\n"
+					+ "(_____ (_) |         _             (_______) |                 \r\n"
+					+ " _____) )| | _____ _| |_ _____  ___ _      | | _____  ___  ___ \r\n"
+					+ "|  ____/ | |(____ (_   _) ___ |/___) |     | |(____ |/___)/___)\r\n"
+					+ "| |    | | |/ ___ | | |_| ____|___ | |_____| |/ ___ |___ |___ |\r\n"
+					+ "|_|    |_|\\_)_____|  \\__)_____|___/ \\______)\\_)_____(___/(___/ \r\n"
+					+ "                                                               ");
+			System.out.println("===============================================================");
 			System.out.println(" 1.관리자페이지 2.회원페이지");
+			System.out.println("===============================================================");
 			try {
 				int ch = scanner.nextInt();
 				if ( ch == 1 ) { MemberView.getInstance().admin_login();	}
@@ -76,9 +80,9 @@ public class Front {
 				ReservationView.getInstance().res_print();
 				cancel_page(); //학생은 예약을 하기때문에 취소가 가능
 			}else if (ch==3) {	logout(); break;		}
-			else if (ch==4) {	MessageView.getInstance().message_Page();		}
-			else if (ch==5) {	MemberView.getInstance().getTchRank();}
-			else if (ch==6) {	PointView.getInstance().viewPoint();		}
+			else if (ch==4) {	MessageView.getInstance().message_Page();  }
+			else if (ch==5) {	MemberView.getInstance().getTchRank(); }
+			else if (ch==6) {	PointView.getInstance().viewPoint();  }
 		}
 
 }
@@ -99,7 +103,7 @@ public class Front {
 	public void logout() {
 	 	 MemberController.getInstance().setLogSession(0);
 		 int login=MemberController.getInstance().getLogSession(); //확인용 주석처리할것
-		 System.out.println("로그세션확인:"+login);//확인용 주석처리할것
+		 //System.out.println("로그세션확인:"+login);//확인용 주석처리할것
 		 System.out.println("정상 로그아웃 되었습니다~!");
 	 
 	}
@@ -148,8 +152,7 @@ public class Front {
 					else if ( sc == 2 ) { MemberView.getInstance().PMemberView();	}
 					else if ( sc == 3 ) { MemberView.getInstance().PteacherView();	}
 					else if ( sc == 4 ) { SalesView.getInstance().sales_page();	} //매출관리
-					else if ( sc == 5 ) { break;	}
-					else {	}
+					else if ( sc == 5 ) { break; }
 				}catch (Exception e) {
 					System.out.println("[메뉴 번호에 맞게 입력하세요.]");
 					scanner=new Scanner(System.in);
