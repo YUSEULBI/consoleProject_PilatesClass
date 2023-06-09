@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pilatesClass.model.PointDao;
 import pilatesClass.model.PointDto;
+import pilatesClass.model.RefundDto;
 
 public class PointController {
 	private static PointController controller = new PointController();
@@ -38,7 +39,7 @@ public class PointController {
 	}
 	
 	// 예약취소시 예약시 적립된 포인트 차감
-	public int cancelPoint( int rno ) {
+	public RefundDto cancelPoint( int rno ) {
 		int loginsession = MemberController.getInstance().getLogSession();
 		return PointDao.getInstance().cancelPoint(rno , loginsession);
 	}

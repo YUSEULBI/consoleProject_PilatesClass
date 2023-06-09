@@ -64,55 +64,89 @@ public class PointDao extends Dao {
 	}
 	
 	// 예약취소시 예약시 적립된 포인트 차감
-	public int cancelPoint( int rno , int loginsession ) {
+	public RefundDto cancelPoint( int rno , int loginsession ) {
+		
+		// 예약시 적립 또는 사용한 포인트 찾기
 		String sql = "select pointvalue from point where pointvalue > 0 and rno = ? and mno = ?";
-
+		//환불정보를 담은 dto
+		RefundDto refundDto = new RefundDto();
+		
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, rno);
 			ps.setInt(2, loginsession);
 			rs = ps.executeQuery();
-			
-			refundDto refundDto = new refundDto();
-			
-			// 차감해야할 포인트가 있으면 포인트 차감
+					
+			// 적립또는 사용을 했다면
 			if ( rs.next() ) {
-				// 차감해야할 포인트
+				
+				// 적립포인트 또는 사용포인트
 				int pointvalue = rs.getInt(1); 
-				// 보유포인트 확인
-				int currentPoints = pointCheck(loginsession);
 				
-				// 차감포인트변수 
-				int negativePoints = pointvalue;
-				if ( currentPoints < pointvalue ) { 
-					negativePoints = currentPoints;
-					refundDto.setDeductedPoints(negativePoints);
+				// 적립취소(회수) 또는 환불해줄 포인트 변수
+				int negativePoints = 0;
+				// 적립취소 또는 환불 내용 작성 변수
+				String reason = "";
+				
+				// 포인트 적립했을 경우 => 적립취소(회수)
+				if ( pointvalue > 0 ) {
+					// 적립취소(회수)해야하는 총 포인트
+					refundDto.setCanceledAccumulatedPoints(pointvalue);
+					
+					// 적립한 포인트를 다시 차감해야하기 때문에
+					// 1. 보유포인트 확인
+					int currentPoints = pointCheck(loginsession);
+					
+					// 차감할 레코드에 넣을 차감포인트 변수 negativePoints
+						// 차감할 포인트는 = 적립된 포인트이다.
+					negativePoints = -pointvalue;
+					
+					reason = "적립취소[수강번호 "+rno+"번 예약취소]";
+					
+					// 적립포인트 모두를 회수하지 못하게 되는 상황
+					// 결제금액 환불을 적립포인트를 회수하고 환불해줘야함.
+					// 차감해야할 포인트보다 보유포인트가 적으면
+					if ( currentPoints < pointvalue ) {
+						// 차감할 포인트 = 적립된 포인트.
+						negativePoints = -currentPoints;
+						
+						// 환불정보 dto 적립포인트 회수를 위해 차감한 보유포인트 필드에 차감할보유포인트 넣기
+						refundDto.setDeductedPoints(currentPoints);
+						
+						reason = "적립취소할 보유포인트 부족 [수강번호 "+rno+"번 예약취소]";
+						
+						// 아직 회수하지못한 포인트 = 회수해야할 포인트
+						//refundDto.setRemainingPoints(pointvalue-negativePoints);
+					}
+				// 포인트 사용했을 경우 => 환불
+				}else if ( pointvalue < 0 ) { // 적립포인트(차감해야할 포인트)가 없음, 사용포인트가 있음 환불해드려야함.
+					// 적립된 포인트가 없으면 포인트 사용했을 수 있음.
+					// 해당 rno로 예약할때 사용한 포인트 확인
+					// 환불해들릴 포인트
+					//negativePoints = Math.abs(pointvalue);
+					negativePoints = -pointvalue;
+					reason = "포인트 환불 [수강번호 "+rno+"번 예약취소]";
+					refundDto.setUsedPoints(negativePoints);
+
 				}
-				
-				// 포인트차감 ( 차감레코드 생성 )
-				sql = "insert into point ( pointvalue , reason , mno , rno ) values( ? , ? , ? , ? )";
+				// 포인트 적립취소(회수) 또는 포인트 환불
+				sql = "insert into point ( pointvalue , reason , mno , rno ) values ( ? , ? , ? , ? )";
 				ps = con.prepareStatement(sql);
-				ps.setInt(1, -negativePoints);
-				ps.setString(2, "적립취소[수강번호 "+rno+"번 예약취소]");
+				ps.setInt(1, negativePoints);
+				ps.setString(2, reason);
 				ps.setInt(3, loginsession);
 				ps.setInt(4, rno);
 				int row = ps.executeUpdate();
-				if ( row > 0 ) { 
-					// 차감해야할 포인트를 보유하지 않았다면 환불시 포인트 적립금액 반환
-					if ( currentPoints < pointvalue ) {
-						
-						return pointvalue - currentPoints; // 기존 포인트 
-					}else { // 포인트 차감완료
-						return 0;
-					}
-				} 
-			}else { // 차감해야할 포인트 없음 ==> 결제시 사용한 포인트 있는지 확인후 환불해줘야함. 
-				return -1; 
+				if ( row > 0 ) { // 포인트환불레코드 생성성공
+					refundDto.setRefundSuccess(true);
+					return refundDto;
+				}
 			} 
 		} catch (Exception e) {
 			System.out.println("예약취소시 포인트차감 예외발생 : "+e);
 		}
-		return -2; // 관리자문의
+		refundDto.setRefundSuccess(false);
+		return refundDto; 
 	}
 	
 	// 포인트 이력 출력

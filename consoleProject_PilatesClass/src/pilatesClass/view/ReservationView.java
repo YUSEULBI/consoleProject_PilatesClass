@@ -12,6 +12,7 @@ import pilatesClass.controller.MemberController;
 import pilatesClass.controller.PointController;
 import pilatesClass.model.ReservationDao;
 import pilatesClass.model.ClassScheduleDto;
+import pilatesClass.model.RefundDto;
 
 
 public class ReservationView {
@@ -56,38 +57,60 @@ public class ReservationView {
 		
 			// 예약시 적립했던 포인트 차감 // 수업취소시 포인트테이블 rno가 null이 되기 때문에 취소전에 포인트차감
 				// 보유포인트가 
-		int cancelPointResult = PointController.getInstance().cancelPoint(rno);
-		
-			// 환불해드릴 결제금액, 현재는 취소할 수업의 금액 [ 사용한 포인트 있으면 아래에서 빼기 ]
+		RefundDto refundDto = PointController.getInstance().cancelPoint(rno);
+		System.out.println("refundDto : "+refundDto);
+			// 수업 금액 
 		int refundAmount = ClassScheduleController.getInstance().classAmount(sno); 
 		
-			// 사용포인트 있어서 환불해드림
-		if ( cancelPointResult == -1 ) { 		
-			
-		}
-			// 오류 관리자문의
-		else if ( cancelPointResult == -2 ) { System.out.println("적립취소 오류 - 관리자문의"); }
-			// 적립취소할 보유포인트가 없어서 결제금액에서 적립포인트 차감후 환불
-		//else if ( cancelPointResult > 0 ) { refundAmount = refundAmount - cancelPointResult; }
-			// 적립포인트 환불 완료
-		else if ( cancelPointResult == 0 ) { System.out.println("예약시 적립된 "+cancelPointResult+" 포인트가 적립취소되었습니다."); } 			
+		String refundDetails = "=====================환불상세내역======================"
+				+ "[수업금액] : "+refundAmount;
 		
-		/////////////////////////////////////////////////////////////////////////////////////////////
+		// 회수해아할 포인트
+		if ( refundDto.getCanceledAccumulatedPoints() > 0  ) {
+			refundDetails = "[적립취소포인트] : "+ refundDto.getCanceledAccumulatedPoints();
+			
+			int deductedPoints = 0;
+
+			// 보유표인트에서 일부 회수
+			if ( refundDto.getDeductedPoints() > 0 ) {
+				deductedPoints = refundDto.getCanceledAccumulatedPoints()-refundDto.getDeductedPoints();
+				refundDetails = "[보유포인트차감] : "+ (-refundDto.getDeductedPoints());
+				refundDetails = "--------------------------------------------------"
+						+ "[환불금액] : " + refundAmount + "-" + deductedPoints +" 포인트";
+			}else {
+				deductedPoints = refundDto.getCanceledAccumulatedPoints();
+				refundDetails = "--------------------------------------------------"
+						+ "[환불금액] : " + refundAmount + "원 -" + deductedPoints +" 포인트";
+			}
+			//refundAmount = refundAmount-deductedPoints;
+			refundDetails = "--------------------------총 "+(refundAmount-deductedPoints)+" 원";
+			
+			
+		// 환불해야할 포인트
+		}else if ( refundDto.getUsedPoints() > 0 ) {
+			int usedPoints = refundDto.getUsedPoints();
+			refundDetails = "[환불포인트] : "+refundDto.getUsedPoints();
+			refundDetails = "--------------------------------------------------"
+					+ "[환불금액] : " + refundAmount + "원 -" + usedPoints +" 포인트";
+			refundDetails = "--------------------------총 "+(refundAmount-usedPoints)+" 원";
+		}
+		
+		
+//////////////////////////////////////////////////////////////////////////////////////
 		
 		// 오류없이 포인트처리 완료시 수업취소
-		if ( cancelPointResult != -2 ) { 
+		if ( refundDto.isRefundSuccess() ) { 
 			// 수업취소
 			boolean result=ReservationController.getInstance().cancel(sno);
 			if(result==true) {
 				System.out.println("수업 취소가 완료되었습니다.");
-				if ( cancelPointResult > 0 ) {
-					System.out.println("");
-					System.out.println( refundAmount + "원 환불되었습니다.");
-				}
+				System.out.println(refundDetails);
 				
 			}else {
 				System.out.println("수업 취소 실패 - 관리자문의");
 			}
+		}else {
+			System.out.println("[예약취소]포인트 요청 실패");
 		}
 		
 	}
