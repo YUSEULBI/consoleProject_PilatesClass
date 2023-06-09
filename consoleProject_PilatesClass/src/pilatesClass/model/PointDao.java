@@ -67,9 +67,10 @@ public class PointDao extends Dao {
 	public RefundDto cancelPoint( int rno , int loginsession ) {
 		
 		// 예약시 적립 또는 사용한 포인트 찾기
-		String sql = "select pointvalue from point where pointvalue > 0 and rno = ? and mno = ?";
+		String sql = "select pointvalue from point where rno = ? and mno = ?";
 		//환불정보를 담은 dto
 		RefundDto refundDto = new RefundDto();
+		refundDto.setRno(rno);
 		
 		try {
 			ps = con.prepareStatement(sql);
@@ -100,7 +101,7 @@ public class PointDao extends Dao {
 					// 차감할 레코드에 넣을 차감포인트 변수 negativePoints
 						// 차감할 포인트는 = 적립된 포인트이다.
 					negativePoints = -pointvalue;
-					
+					refundDto.setDeductedPoints(pointvalue); // 보유포인트에서 차감함
 					reason = "적립취소[수강번호 "+rno+"번 예약취소]";
 					
 					// 적립포인트 모두를 회수하지 못하게 되는 상황
@@ -110,10 +111,10 @@ public class PointDao extends Dao {
 						// 차감할 포인트 = 적립된 포인트.
 						negativePoints = -currentPoints;
 						
-						// 환불정보 dto 적립포인트 회수를 위해 차감한 보유포인트 필드에 차감할보유포인트 넣기
+						// 적립포인트 회수를 위해 환불정보 dto의 차감한 보유포인트 필드에 보유포인트 넣기
 						refundDto.setDeductedPoints(currentPoints);
 						
-						reason = "적립취소할 보유포인트 부족 [수강번호 "+rno+"번 예약취소]";
+						reason = "적립취소할 보유포인트 부족, 환불금액에서 차감 [수강번호 "+rno+"번 예약취소]";
 						
 						// 아직 회수하지못한 포인트 = 회수해야할 포인트
 						//refundDto.setRemainingPoints(pointvalue-negativePoints);

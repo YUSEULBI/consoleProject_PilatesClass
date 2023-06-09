@@ -2,9 +2,10 @@ package pilatesClass.model;
 
 public class RefundDto {
 	
+	private int rno; // 수강번호
 	//private int lessonAmount; // 결제한 수업의 금액
 	private int canceledAccumulatedPoints; // 회수해야할 총 포인트
-	private int deductedPoints; // 환불시 차감해야할 포인트보다 보유포인트가 적어서 보유한 포인트만큼한 차감한 포인트 = 보유포인트.
+	private int deductedPoints; // 회수포인트를 보유포인트에서 차감한 금액.
 	//private int remainingPoints; // 환불시 차감해야할 포인트보다 보유포인트가 적어서 보유포인트를 모두 차감하고 남은 포인트 = 환불금액에서 차감해야할 포인트
 	private int usedPoints; // 결제당시 고객이 사용한 포인트 = 결제취소시 고객에게 환불해줘야하는 포인트
 	private boolean refundSuccess; // 환불 성공실패
@@ -14,8 +15,10 @@ public class RefundDto {
 	
 	public RefundDto() {	}
 
-	public RefundDto(int canceledAccumulatedPoints, int deductedPoints, int usedPoints, boolean refundSuccess) {
+	public RefundDto(int rno, int canceledAccumulatedPoints, int deductedPoints, int usedPoints,
+			boolean refundSuccess) {
 		super();
+		this.rno = rno;
 		this.canceledAccumulatedPoints = canceledAccumulatedPoints;
 		this.deductedPoints = deductedPoints;
 		this.usedPoints = usedPoints;
@@ -24,8 +27,17 @@ public class RefundDto {
 
 	@Override
 	public String toString() {
-		return "RefundDto [canceledAccumulatedPoints=" + canceledAccumulatedPoints + ", deductedPoints="
-				+ deductedPoints + ", usedPoints=" + usedPoints + ", refundSuccess=" + refundSuccess + "]";
+		return "RefundDto [rno=" + rno + ", canceledAccumulatedPoints=" + canceledAccumulatedPoints
+				+ ", deductedPoints=" + deductedPoints + ", usedPoints=" + usedPoints + ", refundSuccess="
+				+ refundSuccess + "]";
+	}
+
+	public int getRno() {
+		return rno;
+	}
+
+	public void setRno(int rno) {
+		this.rno = rno;
 	}
 
 	public int getCanceledAccumulatedPoints() {
@@ -59,10 +71,6 @@ public class RefundDto {
 	public void setRefundSuccess(boolean refundSuccess) {
 		this.refundSuccess = refundSuccess;
 	}
-
-	
-
-	
 	
 	
 }

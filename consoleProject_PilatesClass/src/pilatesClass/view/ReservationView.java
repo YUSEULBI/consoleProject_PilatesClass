@@ -62,37 +62,46 @@ public class ReservationView {
 			// 수업 금액 
 		int refundAmount = ClassScheduleController.getInstance().classAmount(sno); 
 		
-		String refundDetails = "=====================환불상세내역======================"
-				+ "[수업금액] : "+refundAmount;
+		String refundDetails = "=====================환불상세내역======================\n"
+				+ "[수업금액] : "+refundAmount+"원\n";
 		
 		// 회수해아할 포인트
 		if ( refundDto.getCanceledAccumulatedPoints() > 0  ) {
-			refundDetails = "[적립취소포인트] : "+ refundDto.getCanceledAccumulatedPoints();
+			refundDetails += "[예약시 적립포인트 적립취소 됩니다.] : "+ refundDto.getCanceledAccumulatedPoints()+"포인트\n";
 			
 			int deductedPoints = 0;
 
-			// 보유표인트에서 일부 회수
+			// 보유표인트에서 회수
 			if ( refundDto.getDeductedPoints() > 0 ) {
-				deductedPoints = refundDto.getCanceledAccumulatedPoints()-refundDto.getDeductedPoints();
-				refundDetails = "[보유포인트차감] : "+ (-refundDto.getDeductedPoints());
-				refundDetails = "--------------------------------------------------"
-						+ "[환불금액] : " + refundAmount + "-" + deductedPoints +" 포인트";
-			}else {
+				
+				// 1. 모든포인트를 보유포인트에서 회수함
+				if ( refundDto.getDeductedPoints() == refundDto.getCanceledAccumulatedPoints() ) {
+					refundDetails += "[보유포인트에서 전액 적립취소되었습니다.] : "+ (-refundDto.getDeductedPoints())+"원\n";
+					// deductedPoints = 0;
+					
+				// 2. 보유포인트가 부족해서 적립취소해야할 포인트 전부 회수하지 못함 => 환불금액에서 차감해야함.
+				}else if ( refundDto.getDeductedPoints() < refundDto.getCanceledAccumulatedPoints() ) {
+					deductedPoints = refundDto.getCanceledAccumulatedPoints()-refundDto.getDeductedPoints();
+					refundDetails += "[보유포인트에서 적립포인트 적립취소] : "+ (-refundDto.getDeductedPoints())+"원\n";
+					refundDetails += "[나머지 적립취소해야할 포인트 환불금액에서 차감] : "
+							+  refundAmount + "-" + deductedPoints +"포인트\n";
+				}
+			}else { // 보유포인트가 0원이라 아예 회수 못함 , 회수해야할 포인트 전체 환불금액에서 차감
 				deductedPoints = refundDto.getCanceledAccumulatedPoints();
-				refundDetails = "--------------------------------------------------"
-						+ "[환불금액] : " + refundAmount + "원 -" + deductedPoints +" 포인트";
+				refundDetails += "[적립취소할 보유포인트가 없으므로 환불금액에서 적립포인트를 제하고 환불됩니다.]\n"
+						+ refundAmount + "원 - " + deductedPoints +"포인트적립취소\n";
 			}
 			//refundAmount = refundAmount-deductedPoints;
-			refundDetails = "--------------------------총 "+(refundAmount-deductedPoints)+" 원";
+			refundDetails += "--------------------------[환불금액] : 총 "+(refundAmount-deductedPoints)+"원\n";
 			
 			
 		// 환불해야할 포인트
 		}else if ( refundDto.getUsedPoints() > 0 ) {
-			int usedPoints = refundDto.getUsedPoints();
-			refundDetails = "[환불포인트] : "+refundDto.getUsedPoints();
-			refundDetails = "--------------------------------------------------"
-					+ "[환불금액] : " + refundAmount + "원 -" + usedPoints +" 포인트";
-			refundDetails = "--------------------------총 "+(refundAmount-usedPoints)+" 원";
+			refundDetails += "[사용포인트 환불적립] : "+"+"+refundDto.getUsedPoints()+"\n";
+			refundDetails += "-------------------------[환불금액] : 총 " + refundAmount +"원\n";
+		}else {
+			refundDetails += "--------------------------------------------------\n"
+					+ "-------------------------[환불금액] : 총 " + refundAmount +"원\n";
 		}
 		
 		
@@ -143,9 +152,9 @@ public class ReservationView {
 		int point =  PointView.getInstance().wannaUsePoint(amount);
 		// 선택한 포인트만큼 결제금액 차감
 		amount = amount-point;
-		//결제금액 안내
-		PointView.getInstance().payMoney_info(amount);
-		
+
+		//포인트 차감한 결제금액 안내
+		System.out.println("[결제예정금액 : "+amount+"원]");
 		
 		System.out.println("지불금액을 써주세요"); int money=scanner.nextInt();
 		
@@ -181,7 +190,7 @@ public class ReservationView {
 				//사용한 포인트 차감
 				PointView.getInstance().pointUse(point , reservationRno);					
 			}else {
-				//포인트 사용을 안했을 경우에만 포인트추가
+				//포인트 사용을 안했을 경우에만 포인트 적립
 				PointView.getInstance().addPoint(amount , reservationRno );
 			}
 		}

@@ -28,7 +28,8 @@ public class PointController {
 	}
 	
 	// 포인트 적립
-	public int addPoint( int amount  , String reason , int rno ) {
+	public int addPoint( int amount  ,  int rno ) {
+		String reason = "1% 포인트적립 [결제금액"+amount+"] [수강번호 "+rno+"번 수업예약]";
 		// 결제금액10% 포인트 만들기 
 		double point = amount*0.01;
 		int intPoint = (int)point;

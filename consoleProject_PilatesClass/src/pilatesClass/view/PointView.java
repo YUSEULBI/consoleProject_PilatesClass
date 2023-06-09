@@ -37,6 +37,7 @@ public class PointView {
 				int wannaPoint = scanner.nextInt();
 				if ( wannaPoint == 0 ) { return 0;	}
 				if ( wannaPoint%100 != 0) { System.out.println("[100원 단위만 사용가능합니다. 다시 입력해주세요.]"); continue;	}
+				if ( wannaPoint > point ) { System.out.println("[보유포인트를 초과하는 금액입니다. 다시 입력해주세요.]"); continue; }
 				// 포인트가 결제금액보다 많으면 사용할 포인트는 결제금액과 동일하게 변경
 				if ( amount < wannaPoint ) { 
 					wannaPoint = amount; 
@@ -50,10 +51,7 @@ public class PointView {
 		
 	}
 	
-	//포인트 차감한 결제금액 안내
-	public void payMoney_info( int money ) {
-		System.out.println("[결제예정금액 : "+money+"원]");
-	}
+
 	
 	//포인트 사용
 	public void pointUse( int point , int rno ) {
@@ -66,8 +64,7 @@ public class PointView {
 	
 	// 결제후 포인트적립
 	public void addPoint( int amount , int reservationRno ) {
-		String reason = "결제금액의 1% 포인트적립 [결제금액"+amount+"]";
-		int point = PointController.getInstance().addPoint(amount, reason , reservationRno );
+		int point = PointController.getInstance().addPoint(amount, reservationRno );
 		if ( point == -1 ) { System.out.println("[포인트적립 실패] - 관리자문의 ");	}
 		else { System.out.println(point+" 포인트 적립되었습니다."); }
 		
