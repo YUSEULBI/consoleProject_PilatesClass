@@ -74,6 +74,22 @@ public class MemberController {
 		return MemberDao.getInstance().findName();
 	}
 	
+	
+	// 패스워드확인
+	public boolean checkPw( String mpw ) {
+		int mno = getLogSession();
+		return MemberDao.getInstance().checkPw(mno, mpw);
+	}
+	
+	
+	// 회원탈퇴
+	public boolean deleteMember() {
+		int mno = getLogSession();
+		boolean result = MemberDao.getInstance().deleteMember(mno);
+		if ( result ) { setLogSession(0); } // 로그아웃
+		return result;
+	}
+	
 	public ArrayList<RankDto> teacherRank(){
 		return MemberDao.getInstance().getTchRank();
 	}

@@ -73,7 +73,7 @@ public class Front {
 			ClassScheduleView.getInstance().classView();
 			MessageView.getInstance().messageCount(); // 메시지 알림 추가 ////////////
 			System.out.println();
-			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지 5.강사인기순위 6.포인트조회"); // 메시지 추가 ////////////
+			System.out.printf("1.예약 2.예약내역보기 3.로그아웃 4.메시지 5.강사인기순위 6.포인트조회 7.회원탈퇴"); // 메시지 추가 ////////////
 			int ch=scanner.nextInt();
 			if(ch==1) { ReservationView.getInstance().pay();}
 			else if(ch==2) {
@@ -83,6 +83,11 @@ public class Front {
 			else if (ch==4) {	MessageView.getInstance().message_Page();  }
 			else if (ch==5) {	MemberView.getInstance().getTchRank(); }
 			else if (ch==6) {	PointView.getInstance().viewPoint();  }
+			else if (ch==7) {
+				// 회원탈퇴
+				boolean result = MemberView.getInstance().deleteMember();
+				if ( result ) { break; } //회원탈퇴 성공시 초기화면으로
+			}
 		}
 
 }

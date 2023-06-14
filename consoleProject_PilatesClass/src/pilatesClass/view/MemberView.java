@@ -114,6 +114,28 @@ public class MemberView {
 				scanner=new Scanner(System.in);
 			}
 		}
+		
+		public boolean deleteMember() {
+			System.out.println("================= 회원탈퇴 =================");
+			System.out.println("비밀번호를 확인 : ");
+			boolean result = false;
+			try {
+				String mpw = scanner.next();
+				boolean checkPwResult = MemberController.getInstance().checkPw(mpw);
+				if ( !checkPwResult ) { System.out.println("비밀번호가 맞지 않습니다."); return false; }
+				
+				result = MemberController.getInstance().deleteMember();
+				if ( result ) {
+					System.out.println("회원탈퇴가 완료 되었습니다.");
+				}else {
+					System.out.println("회원탈퇴 실패 - 관리자문의");
+				}				
+			} catch (Exception e) {
+				System.out.println(e);
+				scanner = new Scanner(System.in);
+			}
+			return result;
+		}
 //////////////////////////////////////////////////////////
 		// 관리자페이지
 

@@ -47,6 +47,7 @@ public class MemberDao extends Dao{
 		
 	}
 	
+	// 조회
 	public ArrayList<MemberDto> PMemberView(int PRating){
 		PMemberList = new ArrayList<>();
 		String sql = "select * from member where member.mrole = ?;";
@@ -101,16 +102,7 @@ public class MemberDao extends Dao{
 	}
 	
 
-	public boolean reservation(int ch) {
-		
-		String sql="insert into ";
-		return true;
-	}
-	
-	public ArrayList<ReservationDto> print(){
-		
-		return null;
-	}
+
 	
 	
 	
@@ -177,6 +169,34 @@ public class MemberDao extends Dao{
 			return rankList;
 		}catch (Exception e) {System.out.println(e);}
 		return null;
+	}
+	
+	// 패스워드확인
+	public boolean checkPw( int mno , String mpw ) {
+		String sql = "select * from member where mno = ? and mpw = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, mno);
+			ps.setString(2, mpw);
+			rs = ps.executeQuery();
+			if ( rs.next() ) { return true; }
+		} catch (Exception e) { System.out.println(e); }
+		return false;
+	}
+	
+	// 회원탈퇴
+	public boolean deleteMember( int mno ) {
+		String sql = "delete from member where mno = "+mno;
+		try {
+			ps = con.prepareStatement(sql);
+			int row = ps.executeUpdate();
+			if ( row == 1 ) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
 	}
 	
 	//////////////////////////////////////////////////////////////////
