@@ -153,19 +153,19 @@ public class MemberView {
 			while(true) {
 				String RaitingName;
 				System.out.println("================= 회원 목록 =================");
-				System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
-				ArrayList<MemberDto> PMemberList = MemberController.getInstance().PMemberView();
-				for (MemberDto Pm : PMemberList) {
-					if(Pm.getMrole() == 1) {RaitingName="일반회원";}
+				System.out.printf("%s\t%s\t%s\t%s\t\t%s\n","번호","아이디","이름","전화번호","등급");
+				ArrayList<MemberDto> pMemberList = MemberController.getInstance().pMemberView(1);
+				for (MemberDto pm : pMemberList) {
+					if(pm.getMrole() == 1) {RaitingName="일반회원";}
 					else {RaitingName=null;}
-					System.out.printf("%s\t%s\t%s\t%s\n",Pm.getMid() , Pm.getMname() , Pm.getMphone() , RaitingName);
+					System.out.printf("%s\t%s\t%s\t%s\t%s\n", pm.getMno(),pm.getMid() , pm.getMname() , pm.getMphone() , RaitingName);
 				}
 				System.out.println("==========================================");
 				
 				System.out.println("1.뒤로가기 2.메시지보내기"); 
 				int ch = scanner.nextInt();
 				if(ch == 1) { break; }
-				else if(ch == 2) { MessageView.getInstance().adminMessage_page();}//메시지 보내기 기능
+				else if(ch == 2) { MessageView.getInstance().adminMessage_page(1);}//메시지 보내기 기능
 				else {System.out.println(
 						".╭◜◝ ͡ ◜◝\r\n"
 						+ "(    ´ㅅ` )\r\n"
@@ -178,19 +178,19 @@ public class MemberView {
 		public void PteacherView() {
 			while(true) {
 				String RaitingName;
-				System.out.println("================= 회원 목록 =================");
-				System.out.printf("%s\t%s\t%-15s\t%s\n","아이디","이름","전화번호","등급");
-				ArrayList<MemberDto> PteacherList = MemberController.getInstance().PteacherView();
-				for (MemberDto Pm : PteacherList) {
-					if(Pm.getMrole()==2) {RaitingName="강사";}
+				System.out.println("================= 강사 목록 =================");
+				System.out.printf("%s\t%s\t%s\t%s\t\t%s\n","번호","아이디","이름","전화번호","등급");
+				ArrayList<MemberDto> pMemberList = MemberController.getInstance().pMemberView(2);
+				for (MemberDto pm : pMemberList) {
+					if(pm.getMrole() == 1) {RaitingName="일반회원";}
 					else {RaitingName=null;}
-					System.out.printf("%s\t%s\t%s\t%s\n",Pm.getMid() , Pm.getMname() , Pm.getMphone() , RaitingName);
+					System.out.printf("%s\t%s\t%s\t%s\t%s\n", pm.getMno(),pm.getMid() , pm.getMname() , pm.getMphone() , RaitingName);
 				}
 				System.out.println("==========================================");
 				
-				System.out.println("1.뒤로가기 2.처음으로"); int 채널 = scanner.nextInt();
-				if(채널 == 1) {Front.getInstance().admin_page();	}
-				else if(채널 == 2) {Front.getInstance().index();}
+				System.out.println("1.뒤로가기 2.메시지보내기"); int ch = scanner.nextInt();
+				if(ch == 1) {Front.getInstance().admin_page();	}
+				else if(ch == 2) { MessageView.getInstance().adminMessage_page(2);}//메시지 보내기 기능
 				else {System.out.println(
 						".╭◜◝ ͡ ◜◝\r\n"
 						+ "(    ´ㅅ` )\r\n"

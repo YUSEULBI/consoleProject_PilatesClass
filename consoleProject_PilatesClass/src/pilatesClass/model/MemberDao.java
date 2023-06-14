@@ -48,7 +48,7 @@ public class MemberDao extends Dao{
 	}
 	
 	// 조회
-	public ArrayList<MemberDto> PMemberView(int PRating){
+	public ArrayList<MemberDto> pMemberView(int PRating){
 		PMemberList = new ArrayList<>();
 		String sql = "select * from member where member.mrole = ?;";
 		try {

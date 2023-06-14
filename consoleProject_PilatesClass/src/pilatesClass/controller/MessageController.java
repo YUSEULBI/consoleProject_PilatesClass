@@ -26,9 +26,9 @@ public class MessageController {
 	}
 	
 	// 전체 회원번호 반환하기
-	public ArrayList<Integer> allMember(){
-		return MessageDao.getInstance().allMember();
-	}
+//	public ArrayList<Integer> allMember(){
+//		return MessageDao.getInstance().allMember();
+//	}
 	
 	
 	// 선택한 여러 회원에게 공통메시지 보내기
@@ -42,14 +42,13 @@ public class MessageController {
 	}
 	
 	// 전체 , 강사, 회원 전체메시지 보내기
-	public boolean sendMessageByRole( int role  , String title , String content ) {
+	public boolean sendMessageByRole( int role , String title , String content ) {
 		ArrayList<MessageDto> messageList = new ArrayList<>();
 		ArrayList<Integer> MemList = new ArrayList<>();
-		if ( role == 0 ) { // 회원+강사 전체 보내기
-			MemList = allMember();
-		}else{ // 회원 또는 강사에게 보내기
-			MemList = MemberDao.getInstance().findRoleNo( role );
-		}
+		
+		// 전체회원 또는 전체강사의 mno 가져오기
+		MemList = MemberDao.getInstance().findRoleNo( role );
+		
 		for ( Integer i : MemList ) { // 선택한 회원들 각각의 메세지 작성 dto에 저장 후 ArrayList에 저장
 			MessageDto dto = new MessageDto(title, content, false, i);
 			messageList.add(dto);

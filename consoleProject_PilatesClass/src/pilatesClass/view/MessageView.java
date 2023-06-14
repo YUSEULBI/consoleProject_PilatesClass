@@ -17,13 +17,14 @@ public class MessageView {
 	Scanner scanner = new Scanner(System.in);
 	
 	// 관리자 메시지 창
-	public void adminMessage_page() {
+	public void adminMessage_page(int role) {
+		System.out.println("role : "+role);
 		while(true) {
-			System.out.println("1.회원1명메시지 2.전체메시지 3.뒤로가기");
+			System.out.println("1.개별메시지 2.전체메시지 3.뒤로가기");
 			try {
 				int ch = scanner.nextInt();
 				if ( ch == 1 ) { sendMessageOne();	}
-				else if ( ch == 2 ) { sendMessageAll();	}
+				else if ( ch == 2 ) { sendMessageAll(role);	}
 				else if ( ch == 3 ) { break;	}
 			}catch (Exception e) {
 				System.out.println(e);
@@ -55,7 +56,7 @@ public class MessageView {
 			boolean result = MessageController.getInstance().sendMessage(MemList, title, content);
 			if ( result ) {
 				for ( Integer i : MemList ) {
-					System.out.println("회원번호 "+i+"번 "+MemberController.getInstance().memberNameFind(i)+" 회원에게 메세지를 보냈습니다.");
+					System.out.println("회원번호 "+i+"번 "+MemberController.getInstance().memberNoFind(i)+" 회원에게 메세지를 보냈습니다.");
 				}
 			}else { System.out.println("[메시지 발송 실패]");	}
 			return result;
@@ -117,27 +118,25 @@ public class MessageView {
 	
 	// 1명에게 메시지 보내기
 	public void sendMessageOne() throws Exception {
-		System.out.println("메시지를 보낼 회원명을 입력하세요.");
-		String name = scanner.next();
+		System.out.println("메시지 받을분 회원번호를 입력하세요.");
+		int mno = scanner.nextInt();
 		// 존재하는 회원명인지 체크
-		int no = MemberController.getInstance().memberNoFind(name);
-		if ( no == -1 ) { System.out.println("없는 회원 입니다.");	}
+		String name = MemberController.getInstance().memberNoFind(mno);
+		if ( name == null ) { System.out.println("없는 회원 입니다.");	}
 		else {
 			System.out.print("제목 : ");
 			scanner.nextLine();
 			String title = scanner.nextLine();
 			System.out.print("보낼메시지 : ");
 			String content = scanner.nextLine();
-			MessageDto dto = new MessageDto(0, title, content, false, no);
+			MessageDto dto = new MessageDto(0, title, content, false, mno);
 			boolean result = MessageController.getInstance().sendMessageOne(dto);
-			if ( result ) { System.out.println("["+no+"번 "+name+" 회원에게 메시지를 보냈습니다.]");	}
+			if ( result ) { System.out.println("["+mno+"번 "+name+" 회원에게 메시지를 보냈습니다.]");	}
 		}
 	}
 	
-	// 회원 전체에게 메시지 보내기
-	public void sendMessageAll() throws Exception {
-		System.out.println("0.회원+강사전체 1.회원전체 2.강사전체");
-		int role = scanner.nextInt();
+	// 회원 또는 강사 전체에게 메시지 보내기
+	public void sendMessageAll( int role ) throws Exception {
 		System.out.print("제목 : ");
 		scanner.nextLine();
 		String title = scanner.nextLine();
@@ -145,7 +144,7 @@ public class MessageView {
 		String content = scanner.nextLine();
 
 		boolean result = 
-				MessageController.getInstance().sendMessageByRole(role, title, content);
+				MessageController.getInstance().sendMessageByRole( role, title, content);
 		if ( result ) { System.out.println("[모든 회원에게 메시지를 보냈습니다.]");	}
 		
 	}

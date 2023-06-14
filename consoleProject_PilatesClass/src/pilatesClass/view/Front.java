@@ -148,7 +148,7 @@ public class Front {
 			while(true) {
 				System.out.println("================ 관리자 페이지 ================");
 				System.out.println();
-				System.out.println("1.수업관리 2.회원관리 3.강사목록 4.매출관리 5.로그아웃");
+				System.out.println("1.수업관리 2.회원목록 3.강사목록 4.매출관리 5.로그아웃");
 				System.out.println();
 				System.out.println("===========================================");
 				try {
@@ -160,6 +160,7 @@ public class Front {
 					else if ( sc == 5 ) { break; }
 				}catch (Exception e) {
 					System.out.println("[메뉴 번호에 맞게 입력하세요.]");
+					System.out.println(e);
 					scanner=new Scanner(System.in);
 				}
 			}

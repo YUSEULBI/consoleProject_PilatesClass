@@ -27,20 +27,20 @@ public class MessageDao extends Dao {
 		}return reserMemList;
 	}
 	
-	// 전체 회원번호 구하기
-	public ArrayList<Integer> allMember(){
-		ArrayList<Integer> allMemList = new ArrayList<>();
-		String sql = "select mno from member where mrole =1;";
-		try {
-			ps = con.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while ( rs.next()) {
-				allMemList.add(rs.getInt(1));
-			}
-		}catch (Exception e) {
-			System.out.println("전체회원번호구하기 예외: "+e);
-		}return allMemList;
-	}
+//	// 전체 회원번호 구하기
+//	public ArrayList<Integer> allMember(){
+//		ArrayList<Integer> allMemList = new ArrayList<>();
+//		String sql = "select mno from member where mrole =1;";
+//		try {
+//			ps = con.prepareStatement(sql);
+//			rs = ps.executeQuery();
+//			while ( rs.next()) {
+//				allMemList.add(rs.getInt(1));
+//			}
+//		}catch (Exception e) {
+//			System.out.println("전체회원번호구하기 예외: "+e);
+//		}return allMemList;
+//	}
 	
 	// [선택]한 [여러회원]에게 [공통메세지] 보내기
 	public boolean sendMessage( ArrayList<MessageDto> messageList ) {

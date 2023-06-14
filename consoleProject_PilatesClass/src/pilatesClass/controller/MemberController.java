@@ -27,19 +27,14 @@ public class MemberController {
 		
 	}
 	
-	// 회원출력
-	public ArrayList<MemberDto> PMemberView(){
+	// 회원 또는 강사 출력
+	public ArrayList<MemberDto> pMemberView( int role ){
 		
-		return MemberDao.getInstance().PMemberView(1);
+		return MemberDao.getInstance().pMemberView(role);
 		
 	}
 	
-	// 강사출력
-		public ArrayList<MemberDto> PteacherView(){
-			
-			return MemberDao.getInstance().PMemberView(2);
-			
-		}
+
 
 	
 	private int logSession; //로그 세션 int
@@ -108,13 +103,13 @@ public class MemberController {
 		}
 	
 	// 회원번호로 회원명 알기
-	public String memberNameFind( int num ) {
+	public String memberNoFind( int num ) {
 		return MemberDao.getInstance().memberNameFind(num);
 	}
 	
 	// 회원명으로 회원번호 찾기
-	public int memberNoFind( String name ) {
-		return MemberDao.getInstance().memberNoFind(name);
-	}
+//	public int memberNameFind( String name ) {
+//		return MemberDao.getInstance().memberNoFind(name);
+//	}
 
 }
