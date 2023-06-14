@@ -136,16 +136,16 @@ public class MessageView {
 	
 	// 회원 전체에게 메시지 보내기
 	public void sendMessageAll() throws Exception {
-		
+		System.out.println("0.회원+강사전체 1.회원전체 2.강사전체");
+		int role = scanner.nextInt();
 		System.out.print("제목 : ");
 		scanner.nextLine();
 		String title = scanner.nextLine();
 		System.out.print("보낼메시지 : ");
 		String content = scanner.nextLine();
-		ArrayList<Integer> memNumList = MessageController.getInstance().allMember();
-		
+
 		boolean result = 
-				MessageController.getInstance().sendMessage(memNumList, title, content);
+				MessageController.getInstance().sendMessageByRole(role, title, content);
 		if ( result ) { System.out.println("[모든 회원에게 메시지를 보냈습니다.]");	}
 		
 	}

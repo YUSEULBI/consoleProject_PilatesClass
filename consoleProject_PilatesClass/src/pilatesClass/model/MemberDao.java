@@ -270,6 +270,22 @@ public class MemberDao extends Dao{
 		}
 		return -1;
 	}
+	
+	// 회원이나 강사 mno 리스트 반환
+	public ArrayList<Integer> findRoleNo( int role ){
+		String sql = "select mno from member where mrole = "+role;
+		ArrayList<Integer> mnoList = new ArrayList<>();
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while ( rs.next() ) {
+				mnoList.add(rs.getInt(1));
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return mnoList;
+	}
 }
 
 	

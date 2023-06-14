@@ -19,6 +19,15 @@ public class MessageDto {
 		this.state = state;
 		this.mno = mno;
 	}
+	
+	// 메세지 보내기용 생성자
+	public MessageDto(String title, String content, boolean state, int mno) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.state = state;
+		this.mno = mno;
+	}
 
 
 	@Override
@@ -26,6 +35,9 @@ public class MessageDto {
 		return "MessageDto [msgno=" + msgno + ", title=" + title + ", content=" + content + ", state=" + state
 				+ ", mno=" + mno + "]";
 	}
+
+
+
 
 
 	public int getMsgno() {

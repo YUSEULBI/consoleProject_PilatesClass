@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import pilatesClass.model.MessageDao;
 import pilatesClass.model.MessageDto;
 import pilatesClass.model.ClassScheduleDao;
+import pilatesClass.model.MemberDao;
 
 public class MessageController {
 	private static MessageController controller = new MessageController();
@@ -30,12 +31,27 @@ public class MessageController {
 	}
 	
 	
-	
 	// 선택한 여러 회원에게 공통메시지 보내기
 	public boolean sendMessage( ArrayList<Integer> MemList  , String title , String content ) {
 		ArrayList<MessageDto> messageList = new ArrayList<>();
 		for ( Integer i : MemList ) { // 선택한 회원들 각각의 메세지 작성 dto에 저장 후 ArrayList에 저장
 			MessageDto dto = new MessageDto(0, title, content, false, i);
+			messageList.add(dto);
+		}
+		return MessageDao.getInstance().sendMessage(messageList); //메세지 보낸 결과
+	}
+	
+	// 전체 , 강사, 회원 전체메시지 보내기
+	public boolean sendMessageByRole( int role  , String title , String content ) {
+		ArrayList<MessageDto> messageList = new ArrayList<>();
+		ArrayList<Integer> MemList = new ArrayList<>();
+		if ( role == 0 ) { // 회원+강사 전체 보내기
+			MemList = allMember();
+		}else{ // 회원 또는 강사에게 보내기
+			MemList = MemberDao.getInstance().findRoleNo( role );
+		}
+		for ( Integer i : MemList ) { // 선택한 회원들 각각의 메세지 작성 dto에 저장 후 ArrayList에 저장
+			MessageDto dto = new MessageDto(title, content, false, i);
 			messageList.add(dto);
 		}
 		return MessageDao.getInstance().sendMessage(messageList); //메세지 보낸 결과
