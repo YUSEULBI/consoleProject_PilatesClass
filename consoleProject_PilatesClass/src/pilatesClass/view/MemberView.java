@@ -189,7 +189,7 @@ public class MemberView {
 				System.out.println("==========================================");
 				
 				System.out.println("1.뒤로가기 2.메시지보내기"); int ch = scanner.nextInt();
-				if(ch == 1) {Front.getInstance().admin_page();	}
+				if(ch == 1) { break;	}
 				else if(ch == 2) { MessageView.getInstance().adminMessage_page(2);}//메시지 보내기 기능
 				else {System.out.println(
 						".╭◜◝ ͡ ◜◝\r\n"

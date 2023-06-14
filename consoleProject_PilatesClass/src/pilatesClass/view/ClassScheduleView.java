@@ -184,6 +184,8 @@ public class ClassScheduleView {
 		System.out.println("==================강사 수업목록===================");
 		System.out.printf("%s\t %10s\t %10s %6s \n","수업번호","수강일시","금액","강사");
 		ArrayList<ClassScheduleDto> relist=ClassScheduleController.getInstance().te_print();
+		
+		if( relist == null ) { return; }
 		for(ClassScheduleDto d: relist) {
 			System.out.printf("%d\t%s\t%d\t%s \n",d.getSno(),d.getSdate(),d.getSprice(),d.getTeacherName());
 		}

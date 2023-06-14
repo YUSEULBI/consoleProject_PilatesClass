@@ -158,7 +158,7 @@ public class ClassScheduleDao extends Dao {
 				rs=ps.executeQuery();
 				
 				while(rs.next()) {
-					ClassScheduleDto classScheduleDto=new ClassScheduleDto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getInt(4));
+					ClassScheduleDto classScheduleDto=new ClassScheduleDto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getString(4));
 					relist.add(classScheduleDto);
 					
 				}

@@ -18,7 +18,7 @@ public class MessageView {
 	
 	// 관리자 메시지 창
 	public void adminMessage_page(int role) {
-		System.out.println("role : "+role);
+
 		while(true) {
 			System.out.println("1.개별메시지 2.전체메시지 3.뒤로가기");
 			try {
