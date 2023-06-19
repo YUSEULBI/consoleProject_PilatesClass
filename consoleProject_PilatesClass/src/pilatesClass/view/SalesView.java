@@ -136,28 +136,32 @@ public class SalesView {
 			int ch = scanner.nextInt();
 			if ( ch == 1 ) { 
 				day--; 
-				if ( day < 1 ) {
-					month--;
-					if( month < 1 ) { year--; month = 12; }// if end
-					cal.set(year, month-1, 1);
-					day = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					
+				if ( day < 1 ) { // day가 1보다 작으면
+					month--; // 이전달로 변경
+					if( month < 1 ) { year--; month = 12; }// 월이 1보다 작으면 이전해,월은 12월로
+					cal.set(year, month-1, 1); // 변경된 연,월로 calendar셋팅
+					day = cal.getActualMaximum(Calendar.DAY_OF_MONTH); // 변경된 연,월의 마지막일
 				}// if end
 			}// if end
 			else if ( ch == 2 ) {
-				int selectday = day+1;
+				int selectYear = year;
+				int selectMonth = month;
+				int selectDay = day+1;
+
+				// 다음날짜구하기
+				cal.set(year, month-1, 1);
+				if ( selectDay > cal.getActualMaximum(Calendar.DAY_OF_MONTH)) { // 입력일이 그달에 마지막날 보다 크면
+					selectMonth = month+1; // 다음달로 변경
+					selectDay = 1; // 다음달이 되면 day는 1로
+					if ( selectMonth > 12 ) { selectYear++; selectMonth = 1; } // 다음달이 12보다 크면 다음해로 넘김, 1월로 변경
+				}// if end
+				
 				// 오늘보다 다음날로는 못가도록 - 선택한날짜가 오늘보다 많으면 안됨.
-				if ( !isPastDate(year, month, selectday) ) {  System.err.println("[금일까지 조회가능합니다.]");
-				}else {
-					// 다음날짜구하기
-					cal.set(year, month-1, 1);
-					day = selectday;
-					if ( day > cal.getActualMaximum(Calendar.DAY_OF_MONTH)) { // 그달에 마지막날 보다 크면
-						month++; // 다음달로 변경
-						if ( month > 12 ) { year++; month = 1; 	} // 다음달이 12보다 크면 다음해로 넘김, 1월로 변경
-						day = 1; // 다음달이 되면 day는 1로
-					}// if end
-				}
+				if ( !isPastDate(selectYear, selectMonth, selectDay) ) {  System.err.println("[금일까지 조회가능합니다.]"); continue; }
+				year = selectYear;
+				month = selectMonth;
+				day = selectDay;
+				
 			}// if end
 			else if ( ch == 3 ) {	
 				System.out.println("년[yyyy] : "); int selectYear = scanner.nextInt();
@@ -165,12 +169,14 @@ public class SalesView {
 				System.out.println("월 : "); int selectMonth = scanner.nextInt();
 				if ( selectMonth > 12 || selectMonth < 1 ) { System.err.println("[달을 맞게 입력하세요.]"); continue;}
 				System.out.println("일 : "); int selectDay = scanner.nextInt();
-				
+				System.out.println(selectYear+" "+selectMonth+" "+selectDay);
 				// 날짜가 금일 이후인지 확인
 				if ( !isPastDate(selectYear, selectMonth, selectDay) ) { System.out.println("매출은 금일까지 조회가능합니다."); continue; }
-				cal.set(year, month, 1);
-				if ( day < 1 || day > cal.getMaximum(Calendar.DAY_OF_MONTH) ) { System.err.println("[존재하지 않는 날짜입니다.]"); continue; }
-				
+				cal.set(selectYear, selectMonth, 1);
+				if ( selectDay < 1 || selectDay > cal.getMaximum(Calendar.DAY_OF_MONTH) ) { System.err.println("[존재하지 않는 날짜입니다.]"); continue; }
+				year = selectYear;
+				month = selectMonth;
+				day = selectDay;
 			}else if ( ch == 4 ) { return; }
 		}// while end
 	} // 일자별 매출 end
@@ -182,7 +188,7 @@ public class SalesView {
 			LocalDate currentDate = LocalDate.now();
 			if ( inputDate.isAfter(currentDate) ) { return false; }	
 			
-		} catch (Exception e) { System.err.println("[날짜형식을 올바르게 입력해주세요]");		}
+		} catch (Exception e) { System.err.println("[날짜형식을 올바르게 입력해주세요]"); return false;		}
 		return true;	
 	}
 	

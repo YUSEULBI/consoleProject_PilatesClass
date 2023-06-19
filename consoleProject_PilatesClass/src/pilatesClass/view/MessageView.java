@@ -78,18 +78,18 @@ public class MessageView {
 		while( true ) {
 			ArrayList<MessageDto> messageList = MessageController.getInstance().message();
 			System.out.println("================= 메시지 페이지 =================");
-			System.out.printf("%s\t%-25s\t%-10s\n","번호","제목","읽음상태");
+			System.out.printf("%s\t%-25s\t%-10s\n","번호","제목","상태");
 			for ( MessageDto m :  messageList ) {
 				String state = "읽지않음";
 				if ( m.isState()) { state = "읽음";	}
-				System.out.printf("%d\t%-25s\t%-10s\n",m.getMno(),m.getTitle(), state );
+				System.out.printf("%d\t%-25s\t%-10s\n",m.getMsgno(),m.getTitle(), state );
 			}
 			System.out.println("=============================================");
 			System.out.println("0.뒤로가기 / 번호입력: 메시지 상세보기");
 			try {
-				int mno = scanner.nextInt();
-				if ( mno == 0 ) { return;	}
-				else { message_content(mno);	}
+				int msgno = scanner.nextInt();
+				if ( msgno == 0 ) { return;	}
+				else { message_content(msgno);	}
 			}catch (Exception e) {
 				System.out.println(e);
 				scanner=new Scanner(System.in);
@@ -98,15 +98,15 @@ public class MessageView {
 	}
 	
 	// 메시지 상세보기
-	public void message_content(int mno) throws Exception {
+	public void message_content(int msgno) throws Exception {
 		while( true ) {
 			System.out.println("================ 메시지 상세보기 ================");
-	        MessageDto dto = MessageController.getInstance().message_content(mno);
-	        System.out.print("[번호] "+dto.getMno()+"\n");
+	        MessageDto dto = MessageController.getInstance().message_content(msgno);
+	        System.out.print("[번호] "+dto.getMsgno()+"\n");
 	        System.out.print("[제목] "+dto.getTitle()+"\n");
 	        System.out.println("[내용] "+dto.getContent());
 	        // 메시지 읽음처리
-	        if ( !(MessageController.getInstance().message_read(mno)) ){
+	        if ( !(MessageController.getInstance().message_read(msgno)) ){
 	        	System.out.println("[메시지 읽음처리 실패]-관리자문의");
 	        }
 			System.out.println("=============================================");

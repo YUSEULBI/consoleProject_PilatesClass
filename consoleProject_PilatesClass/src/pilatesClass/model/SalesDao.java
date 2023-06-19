@@ -9,25 +9,19 @@ public class SalesDao extends Dao {
 	// 선택한 해의 누적예약수,총매출액 [ count(*) , sum(스케줄.sprice) ]
 	public SalesDto yearTotal( int year ) {
 		SalesDto dto = new SalesDto();
-		String sql = "select count(*) as 누적예약수 , sum(s.sprice) as 누적매출액 from member m , classschedule s , reservation r where m.mno = s.mno and s.sno = r.sno and sdate like \""+year+"%\"";
+		String sql = "select count(*) as 누적예약수 , sum(s.sprice) as 누적매출액 from member m , classschedule s , reservation r "
+					+ "where m.mno = s.mno and s.sno = r.sno and sdate like \""+year+"%\"";
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if ( rs.next()) { dto = new SalesDto(rs.getInt(1), rs.getInt(2)); }
 			
-		}catch (Exception e) {
-			System.out.println(e);
-		}return dto;
-		
+		}catch (Exception e) { System.out.println(e); }
+		return dto;
 	}
 	
-	// 월별매출액
+	// 월별 매출액
 	public SalesDto monthTotal( int year , int month ) {
-		
-		/*
-		 * String smonth = "0"; if ( month < 10 ) { smonth = "0"+ month; } else { smonth
-		 * = String.valueOf(month); } System.out.println("년 : "+year +" / 월 : "+smonth);
-		 */
 		SalesDto dto = new SalesDto();
 		String sql ="select count(*) as 해당월예약건 , sum(classschedule.sprice) as 해당월총매출액 "
 				+ "from classschedule,reservation "
@@ -44,7 +38,7 @@ public class SalesDao extends Dao {
 				dto = new SalesDto(rs.getInt(1), rs.getInt(2));
 			}
 		}catch (Exception e) { System.out.println(e); }
-		
+
 		return dto;
 	}
 	

@@ -94,12 +94,12 @@ public class MessageDao extends Dao {
 	}
 	
 	// 메시지 상세보기
-	public MessageDto message_content(int mno) {
+	public MessageDto message_content(int msgno) {
 		MessageDto dto = new MessageDto();
-		String sql = "select * from message where mno = ?;";
+		String sql = "select * from message where msgno = ?;";
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, mno);
+			ps.setInt(1, msgno);
 			rs = ps.executeQuery();
 			if ( rs.next() ) {
 				dto = new MessageDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBoolean(4), rs.getInt(5));
@@ -111,11 +111,11 @@ public class MessageDao extends Dao {
 	}
 	
 	// 메시지 읽음처리
-	public boolean message_read( int mno ) {
-		String sql = "update message set state = 1 where mno = ?;";
+	public boolean message_read( int msgno ) {
+		String sql = "update message set state = 1 where msgno = ?;";
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, mno);
+			ps.setInt(1, msgno);
 			ps.executeUpdate();
 			return true;
 		}catch (Exception e) {

@@ -69,13 +69,13 @@ public class MessageController {
 	}
 	
 	// 메시지 상세보기
-	public MessageDto message_content(int mno) {
-		return MessageDao.getInstance().message_content(mno);
+	public MessageDto message_content(int msgno) {
+		return MessageDao.getInstance().message_content(msgno);
 	}
 	
 	// 메시지 읽음처리
-	public boolean message_read( int mno ) {
-		return MessageDao.getInstance().message_read(mno);
+	public boolean message_read( int msgno ) {
+		return MessageDao.getInstance().message_read(msgno);
 	}
 	
 	
