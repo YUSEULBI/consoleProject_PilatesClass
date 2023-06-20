@@ -120,9 +120,9 @@ public class ClassScheduleView {
 	
 	public void classAdd() {
 		System.out.println("================ 수업등록 페이지 ================");
-		ClassScheduleDto 스케줄dto = classAddandEditInput();
-		if ( 스케줄dto != null ) {
-			boolean result = ClassScheduleController.getInstance().classAdd(스케줄dto);
+		ClassScheduleDto scheduleDto = classAddandEditInput();
+		if ( scheduleDto != null ) {
+			boolean result = ClassScheduleController.getInstance().classAdd(scheduleDto);
 			if ( result ) { System.out.println("[수업이 등록되었습니다.]");	}
 			else { System.out.println("[수업이 등록실패] - 관리자 문의");	}
 		}
@@ -131,11 +131,11 @@ public class ClassScheduleView {
 	public void classEdit() throws Exception {
 		System.out.println("================ 수업수정 페이지 ================");
 		System.out.println("수정할 스케줄번호 입력하세요 : ");
-		int ch = scanner.nextInt();
-		ClassScheduleDto 스케줄dto = classAddandEditInput();
-		if ( 스케줄dto != null ) {
-			int result = ClassScheduleController.getInstance().classEdit(스케줄dto, ch);
-			if ( result == 1 ) { System.out.println("["+ch+"번 수업을 변경했습니다.]");	}
+		int sno = scanner.nextInt();
+		ClassScheduleDto scheduleDto = classAddandEditInput();
+		if ( scheduleDto != null ) {
+			int result = ClassScheduleController.getInstance().classEdit(scheduleDto, sno);
+			if ( result == 1 ) { System.out.println("["+sno+"번 수업을 변경했습니다.]");	}
 			else if ( result == 2 ) { System.out.println("[강사명을 바르게 입력하세요.]");	}
 			else if ( result == 3 ) { System.out.println("[수업 변경 실패] - 관리자 문의");	}
 		}
@@ -144,16 +144,20 @@ public class ClassScheduleView {
 	//스케줄을 삭제하면 수강내역이 사라짐 / 사라지기전에 해당 스케줄을 수강한 회원들에게 삭제 알림을 안내해야할 것 같다.
 	public void classDelete() {
 		System.out.println("================ 수업삭제 페이지 ================");
-		System.out.println("삭제할 스케줄번호를 입력하세요"); int ch = scanner.nextInt();
+		System.out.println("삭제할 스케줄번호를 입력하세요"); int sno = scanner.nextInt();
 
 		// 메시지 발송 [ 인수: 스케줄번호 / 결과 true false ]
-		boolean messageResult = MessageView.getInstance().reser_Member(ch);
+		boolean messageResult = MessageView.getInstance().reser_Member(sno);
 		if ( !messageResult ) { System.out.println("[수업삭제실패]-관리자문의 메시지발송실패"); return; }
 				
-		boolean result = ClassScheduleController.getInstance().classDelete(ch);
-		if ( result ) { System.out.println("["+ch+"번 수업을 삭제했습니다.]"); } else { System.out.println("[수업삭제 실패]-관리자문의"); }	
+		boolean result = ClassScheduleController.getInstance().classDelete(sno);
+		if ( result ) { System.out.println("["+sno+"번 수업을 삭제했습니다.]"); } else { System.out.println("[수업삭제 실패]-관리자문의"); }	
 	}
 	
+	public void refundCancelledClass( int sno ) {
+		// 취소해야할 rno(예약번호), mno(예약자) 구하기 -> 
+		
+	}
 
 	public void te_print() {
 		System.out.println("==================강사 수업목록===================");

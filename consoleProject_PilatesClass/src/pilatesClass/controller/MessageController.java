@@ -16,11 +16,11 @@ public class MessageController {
 	
 	
 	// 수업삭제 전 , 수업유무확인 , 수업을 예약한 수강생 확인
-	public ArrayList<Integer> reser_Member( int 스케줄번호 ){
-		if ( !ClassScheduleDao.getInstance().deleteCheck(스케줄번호) ) { 
+	public ArrayList<Integer> reser_Member( int sno ){
+		if ( !ClassScheduleDao.getInstance().deleteCheck(sno) ) { 
 			return null;	//수업이 없으면 null 반환
 		}else {
-			return MessageDao.getInstance().reser_Member(스케줄번호);
+			return MessageDao.getInstance().reser_Member(sno);
 		}// 수업이 있으면 수강생 회원번호 반환
 		
 	}

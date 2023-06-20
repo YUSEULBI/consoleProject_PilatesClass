@@ -13,8 +13,8 @@ public class ClassScheduleDao extends Dao {
 	
 	ArrayList<ClassScheduleDto> classList  = new ArrayList<>();
 	
-	// 전체수업출력
-	public ArrayList<ClassScheduleDto> classView(){//과거 수업은 안보임
+	// 전체수업출력 //과거 수업은 안보임
+	public ArrayList<ClassScheduleDto> classView(){
 		classList  = new ArrayList<>();
 		String sql = "select sno , sdate , sprice , mname from member , classschedule where member.mno = classschedule.mno and classschedule.sdate >= now() + interval 3 hour";
 		try {
@@ -94,8 +94,8 @@ public class ClassScheduleDao extends Dao {
 	// 수업수정
 	public int classEdit( ClassScheduleDto dto , int sno ) {
 		int teacherMno = MemberDao.getInstance().teacher_NumFind(dto.getTeacherName());
-		if ( teacherMno == -1 ) { return 3;	} // 강사명이 잘못됨
-		String sql = "update classschedule set sdate =? , sprice=? , mno =? where mno =?;";
+		if ( teacherMno == -1 ) { return 3;	} // 강사명으로 회원번호 못찾았을경우
+		String sql = "update classschedule set sdate =? , sprice=? , mno =? where sno = ?";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, dto.getSdate()); ps.setInt(2, dto.getSprice()); ps.setInt(3, teacherMno); ps.setInt(4, sno);

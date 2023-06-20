@@ -46,8 +46,8 @@ public class ClassScheduleController {
 	}
 	
 	//수업수정
-	public int classEdit( ClassScheduleDto dto , int 수업번호 ) {
-		return ClassScheduleDao.getInstance().classEdit(dto, 수업번호);	
+	public int classEdit( ClassScheduleDto dto , int sno ) {
+		return ClassScheduleDao.getInstance().classEdit(dto, sno);	
 	}
 	
 

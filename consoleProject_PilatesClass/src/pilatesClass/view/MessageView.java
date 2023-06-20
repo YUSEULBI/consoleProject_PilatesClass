@@ -35,13 +35,13 @@ public class MessageView {
 	
 	
 	// 수업삭제 전 [수업유무확인,예약수강생 회원번호 가져와서] 메세지 보내기
-		public boolean reser_Member( int 스케줄번호 ){
-			ArrayList<Integer> reserMemList =MessageController.getInstance().reser_Member(스케줄번호);
+		public boolean reser_Member( int sno ){
+			ArrayList<Integer> reserMemList =MessageController.getInstance().reser_Member(sno);
 			if ( reserMemList == null ) {
 				System.out.println("[존재하지 않는 수업번호 입니다.]");
 				return false;			}
 			System.out.println("----------- 메시지작성 -----------");
-			String title = 스케줄번호+"번 수업이 취소 되었습니다.";
+			String title = sno+"번 수업이 취소 되었습니다.";
 			System.out.print("제목 [자동작성] : " + title);
 			System.out.println();
 			System.out.print("보낼메시지 : ");
