@@ -152,7 +152,8 @@ public class ClassScheduleView {
 		//메시지 발송 및 환불
 		byte refundResult = refundCancelledClass(sno);
 		if ( refundResult == 2 ) { System.out.println("[수업삭제 실패]-관리자문의,환불실패"); return; }
-				
+		
+		// 수업삭제
 		boolean result = ClassScheduleController.getInstance().classDelete(sno);
 		if ( result ) { System.out.println("["+sno+"번 수업을 삭제했습니다.]"); } else { System.out.println("[수업삭제 실패]-관리자문의"); }	
 	}
@@ -161,7 +162,7 @@ public class ClassScheduleView {
 		// 취소해야할 rno(예약번호), mno(예약자) 구하기 
 		ArrayList<ReservationDto> reservationDtoList = ReservationController.getInstance().findReservationsBySno(sno);
 		// 환불, 환불정보 반환
-		if ( reservationDtoList == null ) { System.out.println("예약회원이 없습니다."); return 1; }
+		if ( reservationDtoList == null ) { System.out.println("예약회원이 없습니다."); return 1; } // 환불할 필요없이 수업삭제 하면 됨.
 		ArrayList<RefundDto> refundDtoList = PointController.getInstance().refundPointCancelledClass(reservationDtoList);
 		
 		// 안내메시지 보내기 ( 수업취소, 환불내용 )

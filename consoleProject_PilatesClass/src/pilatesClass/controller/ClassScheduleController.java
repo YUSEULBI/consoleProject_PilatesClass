@@ -53,7 +53,7 @@ public class ClassScheduleController {
 
 	
 	//수업삭제
-	public boolean classDelete( int ch ) { return ClassScheduleDao.getInstance().classDelete(ch); }
+	public boolean classDelete( int sno ) { return ClassScheduleDao.getInstance().classDelete(sno); }
 	
 	// 회원이 예약취소 가능한 수업인지 체크
 	public boolean checkCancelAvailability( int sno) {
