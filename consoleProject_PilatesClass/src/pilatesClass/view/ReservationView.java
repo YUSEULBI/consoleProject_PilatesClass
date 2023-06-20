@@ -52,9 +52,6 @@ public class ReservationView {
 		
 		
 		// 포인트처리 /////////////////////////////////////////////////////////////////////////////////////////////
-		
-
-		
 			// 예약시 적립했던 포인트 차감 // 수업취소시 포인트테이블 rno가 null이 되기 때문에 취소전에 포인트차감
 				// 보유포인트가 
 		RefundDto refundDto = PointController.getInstance().cancelPoint(rno);
@@ -200,7 +197,7 @@ public class ReservationView {
 	
 	
 	public boolean re_check(int ch) { // 수업등록 유효성
-		if(ReservationDao.getInstance().re_check(ch) == false) {
+		if(ReservationController.getInstance().re_check(ch) == false) {
 			
 			System.err.println("이미 등록하신 수업입니다.");
 			

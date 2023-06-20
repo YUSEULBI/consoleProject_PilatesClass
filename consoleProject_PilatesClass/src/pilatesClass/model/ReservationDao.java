@@ -17,15 +17,14 @@ public class ReservationDao extends Dao{
 	private ReservationDao () {};
 	public static ReservationDao getInstance () {return dao;}
 
-	int logsession=MemberController.getInstance().getLogSession();	
+
 	
-	public boolean re_check(int ch) {
+	public boolean re_check(int ch , int mno) {
 		String sql="select * from reservation where sno=? and mno=?"; //
-		
 		try {
 			ps=con.prepareStatement(sql);
 			ps.setInt(1, ch);
-			ps.setInt(2, logsession);
+			ps.setInt(2, mno);
 			rs=ps.executeQuery();
 			
 			if(rs.next()) {//있으면 중복
@@ -61,14 +60,14 @@ public class ReservationDao extends Dao{
 
 
 
-	public int reservation(int ch) {
+	public int reservation(int ch , int mno) {
 
 		String sql="insert into reservation( mno , sno ) values( ? , ? );";
 		int rno = 0;
 		
 		try {
 			ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, logsession);
+			ps.setInt(1, mno);
 			ps.setInt(2, ch);
 			int row = ps.executeUpdate();
 			if ( row > 0 ) {

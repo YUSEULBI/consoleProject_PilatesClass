@@ -21,17 +21,19 @@ public class ReservationController {
 	
 	// 수업예약
 	public int reservation(int ch) {		
-		return ReservationDao.getInstance().reservation(ch);
+		int mno = MemberController.getInstance().getLogSession();
+		return ReservationDao.getInstance().reservation(ch , mno);
 		}
 	
 	public ArrayList<ClassScheduleDto> print(){
-		int logsession=MemberController.getInstance().getLogSession();
-		return ReservationDao.getInstance().print(logsession);
+		int mno = MemberController.getInstance().getLogSession();
+		return ReservationDao.getInstance().print(mno);
 	}
 	
 		
 	public boolean re_check(int ch) {
-		return ReservationDao.getInstance().re_check(ch);
+		int mno = MemberController.getInstance().getLogSession();
+		return ReservationDao.getInstance().re_check(ch,mno);
 	}
 	
 	public int pay(int point ,int money,int ch) {//결제 및 거스름돈

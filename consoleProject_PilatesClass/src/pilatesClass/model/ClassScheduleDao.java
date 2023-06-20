@@ -20,17 +20,12 @@ public class ClassScheduleDao extends Dao {
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
-			
 			while ( rs.next() ) {
 				ClassScheduleDto classScheduleDto = new ClassScheduleDto(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4));
 				classList.add(classScheduleDto);
 			}
-			return classList;
-			
-		}catch (Exception e) {
-			System.out.println("전체수업출력 예외발생: "+e);
-		}
-		return null;
+		}catch (Exception e) { System.out.println("전체수업출력 예외발생: "+e); }
+		return classList;
 	}
 	
 	// 존재하는 수업인지 확인
@@ -92,30 +87,23 @@ public class ClassScheduleDao extends Dao {
 			ps.executeUpdate();
 			return true;
 		}catch (Exception e) { System.out.println(e); }
-		
 		return false;
 	}
 	
 	
 	// 수업수정
-		public int classEdit( ClassScheduleDto dto , int sno ) {
-			int teacherMno = MemberDao.getInstance().teacher_NumFind(dto.getTeacherName());
-			if ( teacherMno == -1 ) { return 3;	} // 강사명이 잘못됨
-			String sql = "update classschedule set sdate =? , sprice=? , mno =? where mno =?;";
-			try {
-				ps = con.prepareStatement(sql);
-				ps.setString(1, dto.getSdate());
-				ps.setInt(2, dto.getSprice());
-				ps.setInt(3, teacherMno);
-				ps.setInt(4, sno);
-				ps.executeUpdate();
-				return 1; // 변경성공
-			}catch (Exception e) {
-				System.out.println(e);
-			}
-			
-			return 2;
-		}
+	public int classEdit( ClassScheduleDto dto , int sno ) {
+		int teacherMno = MemberDao.getInstance().teacher_NumFind(dto.getTeacherName());
+		if ( teacherMno == -1 ) { return 3;	} // 강사명이 잘못됨
+		String sql = "update classschedule set sdate =? , sprice=? , mno =? where mno =?;";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, dto.getSdate()); ps.setInt(2, dto.getSprice()); ps.setInt(3, teacherMno); ps.setInt(4, sno);
+			ps.executeUpdate();
+			return 1; // 변경성공
+		}catch (Exception e) { System.out.println(e); }
+		return 2; // 변경실패
+	}
 	
 	// 수업삭제 전 스케줄번호 유무 확인
 	public boolean deleteCheck ( int ch ) {
@@ -132,42 +120,38 @@ public class ClassScheduleDao extends Dao {
 	}
 		
 	// 수업삭제
-		public boolean classDelete( int ch ) {
-			String sql = "delete from classschedule where sno = ?;";
-			try {
-				ps = con.prepareStatement(sql);
-				ps.setInt(1, ch);
-				ps.executeUpdate();
-				return true; // 삭제 성공
-			}catch (Exception e) {
-				System.out.println(e);
-			}
-			return false; // 실패 관리자문의
-		}
+	public boolean classDelete( int ch ) {
+		String sql = "delete from classschedule where sno = ?;";
+		try {
+			ps = con.prepareStatement(sql); ps.setInt(1, ch); ps.executeUpdate();
+			return true; // 삭제 성공
+		}catch (Exception e) { System.out.println(e); } return false; // 실패 관리자문의
+	}
 		
 		
+	
+	public ArrayList<ClassScheduleDto> te_print(int logsession){
 		ArrayList<ClassScheduleDto> relist=new ArrayList<>();
-		public ArrayList<ClassScheduleDto> te_print(int logsession){
-			relist=new ArrayList<>();
-			String spl="select sno,sdate,sprice, mname from member m ,classschedule s  where m.mno = s.mno and m.mno=?;";
-				
+		relist=new ArrayList<>();
+		String spl="select sno,sdate,sprice, mname from member m ,classschedule s  where m.mno = s.mno and m.mno=?;";
 			
-			try {
-				ps=con.prepareStatement(spl);
-				ps.setInt(1, logsession);
-				rs=ps.executeQuery();
-				
-				while(rs.next()) {
-					ClassScheduleDto classScheduleDto=new ClassScheduleDto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getString(4));
-					relist.add(classScheduleDto);
-					
-				}
-				return relist;
-				
-			} catch (SQLException e) {System.out.println(e);}
+		
+		try {
+			ps=con.prepareStatement(spl);
+			ps.setInt(1, logsession);
+			rs=ps.executeQuery();
 			
-			return null;
-		}
+			while(rs.next()) {
+				ClassScheduleDto classScheduleDto=new ClassScheduleDto(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getString(4));
+				relist.add(classScheduleDto);
+				
+			}
+			return relist;
+			
+		} catch (SQLException e) {System.out.println(e);}
+		
+		return null;
+	}
 		
 	// 회원이 예약취소 가능한 수업인지 체크
 	public boolean checkCancelAvailability( int sno , int mno ) {

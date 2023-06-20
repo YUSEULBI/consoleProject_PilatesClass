@@ -38,13 +38,18 @@ public class SalesView {
 				else if ( ch == 2 ) { dailySales(); }
 				else if ( ch == 3 ) { // 연매출 
 					System.out.println("년[yyyy] : "); int year = scanner.nextInt();
-					if ( year < 1900 || year > 9999 ) { System.out.println("[연도를 맞게 입력하세요.]");	}
-					else if( year > Calendar.getInstance().get(Calendar.YEAR) ) {System.out.println("[연도를 맞게 입력하세요.]");}
-					else { selectYear = year; }
+					boolean result = checkYear(year);
+					if ( result ) { selectYear = year; }
 				}
 				else if ( ch == 4 ) { return; }
 			}catch (Exception e) { 	System.out.println(e); 	scanner=new Scanner(System.in);}
 		}
+	}
+	
+	public boolean checkYear( int year ) {
+		if ( year < 1900 || year > 9999 ) { System.out.println("[연도를 맞게 입력하세요.]"); return false;	}
+		else if( year > Calendar.getInstance().get(Calendar.YEAR) ) {System.out.println("[연도를 맞게 입력하세요.]"); return false;}
+		else { return true; } 
 	}
 	
 	//올해 총 예약수
@@ -77,20 +82,22 @@ public class SalesView {
 				int ch = scanner.nextInt();
 				if ( ch == 1 ) { month--; if ( month<1) { year--; month=12;	} 	}
 				else if ( ch == 2 ) {
-					 // 유효성검사 : 입력날짜가 금월보다 많으면 안됨.
+					int selectYear = year;
+					int selectMonth = month+1;// 다음달로 넘기기
+					if ( selectMonth>12 ) { selectYear++; selectMonth =1; }
+					
+					// 유효성검사 : 입력날짜가 금월보다 많으면 안됨.
 					LocalDate currentDate = LocalDate.now();
-					LocalDate selectDate = LocalDate.of(year, month+1 , 1);
+					LocalDate selectDate = LocalDate.of(selectYear, selectMonth , 1);
 					if( selectDate.isAfter(currentDate) ) { System.out.println("[금월까지 조회 가능합니다.]"); continue; }
 					
-					// 다음달로 넘기기
-					month++;
-					if ( month>12 ) { year++; month =1; }
+					year = selectYear;
+					month = selectMonth;
 				}
 				else if ( ch == 3 ) {  	
 					LocalDate currentDate = LocalDate.now();
 					year = Calendar.getInstance().get(Calendar.YEAR); // 현재년도로 변경
 	
-					System.out.println(currentDate);
 					System.out.println("년[yyyy] : "); int selectYear = scanner.nextInt();
 					
 					// 입력년도가 현재년도보다 크거나 1900보다 낮으면 안됨.
@@ -134,6 +141,10 @@ public class SalesView {
 			System.out.println("=============================================");
 			System.out.println("1.이전날 2.다음날 3.직접날짜입력 4.뒤로가기");
 			int ch = scanner.nextInt();
+			int selectYear = year;
+			int selectMonth = month;
+			int selectDay = day+1;
+			
 			if ( ch == 1 ) { 
 				day--; 
 				if ( day < 1 ) { // day가 1보다 작으면
@@ -144,10 +155,6 @@ public class SalesView {
 				}// if end
 			}// if end
 			else if ( ch == 2 ) {
-				int selectYear = year;
-				int selectMonth = month;
-				int selectDay = day+1;
-
 				// 다음날짜구하기
 				cal.set(year, month-1, 1);
 				if ( selectDay > cal.getActualMaximum(Calendar.DAY_OF_MONTH)) { // 입력일이 그달에 마지막날 보다 크면
@@ -158,25 +165,21 @@ public class SalesView {
 				
 				// 오늘보다 다음날로는 못가도록 - 선택한날짜가 오늘보다 많으면 안됨.
 				if ( !isPastDate(selectYear, selectMonth, selectDay) ) {  System.err.println("[금일까지 조회가능합니다.]"); continue; }
-				year = selectYear;
-				month = selectMonth;
-				day = selectDay;
+				year = selectYear; month = selectMonth; day = selectDay;
 				
 			}// if end
 			else if ( ch == 3 ) {	
-				System.out.println("년[yyyy] : "); int selectYear = scanner.nextInt();
+				System.out.println("년[yyyy] : "); selectYear = scanner.nextInt();
 				if ( selectYear < 1900 || selectYear > 9999 ) { System.err.println("[연도를 맞게 입력하세요.]"); continue;	}
-				System.out.println("월 : "); int selectMonth = scanner.nextInt();
+				System.out.println("월 : "); selectMonth = scanner.nextInt();
 				if ( selectMonth > 12 || selectMonth < 1 ) { System.err.println("[달을 맞게 입력하세요.]"); continue;}
-				System.out.println("일 : "); int selectDay = scanner.nextInt();
+				System.out.println("일 : "); selectDay = scanner.nextInt();
 				System.out.println(selectYear+" "+selectMonth+" "+selectDay);
 				// 날짜가 금일 이후인지 확인
 				if ( !isPastDate(selectYear, selectMonth, selectDay) ) { System.out.println("매출은 금일까지 조회가능합니다."); continue; }
 				cal.set(selectYear, selectMonth, 1);
 				if ( selectDay < 1 || selectDay > cal.getMaximum(Calendar.DAY_OF_MONTH) ) { System.err.println("[존재하지 않는 날짜입니다.]"); continue; }
-				year = selectYear;
-				month = selectMonth;
-				day = selectDay;
+				year = selectYear; month = selectMonth; day = selectDay;
 			}else if ( ch == 4 ) { return; }
 		}// while end
 	} // 일자별 매출 end
