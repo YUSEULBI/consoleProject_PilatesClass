@@ -3,6 +3,7 @@ package pilatesClass.controller;
 import java.util.ArrayList;
 
 import pilatesClass.model.ReservationDao;
+import pilatesClass.model.ReservationDto;
 import pilatesClass.model.ClassScheduleDto;
 
 public class ReservationController {
@@ -52,7 +53,9 @@ public class ReservationController {
 		return ReservationDao.getInstance().checkRno(sno, mno);
 	}
 	
+	// 수업번호에 해당하는 모든 예약리스트 구하기
+	public ArrayList<ReservationDto> findReservationsBySno( int sno ) {
+		return ReservationDao.getInstance().findReservationsBySno(sno);
+	}
 
-	
-	
 }

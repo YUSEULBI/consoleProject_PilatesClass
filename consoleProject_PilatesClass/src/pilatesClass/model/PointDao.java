@@ -64,13 +64,12 @@ public class PointDao extends Dao {
 	}
 	
 	// 예약취소시 예약시 적립된 포인트 차감
-	public RefundDto cancelPoint( int rno , int loginsession ) {
+	public RefundDto cancelPoint( int rno , int loginsession , byte type ) {
 		
 		// 예약시 적립 또는 사용한 포인트 찾기
 		String sql = "select pointvalue from point where rno = ? and mno = ?";
-		//환불정보를 담은 dto
-		RefundDto refundDto = new RefundDto();
-		refundDto.setRno(rno);
+		//환불정보를 담을 dto
+		RefundDto refundDto = new RefundDto(rno, loginsession);
 		
 		try {
 			ps = con.prepareStatement(sql);
@@ -90,7 +89,7 @@ public class PointDao extends Dao {
 				String reason = "";
 				
 				// 포인트 적립했을 경우 => 적립취소(회수)
-				if ( pointvalue > 0 ) {
+				if ( pointvalue > 0 || type == 1 ) {
 					// 적립취소(회수)해야하는 총 포인트
 					refundDto.setCanceledAccumulatedPoints(pointvalue);
 					
@@ -131,16 +130,18 @@ public class PointDao extends Dao {
 
 				}
 				// 포인트 적립취소(회수) 또는 포인트 환불
-				sql = "insert into point ( pointvalue , reason , mno , rno ) values ( ? , ? , ? , ? )";
-				ps = con.prepareStatement(sql);
-				ps.setInt(1, negativePoints);
-				ps.setString(2, reason);
-				ps.setInt(3, loginsession);
-				ps.setInt(4, rno);
-				int row = ps.executeUpdate();
-				if ( row > 0 ) { // 포인트환불레코드 생성성공
-					refundDto.setRefundSuccess(true);
-					return refundDto;
+				if ( type == 1 || pointvalue < 0 ) {
+					sql = "insert into point ( pointvalue , reason , mno , rno ) values ( ? , ? , ? , ? )";
+					ps = con.prepareStatement(sql);
+					ps.setInt(1, negativePoints);
+					ps.setString(2, reason);
+					ps.setInt(3, loginsession);
+					ps.setInt(4, rno);
+					int row = ps.executeUpdate();
+					if ( row > 0 ) { // 포인트환불레코드 생성성공
+						refundDto.setRefundSuccess(true);
+						return refundDto;
+					}
 				}
 			} 
 		} catch (Exception e) {
@@ -164,6 +165,7 @@ public class PointDao extends Dao {
 		} catch (Exception e) {
 			System.out.println("포인트출력 예외발생 : "+e);
 		}
+		System.out.println("pointList : "+ pointList);
 		return pointList;
 	}
 }

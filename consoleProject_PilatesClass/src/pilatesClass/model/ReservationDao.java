@@ -164,5 +164,18 @@ public class ReservationDao extends Dao{
 		return 0; // 본인이 예약한 수강번호가 아님, 그 외
 	}
 	
+	// 수업번호에 해당하는 모든 예약리스트 구하기
+	public ArrayList<ReservationDto> findReservationsBySno( int sno ) {
+		ArrayList<ReservationDto> reservationDtoList = new ArrayList<>();
+		String sql = "select * from reservation where sno = "+sno;
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while ( rs.next() ) {
+				reservationDtoList.add(new ReservationDto(rs.getInt(1), rs.getInt(2), sno));
+			}
+		} catch (Exception e) { System.out.println("수업번호로 예약리스트 찾기 예외 : "+e);		}
+		return reservationDtoList;
+	}
 	
 }

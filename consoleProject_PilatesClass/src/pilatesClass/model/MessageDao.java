@@ -122,4 +122,23 @@ public class MessageDao extends Dao {
 			System.out.println(e);
 		}return false;
 	}
+	
+	// 수업취소로인한 환불처리 안내메시지 보내기
+	public String CancellationAndRefundMessage ( ArrayList<RefundDto> refundDtoList , int refundAmount ) {
+		String resultInfo = "";
+		for( RefundDto dto : refundDtoList ) {
+			String title = "[환불안내] "+dto.getRno()+"번 수업이 취소되었습니다.";
+			String content = "환불금액 : "+ refundAmount+"원 \n";
+			// 사용한 포인트 환불했다면
+			if ( dto.getDeductedPoints() > 0 ) { // 보유포인트에서 회수
+				content += "환불포인트 : "+ dto.getUsedPoints() + "\n";
+			}
+			if ( dto.isRefundSuccess() ) { content += "[환불완료] \n"; }else { content += "[환불처리중]"; }
+			content += "자세한 사항은 문의주시면 자세히 안내드리겠습니다.";
+			
+			boolean result = sendMessageOne( new MessageDto(title, content, false, dto.getMno() ) );
+			if ( !result ) { resultInfo += dto.getMno()+","; }
+		}
+		return resultInfo;
+	}
 }

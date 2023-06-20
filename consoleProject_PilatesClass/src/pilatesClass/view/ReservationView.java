@@ -54,8 +54,8 @@ public class ReservationView {
 		// 포인트처리 /////////////////////////////////////////////////////////////////////////////////////////////
 			// 예약시 적립했던 포인트 차감 // 수업취소시 포인트테이블 rno가 null이 되기 때문에 취소전에 포인트차감
 		
-		// 
-		RefundDto refundDto = PointController.getInstance().cancelPoint(rno);
+		// 포인트환불,회수처리
+		RefundDto refundDto = PointController.getInstance().cancelPoint( rno , (byte)1 );
 		System.out.println("refundDto : "+refundDto);
 		
 		// 수업 금액 

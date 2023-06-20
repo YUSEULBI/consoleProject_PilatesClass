@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import pilatesClass.controller.MessageController;
+import pilatesClass.controller.PointController;
 import pilatesClass.controller.ReservationController;
 import pilatesClass.controller.ClassScheduleController;
 import pilatesClass.controller.MemberController;
 import pilatesClass.model.ClassScheduleDao;
 import pilatesClass.model.ClassScheduleDto;
+import pilatesClass.model.RefundDto;
+import pilatesClass.model.ReservationDto;
 
 public class ClassScheduleView {
 
@@ -146,17 +149,29 @@ public class ClassScheduleView {
 		System.out.println("================ 수업삭제 페이지 ================");
 		System.out.println("삭제할 스케줄번호를 입력하세요"); int sno = scanner.nextInt();
 
-		// 메시지 발송 [ 인수: 스케줄번호 / 결과 true false ]
-		boolean messageResult = MessageView.getInstance().reser_Member(sno);
-		if ( !messageResult ) { System.out.println("[수업삭제실패]-관리자문의 메시지발송실패"); return; }
+		//메시지 발송 및 환불
+		byte refundResult = refundCancelledClass(sno);
+		if ( refundResult == 2 ) { System.out.println("[수업삭제 실패]-관리자문의,환불실패"); return; }
 				
 		boolean result = ClassScheduleController.getInstance().classDelete(sno);
 		if ( result ) { System.out.println("["+sno+"번 수업을 삭제했습니다.]"); } else { System.out.println("[수업삭제 실패]-관리자문의"); }	
 	}
 	
-	public void refundCancelledClass( int sno ) {
-		// 취소해야할 rno(예약번호), mno(예약자) 구하기 -> 
+	public byte refundCancelledClass( int sno ) {
+		// 취소해야할 rno(예약번호), mno(예약자) 구하기 
+		ArrayList<ReservationDto> reservationDtoList = ReservationController.getInstance().findReservationsBySno(sno);
+		// 환불, 환불정보 반환
+		if ( reservationDtoList == null ) { System.out.println("예약회원이 없습니다."); return 1; }
+		ArrayList<RefundDto> refundDtoList = PointController.getInstance().refundPointCancelledClass(reservationDtoList);
 		
+		// 안내메시지 보내기 ( 수업취소, 환불내용 )
+		if ( refundDtoList == null ) { System.out.println("[포인트 환불 실패] - 관리자문의"); return 2; }
+		
+		String messageResult = MessageController.getInstance().CancellationAndRefundMessage(refundDtoList , sno);
+		if( messageResult != "" ) { System.out.println("[메시지전송실패]-"+messageResult+"번 회원 메시지전송실패"); } // 이미 환불처리 되었기 때문에 return하지않음
+		else { System.out.println("취소환불메시지 전송완료"); }
+		
+		return 3;
 	}
 
 	public void te_print() {

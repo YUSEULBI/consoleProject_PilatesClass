@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import pilatesClass.model.MessageDao;
 import pilatesClass.model.MessageDto;
+import pilatesClass.model.RefundDto;
 import pilatesClass.model.ClassScheduleDao;
 import pilatesClass.model.MemberDao;
 
@@ -78,5 +79,10 @@ public class MessageController {
 		return MessageDao.getInstance().message_read(msgno);
 	}
 	
+	// 수업취소로인한 환불처리 안내메시지 보내기
+	public String CancellationAndRefundMessage( ArrayList<RefundDto> refundDtoList , int sno ) {
+		int refundAmount = ClassScheduleController.getInstance().classAmount(sno);
+		return MessageDao.getInstance().CancellationAndRefundMessage( refundDtoList , refundAmount );
+	}
 	
 }
